@@ -412,33 +412,144 @@ export default function Dashboard() {
                 ))}
               </div>
 
-              <div className="space-y-1.5 rounded-2xl bg-white/70 p-4 font-mono text-[11px] leading-relaxed text-clay-700">
-                <p className="font-bold">Rumus:</p>
-                <p>1) Energi makro = gram × faktor kkal/gram</p>
-                <p className="pl-4">
-                  E_karbo = karbo_g × 4 · E_protein = protein_g × 4 · E_lemak
-                  = lemak_g × 9
+              <div className="space-y-4 rounded-2xl bg-white/70 p-4">
+                <p className="text-xs font-extrabold uppercase tracking-wider text-clay-500">
+                  Rumus lengkap (5 langkah)
                 </p>
-                <p>2) Proporsi: p = E_makro ÷ E_total × 100%</p>
-                <p>3) Skor tiap makro (0–100):</p>
-                <p className="pl-4">100, jika lo ≤ p ≤ hi (di rentang sehat)</p>
-                <p className="pl-4">
-                  max(0, 100 − (penyimpangan ÷ lebar rentang) × 100), jika di
-                  luar rentang
-                </p>
-                <p>
-                  4) Skor menu = (skor_karbo + skor_protein + skor_lemak) ÷ 3
-                </p>
+
+                <div>
+                  <p className="text-sm font-extrabold text-clay-800">
+                    Langkah 1 — Total gram tiap makro dari porsi bahan
+                  </p>
+                  <p className="mt-1 text-xs font-semibold leading-relaxed text-clay-600">
+                    Setiap bahan punya nilai gizi per 100 g (database TKPI).
+                    Gizi satu bahan = nilai × (gram bahan ÷ 100), lalu
+                    dijumlahkan dari semua bahan di 5 waktu makan.
+                  </p>
+                  <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
+                    <p>protein_g = Σ ( protein_per100 × gram ÷ 100 )</p>
+                    <p>karbo_g   = Σ ( karbo_per100   × gram ÷ 100 )</p>
+                    <p>lemak_g   = Σ ( lemak_per100   × gram ÷ 100 )</p>
+                  </div>
+                  <p className="mt-1.5 text-[11px] font-bold text-clay-500">
+                    Menu kamu sekarang: protein {menu.totals.protein} g ·
+                    karbo {menu.totals.karbo} g · lemak {menu.totals.lemak} g
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-extrabold text-clay-800">
+                    Langkah 2 — Energi tiap makro (faktor Atwater 4-4-9)
+                  </p>
+                  <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
+                    <p>E_karbo   = karbo_g × 4 kkal = {Math.round(menu.totals.karbo * 4)} kkal</p>
+                    <p>E_protein = protein_g × 4 kkal = {Math.round(menu.totals.protein * 4)} kkal</p>
+                    <p>E_lemak   = lemak_g × 9 kkal = {Math.round(menu.totals.lemak * 9)} kkal</p>
+                    <p>E_total   = {menu.totals.kcal} kkal (jumlah kkal seluruh bahan; bila kosong dipakai 4P + 4K + 9L)</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-sm font-extrabold text-clay-800">
+                    Langkah 3 — Proporsi energi tiap makro
+                  </p>
+                  <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
+                    <p>p_i = E_i ÷ E_total × 100%</p>
+                    <p>p_karbo   = {shares.karbo}%  (target 55–65%)</p>
+                    <p>p_protein = {shares.protein}%  (target 10–15%)</p>
+                    <p>p_lemak   = {shares.lemak}%  (target 20–30%)</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-sm font-extrabold text-clay-800">
+                    Langkah 4 — Skor tiap makro (fungsi pita, 0–100)
+                  </p>
+                  <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
+                    <p>s_i = 100                              jika lo ≤ p_i ≤ hi</p>
+                    <p>s_i = max(0, 100 − (d ÷ L) × 100)      jika p_i di luar rentang</p>
+                    <p>d = jarak p_i ke tepi rentang terdekat</p>
+                    <p>L = lebar rentang = hi − lo</p>
+                  </div>
+                  <p className="mt-1.5 text-[11px] font-semibold leading-relaxed text-clay-600">
+                    Artinya: selama proporsi ada di pita sehat, skornya penuh
+                    (100). Di luar pita, skor menurun linier — meleset satu
+                    lebar rentang penuh berarti skor 0. Contoh rentang lemak
+                    (L = 30 − 20 = 10): meleset 5 poin → skor 50.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm font-extrabold text-clay-800">
+                    Langkah 5 — Skor menu & kesimpulan
+                  </p>
+                  <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
+                    <p>Skor menu = ( s_karbo + s_protein + s_lemak ) ÷ 3</p>
+                  </div>
+                  <ul className="mt-2 space-y-1 text-[11px] font-bold text-clay-600">
+                    <li>• Skor 85–100 → “Seimbang! Proporsi makro pas.”</li>
+                    <li>• Skor 70–84 → “Cukup seimbang.”</li>
+                    <li>• Skor &lt; 70 → “Belum seimbang — refresh menu.”</li>
+                  </ul>
+                </div>
               </div>
 
-              <p className="text-xs font-semibold leading-relaxed text-clay-600">
-                Contoh: karbo 60%, protein 14%, lemak 26% → ketiganya di rentang
-                sehat → skor menu 100. Jika lemak 36% (meleset 6 poin dari batas
-                30%, lebar rentang 10) → skor lemak = 100 − (6 ÷ 10) × 100 = 40.
-                Penyusun menu otomatis menakar porsi dengan penyetel proporsional
-                agar kombinasi yang muncul lolos cek ini. Angka gizi memakai nilai
-                per 100 g (TKPI) untuk perencanaan menu, bukan diagnosis medis.
-              </p>
+              <div className="rounded-2xl bg-white/70 p-4">
+                <p className="text-xs font-extrabold uppercase tracking-wider text-clay-500">
+                  Contoh hitung end-to-end (angka riil menu di atas)
+                </p>
+                <ol className="mt-2 space-y-1 text-xs font-semibold leading-relaxed text-clay-700">
+                  <li>
+                    1) Gram gram makro sudah terkumpul: protein{" "}
+                    {menu.totals.protein} g, karbo {menu.totals.karbo} g, lemak{" "}
+                    {menu.totals.lemak} g (Langkah 1).
+                  </li>
+                  <li>
+                    2) Energi: 4 × {menu.totals.karbo} + 4 ×{" "}
+                    {menu.totals.protein} + 9 × {menu.totals.lemak} ={" "}
+                    {Math.round(4 * menu.totals.karbo + 4 * menu.totals.protein + 9 * menu.totals.lemak)}{" "}
+                    kkal ≈ total {menu.totals.kcal} kkal (Langkah 2).
+                  </li>
+                  <li>
+                    3) Proporsi: karbo {shares.karbo}%, protein{" "}
+                    {shares.protein}%, lemak {shares.lemak}% (Langkah 3).
+                  </li>
+                  <li>
+                    4) Skor makro: s_karbo = {cekDetail.details.find((d) => d.name === "karbo")?.score ?? 0}{" "}
+                    · s_protein = {cekDetail.details.find((d) => d.name === "protein")?.score ?? 0}{" "}
+                    · s_lemak = {cekDetail.details.find((d) => d.name === "lemak")?.score ?? 0} (Langkah 4).
+                  </li>
+                  <li>
+                    5) Skor menu = ({cekDetail.details.find((d) => d.name === "karbo")?.score ?? 0} +{" "}
+                    {cekDetail.details.find((d) => d.name === "protein")?.score ?? 0} +{" "}
+                    {cekDetail.details.find((d) => d.name === "lemak")?.score ?? 0}) ÷ 3 ={" "}
+                    <span className="font-extrabold text-leaf-700">{menu.score}/100</span>{" "}
+                    → {menu.verdict} (Langkah 5).
+                  </li>
+                </ol>
+                <div className="mt-3 space-y-2 border-t border-clay-400/30 pt-3 text-xs font-semibold leading-relaxed text-clay-600">
+                  <p>
+                    Contoh hipotesis: bila lemak mencapai 36% (meleset 6 poin
+                    dari batas 30%, lebar rentang L = 30 − 20 = 10) → skor
+                    lemak = 100 − (6 ÷ 10) × 100 = <b>40</b>; bila karbo dan
+                    protein tetap di rentang sehat (100 keduanya), skor menu =
+                    (100 + 100 + 40) ÷ 3 = <b>80</b> → “Cukup seimbang.”
+                  </p>
+                  <p>
+                    Penyusun menu otomatis memakai penyetel proporsional: skala
+                    porsi karbo (cs) dan lauk-pauk (ps) digeser bertahap
+                    (×0,96–×1,04 per iterasi, maksimum 80 iterasi) sampai
+                    proporsi masuk pita lebih ketat dari target cek — karbo
+                    57–63%, protein 11–14%, lemak 21–29% — sehingga kombinasi
+                    yang muncul selalu lolos Langkah 4–5.
+                  </p>
+                  <p>
+                    Angka gizi per 100 g bersumber dari TKPI (Tabel Komposisi
+                    Pangan Indonesia) untuk perencanaan menu, bukan diagnosis
+                    medis.
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </section>
