@@ -22,11 +22,14 @@ import {
   CalendarDays,
   CheckCircle2,
   ChefHat,
+  ChevronDown,
+  ChevronUp,
   Copy,
   ListChecks,
   LogOut,
   RefreshCw,
   Save,
+  Sigma,
   Trash2,
   Utensils,
 } from "lucide-react";
@@ -44,6 +47,12 @@ const MEAL_TINT: Record<string, string> = {
 };
 
 const PROFILS: Profil[] = ["sekolah", "rumah-tangga", "umum"];
+
+const MACRO_LABEL: Record<"karbo" | "protein" | "lemak", string> = {
+  karbo: "Karbohidrat",
+  protein: "Protein",
+  lemak: "Lemak",
+};
 
 function scoreTint(score: number) {
   if (score >= 85) return { chip: "bg-leaf-200 text-leaf-700", bar: "bg-leaf-500" };
@@ -132,6 +141,7 @@ export default function Dashboard() {
 
   const [profil, setProfil] = useState<Profil>("sekolah");
   const [refreshCount, setRefreshCount] = useState(0);
+  const [formulaOpen, setFormulaOpen] = useState(false);
   const [savingOpen, setSavingOpen] = useState(false);
   const [saveName, setSaveName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -139,6 +149,11 @@ export default function Dashboard() {
   const menu = useMemo(() => generateMenu(profil, refreshCount), [profil, refreshCount]);
   const shares = macroShares(menu.totals);
   const tint = scoreTint(menu.score);
+  // Hitung ulang cek gizi untuk mendapatkan rincian rumus per makro.
+  const cekDetail = useMemo(
+    () => checkBalance(menu.meals, menu.totals),
+    [menu],
+  );
 
   const savedMenus = (useQuery(api.menus.list) ?? []) as Array<
     Doc<"menus"> & { _id: Id<"menus"> }
@@ -341,6 +356,91 @@ export default function Dashboard() {
               Lemak <span className="text-sunny-600">{menu.totals.lemak} g</span>
             </span>
           </div>
+
+          {/* Penjelasan logika proporsional + rumus */}
+          <button
+            type="button"
+            onClick={() => setFormulaOpen((v) => !v)}
+            className="clay-btn-soft mt-5 inline-flex w-full items-center justify-between px-5 py-3 text-left text-sm font-extrabold text-clay-800"
+          >
+            <span className="inline-flex items-center gap-2">
+              <Sigma className="size-4 text-leaf-600" />
+              Bagaimana skor ini dihitung? — Logika Proporsional
+            </span>
+            {formulaOpen ? (
+              <ChevronUp className="size-4 shrink-0" />
+            ) : (
+              <ChevronDown className="size-4 shrink-0" />
+            )}
+          </button>
+          {formulaOpen && (
+            <div className="clay-inset mt-3 space-y-4 bg-cream-100 p-5 text-sm text-clay-700">
+              <p className="font-semibold leading-relaxed">
+                Sistem memakai{" "}
+                <span className="font-extrabold text-clay-800">
+                  logika proporsional
+                </span>
+                : menu dinilai seimbang bila proporsi energi tiap makronutrien
+                berada di rentang sehat pedoman gizi seimbang — karbohidrat
+                55–65%, protein 10–15%, lemak 20–30% dari total kkal.
+              </p>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                {cekDetail.details.map((d) => (
+                  <div key={d.name} className="clay-chip bg-white/70 px-4 py-3">
+                    <p className="text-[11px] font-extrabold uppercase tracking-wider text-clay-500">
+                      {MACRO_LABEL[d.name]}
+                    </p>
+                    <p className="mt-1 text-lg font-extrabold text-clay-800">
+                      {d.pct}%
+                      <span className="ml-1 text-xs font-bold text-clay-500">
+                        (target {d.lo}–{d.hi}%)
+                      </span>
+                    </p>
+                    <p
+                      className={`mt-0.5 text-xs font-extrabold ${
+                        d.score >= 70
+                          ? "text-leaf-600"
+                          : d.score >= 40
+                            ? "text-sunny-600"
+                            : "text-berry-600"
+                      }`}
+                    >
+                      skor makro: {d.score}/100
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-1.5 rounded-2xl bg-white/70 p-4 font-mono text-[11px] leading-relaxed text-clay-700">
+                <p className="font-bold">Rumus:</p>
+                <p>1) Energi makro = gram × faktor kkal/gram</p>
+                <p className="pl-4">
+                  E_karbo = karbo_g × 4 · E_protein = protein_g × 4 · E_lemak
+                  = lemak_g × 9
+                </p>
+                <p>2) Proporsi: p = E_makro ÷ E_total × 100%</p>
+                <p>3) Skor tiap makro (0–100):</p>
+                <p className="pl-4">100, jika lo ≤ p ≤ hi (di rentang sehat)</p>
+                <p className="pl-4">
+                  max(0, 100 − (penyimpangan ÷ lebar rentang) × 100), jika di
+                  luar rentang
+                </p>
+                <p>
+                  4) Skor menu = (skor_karbo + skor_protein + skor_lemak) ÷ 3
+                </p>
+              </div>
+
+              <p className="text-xs font-semibold leading-relaxed text-clay-600">
+                Contoh: karbo 60%, protein 14%, lemak 26% → ketiganya di rentang
+                sehat → skor menu 100. Jika lemak 36% (meleset 6 poin dari batas
+                30%, lebar rentang 10) → skor lemak = 100 − (6 ÷ 10) × 100 = 40.
+                Penyusun menu otomatis menakar porsi dengan penyetel proporsional
+                agar kombinasi yang muncul lolos cek ini. Angka gizi memakai nilai
+                per 100 g (TKPI) untuk perencanaan menu, bukan diagnosis medis.
+              </p>
+            </div>
+          )}
         </section>
 
         {/* Menu harian */}

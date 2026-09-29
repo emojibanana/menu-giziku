@@ -159,6 +159,7 @@ export interface GeneratedMenu {
   totals: Totals;
   score: number;
   verdict: string;
+  details: MacroDetail[];
 }
 
 /**
@@ -286,12 +287,27 @@ export function generateMenu(profil: Profil, refreshCount = 0): GeneratedMenu {
     totals,
     score: cek.score,
     verdict: cek.verdict,
+    details: cek.details,
   };
+}
+
+/** Skor satu makro (0-100) beserta persentase dan rentang sehatnya. */
+export interface MacroDetail {
+  name: "karbo" | "protein" | "lemak";
+  /** persentase kkal makro terhadap total energi */
+  pct: number;
+  /** rentang sehat (% kkal) */
+  lo: number;
+  hi: number;
+  /** skor proporsional makro ini, 0-100 */
+  score: number;
 }
 
 export interface CekResult {
   score: number;
   verdict: string;
+  /** rincian skor per makro untuk ditampilkan di rumus */
+  details: MacroDetail[];
 }
 
 /**
@@ -306,7 +322,7 @@ export function checkBalance(meals: Meal[], totals: Totals): CekResult {
       ? totals.kcal
       : totals.karbo * 4 + totals.protein * 4 + totals.lemak * 9;
   if (kcal <= 0) {
-    return { score: 0, verdict: "Menu masih kosong — buat menu dulu ya." };
+    return { score: 0, verdict: "Menu masih kosong — buat menu dulu ya.", details: [] };
   }
 
   const kcalKarbo = totals.karbo * 4;
@@ -337,7 +353,12 @@ export function checkBalance(meals: Meal[], totals: Totals): CekResult {
   } else {
     verdict = "Belum seimbang — coba refresh menu untuk kombinasi baru.";
   }
-  return { score, verdict };
+  const details: MacroDetail[] = [
+    { name: "karbo", pct: Math.round(pct(kcalKarbo)), lo: 55, hi: 65, score: Math.round(sKarbo * 100) },
+    { name: "protein", pct: Math.round(pct(kcalProtein)), lo: 10, hi: 15, score: Math.round(sProtein * 100) },
+    { name: "lemak", pct: Math.round(pct(kcalLemak)), lo: 20, hi: 30, score: Math.round(sLemak * 100) },
+  ];
+  return { score, verdict, details };
 }
 
 /** Ringkasan proporsi makro dalam persen kkal, untuk ditampilkan. */
