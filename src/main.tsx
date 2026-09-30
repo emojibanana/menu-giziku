@@ -136,10 +136,9 @@ function RouteSyncer() {
   return null;
 }
 
-
 const app = convex ? (
   <ConvexAuthProvider client={convex}>
-        <BrowserRouter>
+        <BrowserRouter basename={BASENAME}>
           <RouteSyncer />
           <Suspense fallback={<RouteLoading />}>
             <Routes>
