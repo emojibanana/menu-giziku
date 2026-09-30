@@ -1,11 +1,11 @@
 {
-  "name": "freebuff.com application",
-  "short_name": "freebuff.com",
-  "description": "freebuff.com application",
-  "start_url": "/",
+  "name": "Menu Giziku — Generator Menu Bergizi Harian",
+  "short_name": "Menu Giziku",
+  "description": "Generator menu bergizi harian dengan cek gizi seimbang",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#f7f3ea",
+  "theme_color": "#f7f3ea",
   "icons": [
     {
       "src": "logo.svg",
