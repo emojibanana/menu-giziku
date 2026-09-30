@@ -17,6 +17,7 @@ import {
   type Meal,
   type Profil,
 } from "@/lib/nutrition";
+import { forwardChain } from "@/lib/predicates";
 import { motion } from "framer-motion";
 import {
   CalendarDays,
@@ -155,6 +156,8 @@ export default function Dashboard() {
     [menu],
   );
 
+  // Logika predikat: forward chaining atas menu aktif (fakta → aturan → kesimpulan).
+  const proof = useMemo(() => forwardChain(menu), [menu]);
   const savedMenus = (useQuery(api.menus.list) ?? []) as Array<
     Doc<"menus"> & { _id: Id<"menus"> }
   >;
@@ -554,6 +557,61 @@ export default function Dashboard() {
           )}
         </section>
 
+        {/* Logika predikat — jejak inferensi */}
+      <section className="clay-card mt-6 p-6 sm:p-8">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="flex items-center gap-2 text-xl font-extrabold text-clay-800">
+            <ListChecks className="size-5 text-leaf-600" />
+            Logika Predikat — Jejak Inferensi
+          </h2>
+          <span
+            className={`clay-chip px-4 py-2 text-xs font-extrabold ${
+              proof.balanced
+                ? "bg-leaf-200 text-leaf-700"
+                : "bg-berry-200 text-berry-700"
+            }`}
+          >
+            {proof.conclusion === "MenuLayakSajikan"
+              ? "✅ MenuLayakSajikan(m)"
+              : proof.conclusion === "MenuSeimbang"
+                ? "✅ MenuSeimbang(m)"
+                : "❌ MenuTidakSeimbang(m)"}
+          </span>
+        </div>
+        <p className="mt-2 text-sm font-semibold leading-relaxed text-clay-600">
+          {proof.summary}
+        </p>
+        <div className="mt-4 space-y-2">
+          {proof.steps.map((s) => (
+            <div
+              key={s.id}
+              className={`clay-chip flex flex-wrap items-center gap-2 px-4 py-2.5 text-xs font-bold ${
+                s.fired ? "bg-leaf-100 text-clay-800" : "bg-cream-200 text-clay-500"
+              }`}
+            >
+              <span className="font-extrabold">{s.id}</span>
+              <span className="font-mono text-[11px]">{s.formula}</span>
+              <span className="ml-auto">{s.fired ? "✓ aktif" : "— tidak aktif"}</span>
+            </div>
+          ))}
+        </div>
+        
+        <div className="clay-inset mt-4 bg-cream-100 p-4">
+          <p className="text-[11px] font-extrabold uppercase tracking-wider text-clay-500">
+            Fakta (predikat atomik yang bernilai benar)
+          </p>
+          <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs font-bold text-clay-700">
+            {Object.entries(proof.facts)
+              .filter(([, v]) => v)
+              .map(([k]) => (
+                <span key={k} className="font-mono">
+                  {k} = benar
+                </span>
+              ))}
+          </p>
+        </div>
+      </section>
+        
         {/* Menu harian */}
         <section className="mt-6">
           <h2 className="flex items-center gap-2 px-1 text-xl font-extrabold text-clay-800">
