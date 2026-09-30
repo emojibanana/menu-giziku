@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+=======
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+>>>>>>> f9b8045 (Update semua)
 
 const alertVariants = cva(
   "relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
@@ -16,8 +23,13 @@ const alertVariants = cva(
     defaultVariants: {
       variant: "default",
     },
+<<<<<<< HEAD
   }
 )
+=======
+  },
+);
+>>>>>>> f9b8045 (Update semua)
 
 function Alert({
   className,
@@ -31,7 +43,11 @@ function Alert({
       className={cn(alertVariants({ variant }), className)}
       {...props}
     />
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
@@ -40,11 +56,19 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="alert-title"
       className={cn(
         "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function AlertDescription({
@@ -56,6 +80,7 @@ function AlertDescription({
       data-slot="alert-description"
       className={cn(
         "text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
+<<<<<<< HEAD
         className
       )}
       {...props}
@@ -64,3 +89,13 @@ function AlertDescription({
 }
 
 export { Alert, AlertTitle, AlertDescription }
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export { Alert, AlertTitle, AlertDescription };
+>>>>>>> f9b8045 (Update semua)

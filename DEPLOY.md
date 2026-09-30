@@ -49,6 +49,7 @@ https://<username>.github.io/<nama-repo>/
 
 ## Yang diperbaiki di repo
 
+<<<<<<< HEAD
 | File | Perubahan |
 | --- | --- |
 | `.github/workflows/deploy.yml` | Workflow baru: install → `convex codegen` → build `--base=./` → salin `404.html` → deploy Pages |
@@ -64,6 +65,23 @@ https://<username>.github.io/<nama-repo>/
 | Halaman menampilkan "Konfigurasi belum lengkap" | Secret `VITE_CONVEX_URL` belum diset / kosong | Ulangi langkah 1, lalu deploy ulang |
 | Refresh di `/dashboard` → 404 | `404.html` SPA fallback tidak ada | Sudah ditangani workflow (`cp dist/index.html dist/404.html`) |
 | Data tidak muncul / error di console soal Convex | URL Convex salah | Cek lagi dengan `bun convex deployment url` |
+=======
+| File                                         | Perubahan                                                                                       |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `.github/workflows/deploy.yml`               | Workflow baru: install → `convex codegen` → build `--base=./` → salin `404.html` → deploy Pages |
+| `.gitignore`                                 | `src/convex/_generated` ikut di-commit agar CI bisa build tanpa login Convex                    |
+| `src/main.tsx`                               | Guard: kalau `VITE_CONVEX_URL` kosong, tampil pesan panduan (bukan putih kosong)                |
+| `index.html` & `public/manifest.webmanifest` | Referensi `logo.svg` / manifest jadi relatif                                                    |
+
+## Troubleshooting
+
+| Gejala                                           | Penyebab                                      | Solusi                                                        |
+| ------------------------------------------------ | --------------------------------------------- | ------------------------------------------------------------- |
+| Putih kosong, console: `assets/index-*.js 404`   | Build lama (path absolut) masih ter-deploy    | Pastikan workflow jalan & Pages Source = `GitHub Actions`     |
+| Halaman menampilkan "Konfigurasi belum lengkap"  | Secret `VITE_CONVEX_URL` belum diset / kosong | Ulangi langkah 1, lalu deploy ulang                           |
+| Refresh di `/dashboard` → 404                    | `404.html` SPA fallback tidak ada             | Sudah ditangani workflow (`cp dist/index.html dist/404.html`) |
+| Data tidak muncul / error di console soal Convex | URL Convex salah                              | Cek lagi dengan `bun convex deployment url`                   |
+>>>>>>> f9b8045 (Update semua)
 
 ## Deploy alternatif: VPS dengan Deno (main.ts)
 

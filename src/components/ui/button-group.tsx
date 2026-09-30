@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
+=======
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+>>>>>>> f9b8045 (Update semua)
 
 const buttonGroupVariants = cva(
   "flex w-fit items-stretch [&>*]:focus-visible:z-10 [&>*]:focus-visible:relative [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-md has-[>[data-slot=button-group]]:gap-2",
@@ -18,8 +26,13 @@ const buttonGroupVariants = cva(
     defaultVariants: {
       orientation: "horizontal",
     },
+<<<<<<< HEAD
   }
 )
+=======
+  },
+);
+>>>>>>> f9b8045 (Update semua)
 
 function ButtonGroup({
   className,
@@ -34,7 +47,11 @@ function ButtonGroup({
       className={cn(buttonGroupVariants({ orientation }), className)}
       {...props}
     />
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ButtonGroupText({
@@ -42,19 +59,33 @@ function ButtonGroupText({
   asChild = false,
   ...props
 }: React.ComponentProps<"div"> & {
+<<<<<<< HEAD
   asChild?: boolean
 }) {
   const Comp = asChild ? Slot : "div"
+=======
+  asChild?: boolean;
+}) {
+  const Comp = asChild ? Slot : "div";
+>>>>>>> f9b8045 (Update semua)
 
   return (
     <Comp
       className={cn(
         "bg-muted flex items-center gap-2 rounded-md border px-4 text-sm font-medium shadow-xs [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ButtonGroupSeparator({
@@ -68,11 +99,19 @@ function ButtonGroupSeparator({
       orientation={orientation}
       className={cn(
         "bg-input relative !m-0 self-stretch data-[orientation=vertical]:h-auto",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 export {
@@ -80,4 +119,8 @@ export {
   ButtonGroupSeparator,
   ButtonGroupText,
   buttonGroupVariants,
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> f9b8045 (Update semua)

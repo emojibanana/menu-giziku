@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import '@vly-ai/integrations';
+=======
+import "@vly-ai/integrations";
+>>>>>>> f9b8045 (Update semua)
 import { Toaster } from "@/components/ui/sonner";
 import { RequireAuth } from "@/components/RequireAuth";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
@@ -83,9 +87,13 @@ class RootErrorBoundary extends React.Component<
 // VITE_CONVEX_URL disuntik saat build (lihat workflow deploy). Tanpa ini,
 // konstruktor melempar error di level modul → halaman putih kosong total.
 const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined;
+<<<<<<< HEAD
 const convex = convexUrl
   ? new ConvexReactClient(convexUrl)
   : null;
+=======
+const convex = convexUrl ? new ConvexReactClient(convexUrl) : null;
+>>>>>>> f9b8045 (Update semua)
 
 // GitHub Pages menyajikan app di subpath /<repo>/. Router harus tahu prefix
 // itu supaya semua link tetap membawa /menu-giziku. Di preview Vly / localhost
@@ -111,8 +119,11 @@ function MissingConvexUrl() {
   );
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> f9b8045 (Update semua)
 function RouteSyncer() {
   const location = useLocation();
   useEffect(() => {
@@ -138,6 +149,7 @@ function RouteSyncer() {
 
 const app = convex ? (
   <ConvexAuthProvider client={convex}>
+<<<<<<< HEAD
         <BrowserRouter basename={BASENAME}>
           <RouteSyncer />
           <Suspense fallback={<RouteLoading />}>
@@ -162,6 +174,32 @@ const app = convex ? (
             </Routes>
           </Suspense>
         </BrowserRouter>
+=======
+    <BrowserRouter basename={BASENAME}>
+      <RouteSyncer />
+      <Suspense fallback={<RouteLoading />}>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route
+            path="/auth"
+            element={<AuthPage redirectAfterAuth="/dashboard" />}
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth
+                title="Masuk untuk membuat menu"
+                description="Dashboard pembuat menu harian hanya untuk pengguna yang sudah masuk."
+              >
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+>>>>>>> f9b8045 (Update semua)
     <Toaster />
   </ConvexAuthProvider>
 ) : (

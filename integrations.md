@@ -18,13 +18,18 @@ The `@vly-ai/integrations` package is already included in package.json.
 ```typescript
 "use node";
 
+<<<<<<< HEAD
 import { vly } from '../lib/vly-integrations';
+=======
+import { vly } from "../lib/vly-integrations";
+>>>>>>> f9b8045 (Update semua)
 import { action } from "./_generated/server";
 
 export const generateAIResponse = action({
   handler: async (ctx, args) => {
     // AI Completions
     const completion = await freebuff.com.completion({
+<<<<<<< HEAD
       model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
@@ -36,12 +41,29 @@ export const generateAIResponse = action({
     
     return completion;
   }
+=======
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: "You are a helpful assistant." },
+        { role: "user", content: "Hello!" },
+      ],
+      temperature: 0.7,
+      maxTokens: 150,
+    });
+
+    return completion;
+  },
+>>>>>>> f9b8045 (Update semua)
 });
 ```
 
 ## Available Features
 
 ### AI Integration
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9b8045 (Update semua)
 ```typescript
 // Create completion
 const completion = await freebuff.com.completion({
@@ -62,6 +84,7 @@ const embeddings = await freebuff.com.embeddings("Your text here");
 ```
 
 ### Email Integration
+<<<<<<< HEAD
 ```typescript
 // Send email
 const emailResult = await vly.email.send({
@@ -69,6 +92,16 @@ const emailResult = await vly.email.send({
   subject: 'Welcome!',
   html: '<h1>Welcome to our service!</h1>',
   text: 'Welcome to our service!'
+=======
+
+```typescript
+// Send email
+const emailResult = await vly.email.send({
+  to: "user@example.com",
+  subject: "Welcome!",
+  html: "<h1>Welcome to our service!</h1>",
+  text: "Welcome to our service!",
+>>>>>>> f9b8045 (Update semua)
 });
 
 // Send batch emails
@@ -76,6 +109,10 @@ const batchResult = await vly.email.sendBatch([...emails]);
 ```
 
 ### Payments Integration
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9b8045 (Update semua)
 ```typescript
 // Create payment intent
 const paymentIntent = await vly.payments.createPaymentIntent({

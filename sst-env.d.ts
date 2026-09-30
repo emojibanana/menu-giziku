@@ -5,5 +5,10 @@
 
 /// <reference path="../../../sst-env.d.ts" />
 
+<<<<<<< HEAD
 import "sst"
 export {}
+=======
+import "sst";
+export {};
+>>>>>>> f9b8045 (Update semua)

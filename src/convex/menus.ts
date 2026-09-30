@@ -43,7 +43,12 @@ export const save = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
+<<<<<<< HEAD
     if (userId === null) throw new Error("Harus masuk dulu untuk menyimpan menu.");
+=======
+    if (userId === null)
+      throw new Error("Harus masuk dulu untuk menyimpan menu.");
+>>>>>>> f9b8045 (Update semua)
     const now = Date.now();
     return await ctx.db.insert("menus", {
       userId,

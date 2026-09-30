@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as React from "react"
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
 import { type VariantProps } from "class-variance-authority"
@@ -8,12 +9,28 @@ import { toggleVariants } from "@/components/ui/toggle"
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants> & {
     spacing?: number
+=======
+import * as React from "react";
+import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
+import { type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+import { toggleVariants } from "@/components/ui/toggle";
+
+const ToggleGroupContext = React.createContext<
+  VariantProps<typeof toggleVariants> & {
+    spacing?: number;
+>>>>>>> f9b8045 (Update semua)
   }
 >({
   size: "default",
   variant: "default",
   spacing: 0,
+<<<<<<< HEAD
 })
+=======
+});
+>>>>>>> f9b8045 (Update semua)
 
 function ToggleGroup({
   className,
@@ -24,7 +41,11 @@ function ToggleGroup({
   ...props
 }: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
   VariantProps<typeof toggleVariants> & {
+<<<<<<< HEAD
     spacing?: number
+=======
+    spacing?: number;
+>>>>>>> f9b8045 (Update semua)
   }) {
   return (
     <ToggleGroupPrimitive.Root
@@ -35,7 +56,11 @@ function ToggleGroup({
       style={{ "--gap": spacing } as React.CSSProperties}
       className={cn(
         "group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs",
+<<<<<<< HEAD
         className
+=======
+        className,
+>>>>>>> f9b8045 (Update semua)
       )}
       {...props}
     >
@@ -43,7 +68,11 @@ function ToggleGroup({
         {children}
       </ToggleGroupContext.Provider>
     </ToggleGroupPrimitive.Root>
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ToggleGroupItem({
@@ -54,7 +83,11 @@ function ToggleGroupItem({
   ...props
 }: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &
   VariantProps<typeof toggleVariants>) {
+<<<<<<< HEAD
   const context = React.useContext(ToggleGroupContext)
+=======
+  const context = React.useContext(ToggleGroupContext);
+>>>>>>> f9b8045 (Update semua)
 
   return (
     <ToggleGroupPrimitive.Item
@@ -69,13 +102,24 @@ function ToggleGroupItem({
         }),
         "w-auto min-w-0 shrink-0 px-3 focus:z-10 focus-visible:z-10",
         "data-[spacing=0]:rounded-none data-[spacing=0]:shadow-none data-[spacing=0]:first:rounded-l-md data-[spacing=0]:last:rounded-r-md data-[spacing=0]:data-[variant=outline]:border-l-0 data-[spacing=0]:data-[variant=outline]:first:border-l",
+<<<<<<< HEAD
         className
+=======
+        className,
+>>>>>>> f9b8045 (Update semua)
       )}
       {...props}
     >
       {children}
     </ToggleGroupPrimitive.Item>
+<<<<<<< HEAD
   )
 }
 
 export { ToggleGroup, ToggleGroupItem }
+=======
+  );
+}
+
+export { ToggleGroup, ToggleGroupItem };
+>>>>>>> f9b8045 (Update semua)

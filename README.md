@@ -1,6 +1,10 @@
 ## Overview
 
 This project uses the following tech stack:
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9b8045 (Update semua)
 - Vite
 - Typescript
 - React Router v7 (all imports from `react-router` instead of `react-router-dom`)
@@ -29,7 +33,10 @@ The convex server has a separate set of environment variables that are accessibl
 
 Currently, these variables include auth-specific keys: JWKS, JWT_PRIVATE_KEY, and SITE_URL.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f9b8045 (Update semua)
 # Using Authentication (Important!)
 
 You must follow these conventions when using authentication.
@@ -51,6 +58,10 @@ On the `src/convex/users.ts` file, you can use the `getCurrentUser` function to 
 The `/auth` page is already set up to use auth. Navigate to `/auth` for all log in / sign up sequences.
 
 You MUST use this hook to get user data. Never do this yourself without the hook:
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9b8045 (Update semua)
 ```typescript
 import { useAuth } from "@/hooks/use-auth";
 
@@ -130,6 +141,10 @@ When adding a page, update the react router configuration in `src/main.tsx` to i
 ## Shad CN conventions
 
 Follow these conventions when using Shad CN components, which you should use by default.
+<<<<<<< HEAD
+=======
+
+>>>>>>> f9b8045 (Update semua)
 - Remember to use "cursor-pointer" to make the element clickable
 - For title text, use the "tracking-tight font-bold" class to make the text more readable
 - Always make apps MOBILE RESPONSIVE. This is important
@@ -137,10 +152,17 @@ Follow these conventions when using Shad CN components, which you should use by 
 - AVOID SHADOWS. Avoid adding any shadows to components. stick with a thin border without the shadow.
 - Avoid skeletons; instead, use the loader2 component to show a spinning loading state when loading data.
 
+<<<<<<< HEAD
 
 ## Landing Pages
 
 You must always create good-looking designer-level styles to your application. 
+=======
+## Landing Pages
+
+You must always create good-looking designer-level styles to your application.
+
+>>>>>>> f9b8045 (Update semua)
 - Make it well animated and fit a certain "theme", ie neo brutalist, retro, neumorphism, glass morphism, etc
 
 Use known images and emojis from online.
@@ -163,8 +185,13 @@ You must add animations to components using Framer Motion. It is already install
 
 To use it, import the `motion` component from `framer-motion` and use it to wrap the component you want to animate.
 
+<<<<<<< HEAD
 
 ### Other Items to animate
+=======
+### Other Items to animate
+
+>>>>>>> f9b8045 (Update semua)
 - Fade in and Fade Out
 - Slide in and Slide Out animations
 - Rendering animations
@@ -176,7 +203,10 @@ Animate for all components, including on landing page and app pages.
 
 Your app comes with three js by default. You can use it to create 3D graphics for landing pages, games, etc.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f9b8045 (Update semua)
 ## Colors
 
 You can override colors in: `src/index.css`
@@ -235,7 +265,11 @@ Remember to import { toast } from "sonner". Usage: `toast("Event has been create
 
 Always ensure your larger dialogs have a scroll in its content to ensure that its content fits the screen size. Make sure that the content is not cut off from the screen.
 
+<<<<<<< HEAD
 Ideally, instead of using a new page, use a Dialog instead. 
+=======
+Ideally, instead of using a new page, use a Dialog instead.
+>>>>>>> f9b8045 (Update semua)
 
 # Using the Convex backend
 
@@ -250,7 +284,10 @@ The schema is defined in `src/convex/schema.ts`.
 Do not include the `_id` and `_creationTime` fields in your queries (it is included by default for each table).
 Do not index `_creationTime` as it is indexed for you. Never have duplicate indexes.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f9b8045 (Update semua)
 ## Convex Actions: Using CRUD operations
 
 When running anything that involves external connections, you must use a convex action with "use node" at the top of the file.
@@ -277,10 +314,17 @@ await ctx.runMutation(internal.users.update, {
 });
 ```
 
+<<<<<<< HEAD
 
 ## Common Convex Mistakes To Avoid
 
 When using convex, make sure:
+=======
+## Common Convex Mistakes To Avoid
+
+When using convex, make sure:
+
+>>>>>>> f9b8045 (Update semua)
 - Document IDs are referenced as `_id` field, not `id`.
 - Document ID types are referenced as `Id<"TableName">`, not `string`.
 - Document object types are referenced as `Doc<"TableName">`.

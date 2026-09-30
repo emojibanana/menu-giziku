@@ -103,10 +103,37 @@ export default function Landing() {
             </div>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
+<<<<<<< HEAD
                 { e: "🌅", t: "Makan Pagi", d: "Nasi + telur + susu", c: "bg-sunny-200" },
                 { e: "🍲", t: "Makan Siang", d: "Nasi + ayam + tahu + bayam", c: "bg-leaf-200" },
                 { e: "🍎", t: "Selingan", d: "Pisang + yogurt", c: "bg-berry-200" },
                 { e: "🌙", t: "Makan Malam", d: "Nasi merah + ikan + tempe", c: "bg-sky-200" },
+=======
+                {
+                  e: "🌅",
+                  t: "Makan Pagi",
+                  d: "Nasi + telur + susu",
+                  c: "bg-sunny-200",
+                },
+                {
+                  e: "🍲",
+                  t: "Makan Siang",
+                  d: "Nasi + ayam + tahu + bayam",
+                  c: "bg-leaf-200",
+                },
+                {
+                  e: "🍎",
+                  t: "Selingan",
+                  d: "Pisang + yogurt",
+                  c: "bg-berry-200",
+                },
+                {
+                  e: "🌙",
+                  t: "Makan Malam",
+                  d: "Nasi merah + ikan + tempe",
+                  c: "bg-sky-200",
+                },
+>>>>>>> f9b8045 (Update semua)
               ].map((m) => (
                 <div key={m.t} className={`clay-inset p-4 ${m.c}`}>
                   <div className="text-2xl">{m.e}</div>
@@ -158,7 +185,14 @@ export default function Landing() {
       </section>
 
       {/* Cara kerja */}
+<<<<<<< HEAD
       <section id="cara-kerja" className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8">
+=======
+      <section
+        id="cara-kerja"
+        className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8"
+      >
+>>>>>>> f9b8045 (Update semua)
         <motion.div {...fadeUp} className="text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-clay-800 sm:text-4xl">
             Tiga langkah, menu siap saji

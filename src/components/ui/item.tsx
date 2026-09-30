@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
+=======
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
+>>>>>>> f9b8045 (Update semua)
 
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -13,7 +22,11 @@ function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("group/item-group flex flex-col", className)}
       {...props}
     />
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ItemSeparator({
@@ -27,7 +40,11 @@ function ItemSeparator({
       className={cn("my-0", className)}
       {...props}
     />
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 const itemVariants = cva(
@@ -48,8 +65,13 @@ const itemVariants = cva(
       variant: "default",
       size: "default",
     },
+<<<<<<< HEAD
   }
 )
+=======
+  },
+);
+>>>>>>> f9b8045 (Update semua)
 
 function Item({
   className,
@@ -59,7 +81,11 @@ function Item({
   ...props
 }: React.ComponentProps<"div"> &
   VariantProps<typeof itemVariants> & { asChild?: boolean }) {
+<<<<<<< HEAD
   const Comp = asChild ? Slot : "div"
+=======
+  const Comp = asChild ? Slot : "div";
+>>>>>>> f9b8045 (Update semua)
   return (
     <Comp
       data-slot="item"
@@ -68,7 +94,11 @@ function Item({
       className={cn(itemVariants({ variant, size, className }))}
       {...props}
     />
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 const itemMediaVariants = cva(
@@ -85,8 +115,13 @@ const itemMediaVariants = cva(
     defaultVariants: {
       variant: "default",
     },
+<<<<<<< HEAD
   }
 )
+=======
+  },
+);
+>>>>>>> f9b8045 (Update semua)
 
 function ItemMedia({
   className,
@@ -100,7 +135,11 @@ function ItemMedia({
       className={cn(itemMediaVariants({ variant, className }))}
       {...props}
     />
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
@@ -109,11 +148,19 @@ function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="item-content"
       className={cn(
         "flex flex-1 flex-col gap-1 [&+[data-slot=item-content]]:flex-none",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
@@ -122,11 +169,19 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="item-title"
       className={cn(
         "flex w-fit items-center gap-2 text-sm leading-snug font-medium",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
@@ -136,11 +191,19 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
       className={cn(
         "text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance",
         "[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
@@ -150,7 +213,11 @@ function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("flex items-center gap-2", className)}
       {...props}
     />
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -159,11 +226,19 @@ function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="item-header"
       className={cn(
         "flex basis-full items-center justify-between gap-2",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
@@ -172,11 +247,19 @@ function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="item-footer"
       className={cn(
         "flex basis-full items-center justify-between gap-2",
+<<<<<<< HEAD
         className
       )}
       {...props}
     />
   )
+=======
+        className,
+      )}
+      {...props}
+    />
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 export {
@@ -190,4 +273,8 @@ export {
   ItemDescription,
   ItemHeader,
   ItemFooter,
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> f9b8045 (Update semua)

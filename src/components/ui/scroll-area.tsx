@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 "use client"
 
 import * as React from "react"
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 
 import { cn } from "@/lib/utils"
+=======
+"use client";
+
+import * as React from "react";
+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
+
+import { cn } from "@/lib/utils";
+>>>>>>> f9b8045 (Update semua)
 
 function ScrollArea({
   className,
@@ -25,7 +34,11 @@ function ScrollArea({
       <ScrollBar />
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> f9b8045 (Update semua)
 }
 
 function ScrollBar({
@@ -43,7 +56,11 @@ function ScrollBar({
           "h-full w-2.5 border-l border-l-transparent",
         orientation === "horizontal" &&
           "h-2.5 flex-col border-t border-t-transparent",
+<<<<<<< HEAD
         className
+=======
+        className,
+>>>>>>> f9b8045 (Update semua)
       )}
       {...props}
     >
@@ -52,7 +69,14 @@ function ScrollBar({
         className="bg-border relative flex-1 rounded-full"
       />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
+<<<<<<< HEAD
   )
 }
 
 export { ScrollArea, ScrollBar }
+=======
+  );
+}
+
+export { ScrollArea, ScrollBar };
+>>>>>>> f9b8045 (Update semua)
