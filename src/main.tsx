@@ -87,6 +87,15 @@ const convex = convexUrl
   ? new ConvexReactClient(convexUrl)
   : null;
 
+// GitHub Pages menyajikan app di subpath /<repo>/. Router harus tahu prefix
+// itu supaya semua link tetap membawa /menu-giziku. Di preview Vly / localhost
+// hostname-nya bukan github.io → tetap "/".
+const firstSegment = window.location.pathname.split("/").filter(Boolean)[0];
+const BASENAME =
+  window.location.hostname.endsWith("github.io") && firstSegment
+    ? `/${firstSegment}`
+    : "/";
+
 function MissingConvexUrl() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-6">
