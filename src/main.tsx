@@ -80,7 +80,27 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
+// VITE_CONVEX_URL disuntik saat build (lihat workflow deploy). Tanpa ini,
+// konstruktor melempar error di level modul → halaman putih kosong total.
+const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined;
+const convex = convexUrl
+  ? new ConvexReactClient(convexUrl)
+  : null;
+
+function MissingConvexUrl() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-6">
+      <div className="max-w-lg text-center">
+        <p className="text-sm font-semibold">Konfigurasi belum lengkap</p>
+        <p className="mt-2 text-xs text-muted-foreground">
+          VITE_CONVEX_URL belum diset saat build. Set repository secret
+          VITE_CONVEX_URL di GitHub (Settings → Secrets and variables → Actions)
+          dengan URL deployment Convex, lalu deploy ulang.
+        </p>
+      </div>
+    </div>
+  );
+}
 
 
 
@@ -108,13 +128,8 @@ function RouteSyncer() {
 }
 
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <RootErrorBoundary>
-      <ToolbarErrorBoundary>
-        <VlyToolbar />
-      </ToolbarErrorBoundary>
-      <ConvexAuthProvider client={convex}>
+const app = convex ? (
+  <ConvexAuthProvider client={convex}>
         <BrowserRouter>
           <RouteSyncer />
           <Suspense fallback={<RouteLoading />}>
@@ -139,8 +154,19 @@ createRoot(document.getElementById("root")!).render(
             </Routes>
           </Suspense>
         </BrowserRouter>
-        <Toaster />
-      </ConvexAuthProvider>
+    <Toaster />
+  </ConvexAuthProvider>
+) : (
+  <MissingConvexUrl />
+);
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <RootErrorBoundary>
+      <ToolbarErrorBoundary>
+        <VlyToolbar />
+      </ToolbarErrorBoundary>
+      {app}
     </RootErrorBoundary>
   </StrictMode>,
 );
