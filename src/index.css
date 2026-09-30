@@ -1,0 +1,234 @@
+/* DO NOT CHANGE */
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-cream-50: oklch(0.978 0.014 92);
+  --color-cream-100: oklch(0.962 0.023 88);
+  --color-cream-200: oklch(0.935 0.032 88);
+  --color-clay-400: oklch(0.79 0.065 70);
+  --color-clay-500: oklch(0.67 0.09 60);
+  --color-clay-600: oklch(0.55 0.1 55);
+  --color-clay-700: oklch(0.42 0.07 50);
+  --color-clay-800: oklch(0.34 0.05 50);
+  --color-leaf-50: oklch(0.955 0.04 150);
+  --color-leaf-100: oklch(0.92 0.07 150);
+  --color-leaf-200: oklch(0.88 0.1 150);
+  --color-leaf-400: oklch(0.78 0.12 150);
+  --color-leaf-500: oklch(0.68 0.14 150);
+  --color-leaf-600: oklch(0.55 0.14 150);
+  --color-leaf-700: oklch(0.45 0.12 150);
+  --color-leaf-800: oklch(0.37 0.09 150);
+  --color-berry-50: oklch(0.94 0.035 15);
+  --color-berry-100: oklch(0.9 0.06 15);
+  --color-berry-200: oklch(0.86 0.08 15);
+  --color-berry-400: oklch(0.8 0.1 20);
+  --color-berry-500: oklch(0.73 0.12 20);
+  --color-berry-600: oklch(0.62 0.14 22);
+  --color-berry-700: oklch(0.5 0.13 22);
+  --color-berry-800: oklch(0.4 0.11 22);
+  --color-sunny-50: oklch(0.96 0.04 90);
+  --color-sunny-100: oklch(0.93 0.06 85);
+  --color-sunny-200: oklch(0.9 0.08 85);
+  --color-sunny-400: oklch(0.87 0.1 80);
+  --color-sunny-500: oklch(0.82 0.12 80);
+  --color-sunny-600: oklch(0.7 0.12 75);
+  --color-sunny-700: oklch(0.57 0.11 75);
+  --color-sunny-800: oklch(0.46 0.09 75);
+  --color-sky-50: oklch(0.95 0.025 230);
+  --color-sky-100: oklch(0.92 0.045 230);
+  --color-sky-200: oklch(0.89 0.06 230);
+  --color-sky-400: oklch(0.82 0.07 230);
+  --color-sky-500: oklch(0.75 0.09 230);
+  --color-sky-600: oklch(0.62 0.1 230);
+  --color-sky-700: oklch(0.5 0.1 230);
+  --color-sky-800: oklch(0.4 0.08 230);
+  --font-clay: "Baloo 2", ui-rounded, "Hiragino Maru Gothic ProN", "Quicksand", Manrope, ui-sans-serif, system-ui, sans-serif;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(1.5rem + 0.375rem);
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: calc(1.875rem + 0.5rem);
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: calc(2.25rem + 0.625rem);
+  --text-5xl: 3rem;
+  --text-5xl--line-height: calc(3rem + 0.75rem);
+}
+
+/* DO NOT CHANGE */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* CHANGE VALUES FOR THEME */
+/* ---- Claymorphism theme values ---- */
+:root {
+  --radius: 1.5rem;
+  --background: oklch(0.97 0.016 88);
+  --foreground: oklch(0.36 0.05 50);
+  --card: oklch(0.985 0.008 88);
+  --card-foreground: oklch(0.36 0.05 50);
+  --popover: oklch(0.985 0.008 88);
+  --popover-foreground: oklch(0.36 0.05 50);
+  --primary: oklch(0.68 0.14 150);
+  --primary-foreground: oklch(0.99 0.01 150);
+  --secondary: oklch(0.93 0.04 85);
+  --secondary-foreground: oklch(0.42 0.06 50);
+  --muted: oklch(0.93 0.03 88);
+  --muted-foreground: oklch(0.55 0.06 55);
+  --accent: oklch(0.9 0.06 85);
+  --accent-foreground: oklch(0.4 0.06 50);
+  --destructive: oklch(0.6 0.19 25);
+  --border: oklch(0.9 0.035 85);
+  --input: oklch(0.93 0.03 88);
+  --ring: oklch(0.68 0.14 150);
+  --chart-1: oklch(0.68 0.14 150);
+  --chart-2: oklch(0.75 0.09 230);
+  --chart-3: oklch(0.73 0.12 20);
+  --chart-4: oklch(0.82 0.12 80);
+  --chart-5: oklch(0.67 0.09 60);
+  --sidebar: oklch(0.962 0.023 88);
+  --sidebar-foreground: oklch(0.36 0.05 50);
+  --sidebar-primary: oklch(0.68 0.14 150);
+  --sidebar-primary-foreground: oklch(0.99 0.01 150);
+  --sidebar-accent: oklch(0.93 0.04 85);
+  --sidebar-accent-foreground: oklch(0.42 0.06 50);
+  --signature-lipsum: oklch(0.55 0.06 55);
+  --signature-lipsum-foreground: oklch(0.36 0.05 50);
+  --sidebar-border: oklch(0.9 0.035 85);
+  --sidebar-ring: oklch(0.68 0.14 150);
+}
+
+/* ---- Claymorphism helper classes: soft inflated clay surfaces ---- */
+@layer utilities {
+  .clay-card {
+    background: var(--card);
+    border-radius: 1.5rem;
+    box-shadow:
+      var(--clay-hl) 8px 8px 16px 0px inset,
+      var(--clay-shadow) -6px -6px 14px 0px inset,
+      0 10px 24px -8px rgba(121, 89, 59, 0.18);
+  }
+  .clay-inset {
+    background: var(--card);
+    border-radius: 1rem;
+    box-shadow:
+      var(--clay-shadow) 6px 6px 12px 0px inset,
+      var(--clay-hl) -5px -5px 10px 0px inset;
+  }
+  .clay-btn {
+    border-radius: 9999px;
+    background: var(--clay-primary);
+    color: var(--clay-primary-fg);
+    box-shadow:
+      var(--clay-primary-hl) 4px 4px 8px 0px inset,
+      var(--clay-primary-lo) -4px -4px 8px 0px inset,
+      0 8px 16px -6px var(--clay-primary-shadow);
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .clay-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      var(--clay-primary-hl) 4px 4px 8px 0px inset,
+      var(--clay-primary-lo) -4px -4px 8px 0px inset,
+      0 12px 22px -6px var(--clay-primary-shadow);
+  }
+  .clay-btn:active {
+    transform: translateY(1px);
+    box-shadow:
+      var(--clay-primary-lo) 4px 4px 8px 0px inset,
+      var(--clay-primary-hl) -4px -4px 8px 0px inset;
+  }
+  .clay-btn-soft {
+    border-radius: 9999px;
+    background: var(--clay-neutral);
+    color: var(--clay-ink);
+    box-shadow:
+      var(--clay-hl) 4px 4px 8px 0px inset,
+      var(--clay-shadow) -4px -4px 8px 0px inset;
+  }
+  .clay-btn-soft:hover {
+    transform: translateY(-2px);
+  }
+  .clay-btn-soft:active {
+    transform: translateY(1px);
+    box-shadow:
+      var(--clay-shadow) 4px 4px 8px 0px inset,
+      var(--clay-hl) -4px -4px 8px 0px inset;
+  }
+  .clay-chip {
+    border-radius: 9999px;
+    box-shadow:
+      var(--clay-hl) 3px 3px 6px 0px inset,
+      var(--clay-shadow) -2px -2px 5px 0px inset;
+  }
+  .clay-pop {
+    background: var(--popover);
+    border-radius: 1.25rem;
+    box-shadow:
+      var(--clay-hl) 6px 6px 12px 0px inset,
+      var(--clay-shadow) -5px -5px 10px 0px inset,
+      0 18px 40px -12px rgba(121, 89, 59, 0.25);
+  }
+}
+
+@layer base {
+  :root {
+    --clay-hl: oklch(1 0 0 / 70%);
+    --clay-shadow: oklch(0.82 0.04 80 / 100%);
+    --clay-primary: oklch(0.68 0.14 150);
+    --clay-primary-fg: oklch(0.99 0.01 150);
+    --clay-primary-hl: oklch(0.85 0.1 150);
+    --clay-primary-lo: oklch(0.55 0.13 150);
+    --clay-primary-shadow: oklch(0.6 0.12 150 / 45%);
+    --clay-neutral: var(--secondary);
+    --clay-ink: var(--foreground);
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-clay);
+  }
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+}
