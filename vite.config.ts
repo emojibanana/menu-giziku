@@ -25,7 +25,7 @@ export default defineConfig({
         // Manual chunk splitting for better caching and lazy loading
         manualChunks: {
           // Vendor chunks for large libraries
-<<<<<<< HEAD
+        HEAD
           'react-vendor': ['react', 'react-dom', 'react-router'],
           'convex-vendor': ['convex'],
           // Large UI library chunks
