@@ -66,5 +66,3 @@ Bagian ini menjelaskan interaksi antara frontend dan backend (Convex). Ketika pe
 File ini menggunakan sintaksis Mermaid. Untuk melihat diagram secara visual, buka file `FLOWCHART_SISTEM.md` dengan ekstensi `.md` di Visual Studio Code dan pastikan ekstensi Mermaid diaktifkan, atau buka file di salah satu preview Mermaid online (misalnya https://mermaid.live).
 
 ---
-
-*Penjelasan di atas disusun dalam bahasa yang mudah dipahami agar dapat digunakan saat presentasi kepada dosen.* 
