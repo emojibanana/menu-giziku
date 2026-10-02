@@ -153,16 +153,12 @@ describe("checkBalance — cek gizi seimbang proporsional", () => {
 
 describe("macroShares — persentase makro", () => {
   test("proporsi ideal menghasilkan 60/12/28 persen kkal", () => {
-<<<<<<< HEAD
-    const shares = macroShares({ kcal: 2000, karbo: 300, protein: 60, lemak: 62 });
-=======
     const shares = macroShares({
       kcal: 2000,
       karbo: 300,
       protein: 60,
       lemak: 62,
     });
->>>>>>> f9b8045 (Update semua)
     expect(shares.karbo).toBe(60);
     expect(shares.protein).toBe(12);
     expect(shares.lemak).toBe(28);

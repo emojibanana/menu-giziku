@@ -1,20 +1,6 @@
 /**
  * Modul Logika Predikat — Menu Giziku.
  *
-<<<<<<< HEAD
- * Domain diskusi (untuk laporan):
- *   M = himpunan semua menu harian yang mungkin dibangun generator.
- *   m ∈ M = satu menu harian (5 hidangan + total gizi).
- *   c(m), p(m), l(m) = persentase kkal karbohidrat, protein, lemak menu m.
- *   k(m) = total kkal menu m.
- *
- * Struktur penalaran:
- *   fakta dasar (hasil perhitungan numerik)
- *     → predikat atomik (fungsi boolean atas m)
- *     → predikat majemuk dengan operator ¬, ∧, ∨
- *     → basis aturan inferensi (modus ponens, forward chaining)
- *     → kesimpulan berjenjang + jejak bukti untuk UI.
-=======
  * SISTEM INI MENGGUNAKAN LOGIKA PREDIKAT (First-Order Logic / Predicate Calculus)
  * untuk validasi keseimbangan gizi menu harian.
  *
@@ -42,7 +28,6 @@
  *   ✓ Menampilkan formula logis (notasi ∧, ∨, ¬, →)
  *   ✓ Dokumentasi kuantor (∃, ∀) atas domain
  *   ✓ Jejak evaluasi per aturan untuk proof audit
->>>>>>> f9b8045 (Update semua)
  */
 
 import { macroShares, NUTRIENTS, type GeneratedMenu } from "./nutrition";
@@ -80,11 +65,7 @@ function pctOf(m: MenuInput, name: "karbo" | "protein" | "lemak"): number {
 
 /** Karbo(m) ≡ c(m) ∈ [55, 65] */
 export const Karbo = (m: MenuInput) => {
-<<<<<<< HEAD
-  const { pct } = { pct: pctOf(m, "karbo") };
-=======
   const pct = pctOf(m, "karbo");
->>>>>>> f9b8045 (Update semua)
   return pct >= RANGES.karbo.lo && pct <= RANGES.karbo.hi;
 };
 
@@ -143,14 +124,6 @@ export const AdaSayur = (m: MenuInput) => golonganHadir(m).has("sayur");
 export const AdaBuah = (m: MenuInput) => golonganHadir(m).has("buah");
 export const AdaOleinat = (m: MenuInput) => golonganHadir(m).has("oleinat");
 
-<<<<<<< HEAD
-/** PorsiWajar(m) ≡ ∀i ∈ [1..5] : hidangan_i bermakna (≥ 20 kkal). Kuantor ∀. */
-export const PorsiWajar = (m: MenuInput) =>
-  m.meals.length > 0 && m.meals.every((meal) => meal.kcal >= 20);
-
-/** AdaSlotGizi(m) ≡ ∃i : kkal(hidangan_i) > 0. Kuantor ∃. */
-export const AdaSlotGizi = (m: MenuInput) => m.meals.some((meal) => meal.kcal > 0);
-=======
 /** PorsiWajar(m) ≡ ∀i ∈ [1..5] : hidangan_i bermakna (≥ 20 kkal). Kuantor ∀ atas 5 slot. */
 export const PorsiWajar = (m: MenuInput) =>
   m.meals.length === 5 && m.meals.every((meal) => meal.kcal >= 20);
@@ -158,7 +131,6 @@ export const PorsiWajar = (m: MenuInput) =>
 /** AdaSlotGizi(m) ≡ ∃i : kkal(hidangan_i) > 0. Kuantor ∃. */
 export const AdaSlotGizi = (m: MenuInput) =>
   m.meals.some((meal) => meal.kcal > 0);
->>>>>>> f9b8045 (Update semua)
 
 // ---------------------------------------------------------------------------
 // 2. PREDIKAT MAJEMUK (¬, ∧, ∨) — versi langsung (tanpa inferensi)
@@ -213,19 +185,6 @@ export interface InferenceRule {
 }
 
 /**
-<<<<<<< HEAD
- * Basis aturan (rantai maju; setiap aturan hanya bergantung pada fakta
- * yang sudah tersedia pada urutan sebelumnya):
- *
- *   R1: AdaKarbo(m) ∧ AdaProtein(m)            → KomposisiWajar(m)
- *   R2: AdaSayur(m) ∧ AdaBuah(m)               → KomposisiWajar(m)
- *   R3: AdaOleinat(m) ∧ AdaSlotGizi(m)         → KomposisiWajar(m)
- *   R4: Karbo(m) ∧ Protein(m)                  → MakroCP(m)
- *   R5: MakroCP(m) ∧ Lemak(m)                  → MakroWajar(m)
- *   R6: KomposisiWajar(m) ∧ MakroWajar(m) ∧ LayakEnergi(m) → MenuSeimbang(m)
- *   R7: MenuSeimbang(m) ∧ PorsiWajar(m)        → MenuLayakSajikan(m)
- *   R8: ¬LayakEnergi(m)                        → TidakSeimbang(m)
-=======
  * Basis aturan inferensi — forward chaining dengan modus ponens (I ∧ (I → C) ⊢ C).
  * Setiap aturan hanya bergantung pada fakta yang sudah tersedia pada urutan sebelumnya.
  * Strategi: cek golongan pangan → cek proporsi makro → inferensi final.
@@ -241,89 +200,48 @@ export interface InferenceRule {
  *   R4: KomposisiWajar ∧ MakroWajar ∧ LayakEnergi → MenuSeimbang
  *   R5: MenuSeimbang ∧ PorsiWajar → MenuLayakSajikan (goal akhir)
  *   R6: ¬LayakEnergi → TidakSeimbang (negasi rule)
->>>>>>> f9b8045 (Update semua)
  */
 export const RULES: InferenceRule[] = [
   {
     id: "R1",
-<<<<<<< HEAD
-    formula: "AdaKarbo(m) ∧ AdaProtein(m) → KomposisiWajar(m)",
-    desc: "Ada sumber karbohidrat dan protein",
-    ante: (f) => f.AdaKarbo && f.AdaProtein,
-=======
     formula:
       "AdaKarbo(m) ∧ AdaProtein(m) ∧ AdaSayur(m) ∧ AdaBuah(m) ∧ AdaOleinat(m) → KomposisiWajar(m)",
     desc: "Semua 5 golongan pangan hadir: karbo, protein, sayur, buah, oleinat",
     ante: (f) =>
       f.AdaKarbo && f.AdaProtein && f.AdaSayur && f.AdaBuah && f.AdaOleinat,
->>>>>>> f9b8045 (Update semua)
     derive: "KomposisiWajar",
   },
   {
     id: "R2",
-<<<<<<< HEAD
-    formula: "AdaSayur(m) ∧ AdaBuah(m) → KomposisiWajar(m)",
-    desc: "Ada sayur dan buah",
-    ante: (f) => f.AdaSayur && f.AdaBuah,
-    derive: "KomposisiWajar",
-  },
-  {
-    id: "R3",
-    formula: "AdaOleinat(m) ∧ AdaSlotGizi(m) → KomposisiWajar(m)",
-    desc: "Ada oleinat dan slot bergizi",
-    ante: (f) => f.AdaOleinat && f.AdaSlotGizi,
-    derive: "KomposisiWajar",
-  },
-  {
-    id: "R4",
-=======
->>>>>>> f9b8045 (Update semua)
     formula: "Karbo(m) ∧ Protein(m) → MakroCP(m)",
     desc: "Karbo & protein dalam rentang sehat",
     ante: (f) => f.Karbo && f.Protein,
     derive: "MakroCP",
   },
   {
-<<<<<<< HEAD
-    id: "R5",
-=======
     id: "R3",
->>>>>>> f9b8045 (Update semua)
     formula: "MakroCP(m) ∧ Lemak(m) → MakroWajar(m)",
     desc: "Ditambah lemak, ketiga makro sehat",
     ante: (f) => f.MakroCP && f.Lemak,
     derive: "MakroWajar",
   },
   {
-<<<<<<< HEAD
-    id: "R6",
-    formula: "KomposisiWajar(m) ∧ MakroWajar(m) ∧ LayakEnergi(m) → MenuSeimbang(m)",
-=======
     id: "R4",
     formula:
       "KomposisiWajar(m) ∧ MakroWajar(m) ∧ LayakEnergi(m) → MenuSeimbang(m)",
->>>>>>> f9b8045 (Update semua)
     desc: "Golongan lengkap + makro sehat + energi layak",
     ante: (f) => f.KomposisiWajar && f.MakroWajar && f.LayakEnergi,
     derive: "MenuSeimbang",
   },
   {
-<<<<<<< HEAD
-    id: "R7",
-=======
     id: "R5",
->>>>>>> f9b8045 (Update semua)
     formula: "MenuSeimbang(m) ∧ PorsiWajar(m) → MenuLayakSajikan(m)",
     desc: "Seimbang dan seluruh porsi bermakna",
     ante: (f) => f.MenuSeimbang && f.PorsiWajar,
     derive: "MenuLayakSajikan",
   },
   {
-<<<<<<< HEAD
-    id: "R8",
-=======
     id: "R6",
->>>>>>> f9b8045 (Update semua)
     formula: "¬LayakEnergi(m) → TidakSeimbang(m)",
     desc: "Energi tidak layak → menu tidak seimbang",
     ante: (f) => !f.LayakEnergi,
@@ -383,9 +301,6 @@ export function forwardChain(m: MenuInput): PredicateReport {
   for (const rule of RULES) {
     const anteTrue = rule.ante(facts, m);
     if (anteTrue) facts[rule.derive] = true; // modus ponens
-<<<<<<< HEAD
-    steps.push({ id: rule.id, formula: rule.formula, desc: rule.desc, anteTrue, fired: anteTrue });
-=======
     steps.push({
       id: rule.id,
       formula: rule.formula,
@@ -393,7 +308,6 @@ export function forwardChain(m: MenuInput): PredicateReport {
       anteTrue,
       fired: anteTrue,
     });
->>>>>>> f9b8045 (Update semua)
   }
 
   const layak = facts.MenuLayakSajikan && !facts.TidakSeimbang;
@@ -404,11 +318,7 @@ export function forwardChain(m: MenuInput): PredicateReport {
       ? "MenuSeimbang"
       : "MenuTidakSeimbang";
   const summary = layak
-<<<<<<< HEAD
-    ? "KESIMPULAN: MenuLayakSajikan(m) — menu seimbang, lengkap 4 sehat, dan porsinya layak disajikan."
-=======
     ? "KESIMPULAN: MenuLayakSajikan(m) — menu seimbang, lengkap 5 golongan, dan porsinya layak disajikan."
->>>>>>> f9b8045 (Update semua)
     : seimbang
       ? "KESIMPULAN: MenuSeimbang(m) — komposisi golongan lengkap dan proporsi makro dalam rentang sehat."
       : "KESIMPULAN: MenuTidakSeimbang(m) — ada aturan seimbang yang tidak terpenuhi (lihat jejak di bawah).";
@@ -419,12 +329,8 @@ export function forwardChain(m: MenuInput): PredicateReport {
 /** Ringkasan teks jejak inferensi (untuk laporan/log). */
 export function predicateSummaryText(m: MenuInput): string {
   const r = forwardChain(m);
-<<<<<<< HEAD
-  const aktif = r.steps.filter((s) => s.fired).map((s) => `[${s.id}] ${s.formula}`);
-=======
   const aktif = r.steps
     .filter((s) => s.fired)
     .map((s) => `[${s.id}] ${s.formula}`);
->>>>>>> f9b8045 (Update semua)
   return `${r.summary}\nAturan aktif (modus ponens):\n${aktif.join("\n")}`;
 }

@@ -56,15 +56,10 @@ const MACRO_LABEL: Record<"karbo" | "protein" | "lemak", string> = {
 };
 
 function scoreTint(score: number) {
-<<<<<<< HEAD
-  if (score >= 85) return { chip: "bg-leaf-200 text-leaf-700", bar: "bg-leaf-500" };
-  if (score >= 70) return { chip: "bg-sunny-200 text-sunny-700", bar: "bg-sunny-500" };
-=======
   if (score >= 85)
     return { chip: "bg-leaf-200 text-leaf-700", bar: "bg-leaf-500" };
   if (score >= 70)
     return { chip: "bg-sunny-200 text-sunny-700", bar: "bg-sunny-500" };
->>>>>>> f9b8045 (Update semua)
   return { chip: "bg-berry-200 text-berry-700", bar: "bg-berry-500" };
 }
 
@@ -86,15 +81,11 @@ function MacroBar({
     <div>
       <div className="flex items-baseline justify-between text-xs font-bold">
         <span className="text-clay-700">{label}</span>
-<<<<<<< HEAD
-        <span className={value >= lo && value <= hi ? "text-leaf-600" : "text-berry-600"}>
-=======
         <span
           className={
             value >= lo && value <= hi ? "text-leaf-600" : "text-berry-600"
           }
         >
->>>>>>> f9b8045 (Update semua)
           {value}%{" "}
           <span className="font-semibold text-clay-500">
             (target {lo}–{hi}%)
@@ -162,14 +153,10 @@ export default function Dashboard() {
   const [saveName, setSaveName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-<<<<<<< HEAD
-  const menu = useMemo(() => generateMenu(profil, refreshCount), [profil, refreshCount]);
-=======
   const menu = useMemo(
     () => generateMenu(profil, refreshCount),
     [profil, refreshCount],
   );
->>>>>>> f9b8045 (Update semua)
   const shares = macroShares(menu.totals);
   const tint = scoreTint(menu.score);
   // Hitung ulang cek gizi untuk mendapatkan rincian rumus per makro.
@@ -203,13 +190,9 @@ export default function Dashboard() {
         totals: menu.totals,
         score: menu.score,
       });
-<<<<<<< HEAD
-      toast.success("Menu tersimpan!", { description: `"${name}" ada di daftar menu tersimpan.` });
-=======
       toast.success("Menu tersimpan!", {
         description: `"${name}" ada di daftar menu tersimpan.`,
       });
->>>>>>> f9b8045 (Update semua)
       setSavingOpen(false);
       setSaveName("");
     } catch {
@@ -288,13 +271,7 @@ export default function Dashboard() {
                   type="button"
                   onClick={() => setProfil(p)}
                   className={`clay-btn-soft px-4 py-2.5 text-xs font-extrabold transition-colors ${
-<<<<<<< HEAD
-                    profil === p
-                      ? "bg-leaf-500! text-white!"
-                      : "text-clay-700"
-=======
                     profil === p ? "bg-leaf-500! text-white!" : "text-clay-700"
->>>>>>> f9b8045 (Update semua)
                   }`}
                 >
                   {PROFIL_LABEL[p]}
@@ -382,23 +359,15 @@ export default function Dashboard() {
               <span className="text-leaf-600">{menu.totals.kcal} kkal</span>
             </span>
             <span>
-<<<<<<< HEAD
-              Protein <span className="text-berry-600">{menu.totals.protein} g</span>
-=======
               Protein{" "}
               <span className="text-berry-600">{menu.totals.protein} g</span>
->>>>>>> f9b8045 (Update semua)
             </span>
             <span>
               Karbo <span className="text-leaf-600">{menu.totals.karbo} g</span>
             </span>
             <span>
-<<<<<<< HEAD
-              Lemak <span className="text-sunny-600">{menu.totals.lemak} g</span>
-=======
               Lemak{" "}
               <span className="text-sunny-600">{menu.totals.lemak} g</span>
->>>>>>> f9b8045 (Update semua)
             </span>
           </div>
 
@@ -473,21 +442,12 @@ export default function Dashboard() {
                   </p>
                   <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
                     <p>protein_g = Σ ( protein_per100 × gram ÷ 100 )</p>
-<<<<<<< HEAD
-                    <p>karbo_g   = Σ ( karbo_per100   × gram ÷ 100 )</p>
-                    <p>lemak_g   = Σ ( lemak_per100   × gram ÷ 100 )</p>
-                  </div>
-                  <p className="mt-1.5 text-[11px] font-bold text-clay-500">
-                    Menu kamu sekarang: protein {menu.totals.protein} g ·
-                    karbo {menu.totals.karbo} g · lemak {menu.totals.lemak} g
-=======
                     <p>karbo_g = Σ ( karbo_per100 × gram ÷ 100 )</p>
                     <p>lemak_g = Σ ( lemak_per100 × gram ÷ 100 )</p>
                   </div>
                   <p className="mt-1.5 text-[11px] font-bold text-clay-500">
                     Menu kamu sekarang: protein {menu.totals.protein} g · karbo{" "}
                     {menu.totals.karbo} g · lemak {menu.totals.lemak} g
->>>>>>> f9b8045 (Update semua)
                   </p>
                 </div>
 
@@ -496,12 +456,6 @@ export default function Dashboard() {
                     Langkah 2 — Energi tiap makro (faktor Atwater 4-4-9)
                   </p>
                   <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
-<<<<<<< HEAD
-                    <p>E_karbo   = karbo_g × 4 kkal = {Math.round(menu.totals.karbo * 4)} kkal</p>
-                    <p>E_protein = protein_g × 4 kkal = {Math.round(menu.totals.protein * 4)} kkal</p>
-                    <p>E_lemak   = lemak_g × 9 kkal = {Math.round(menu.totals.lemak * 9)} kkal</p>
-                    <p>E_total   = {menu.totals.kcal} kkal (jumlah kkal seluruh bahan; bila kosong dipakai 4P + 4K + 9L)</p>
-=======
                     <p>
                       E_karbo = karbo_g × 4 kkal ={" "}
                       {Math.round(menu.totals.karbo * 4)} kkal
@@ -518,7 +472,6 @@ export default function Dashboard() {
                       E_total = {menu.totals.kcal} kkal (jumlah kkal seluruh
                       bahan; bila kosong dipakai 4P + 4K + 9L)
                     </p>
->>>>>>> f9b8045 (Update semua)
                   </div>
                 </div>
 
@@ -528,15 +481,9 @@ export default function Dashboard() {
                   </p>
                   <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
                     <p>p_i = E_i ÷ E_total × 100%</p>
-<<<<<<< HEAD
-                    <p>p_karbo   = {shares.karbo}%  (target 55–65%)</p>
-                    <p>p_protein = {shares.protein}%  (target 10–15%)</p>
-                    <p>p_lemak   = {shares.lemak}%  (target 20–30%)</p>
-=======
                     <p>p_karbo = {shares.karbo}% (target 55–65%)</p>
                     <p>p_protein = {shares.protein}% (target 10–15%)</p>
                     <p>p_lemak = {shares.lemak}% (target 20–30%)</p>
->>>>>>> f9b8045 (Update semua)
                   </div>
                 </div>
 
@@ -545,28 +492,18 @@ export default function Dashboard() {
                     Langkah 4 — Skor tiap makro (fungsi pita, 0–100)
                   </p>
                   <div className="mt-2 space-y-1 font-mono text-[11px] leading-relaxed text-clay-700">
-<<<<<<< HEAD
-                    <p>s_i = 100                              jika lo ≤ p_i ≤ hi</p>
-                    <p>s_i = max(0, 100 − (d ÷ L) × 100)      jika p_i di luar rentang</p>
-=======
                     <p>s_i = 100 jika lo ≤ p_i ≤ hi</p>
                     <p>
                       s_i = max(0, 100 − (d ÷ L) × 100) jika p_i di luar rentang
                     </p>
->>>>>>> f9b8045 (Update semua)
                     <p>d = jarak p_i ke tepi rentang terdekat</p>
                     <p>L = lebar rentang = hi − lo</p>
                   </div>
                   <p className="mt-1.5 text-[11px] font-semibold leading-relaxed text-clay-600">
                     Artinya: selama proporsi ada di pita sehat, skornya penuh
                     (100). Di luar pita, skor menurun linier — meleset satu
-<<<<<<< HEAD
-                    lebar rentang penuh berarti skor 0. Contoh rentang lemak
-                    (L = 30 − 20 = 10): meleset 5 poin → skor 50.
-=======
                     lebar rentang penuh berarti skor 0. Contoh rentang lemak (L
                     = 30 − 20 = 10): meleset 5 poin → skor 50.
->>>>>>> f9b8045 (Update semua)
                   </p>
                 </div>
 
@@ -598,25 +535,6 @@ export default function Dashboard() {
                   <li>
                     2) Energi: 4 × {menu.totals.karbo} + 4 ×{" "}
                     {menu.totals.protein} + 9 × {menu.totals.lemak} ={" "}
-<<<<<<< HEAD
-                    {Math.round(4 * menu.totals.karbo + 4 * menu.totals.protein + 9 * menu.totals.lemak)}{" "}
-                    kkal ≈ total {menu.totals.kcal} kkal (Langkah 2).
-                  </li>
-                  <li>
-                    3) Proporsi: karbo {shares.karbo}%, protein{" "}
-                    {shares.protein}%, lemak {shares.lemak}% (Langkah 3).
-                  </li>
-                  <li>
-                    4) Skor makro: s_karbo = {cekDetail.details.find((d) => d.name === "karbo")?.score ?? 0}{" "}
-                    · s_protein = {cekDetail.details.find((d) => d.name === "protein")?.score ?? 0}{" "}
-                    · s_lemak = {cekDetail.details.find((d) => d.name === "lemak")?.score ?? 0} (Langkah 4).
-                  </li>
-                  <li>
-                    5) Skor menu = ({cekDetail.details.find((d) => d.name === "karbo")?.score ?? 0} +{" "}
-                    {cekDetail.details.find((d) => d.name === "protein")?.score ?? 0} +{" "}
-                    {cekDetail.details.find((d) => d.name === "lemak")?.score ?? 0}) ÷ 3 ={" "}
-                    <span className="font-extrabold text-leaf-700">{menu.score}/100</span>{" "}
-=======
                     {Math.round(
                       4 * menu.totals.karbo +
                         4 * menu.totals.protein +
@@ -654,24 +572,16 @@ export default function Dashboard() {
                     <span className="font-extrabold text-leaf-700">
                       {menu.score}/100
                     </span>{" "}
->>>>>>> f9b8045 (Update semua)
                     → {menu.verdict} (Langkah 5).
                   </li>
                 </ol>
                 <div className="mt-3 space-y-2 border-t border-clay-400/30 pt-3 text-xs font-semibold leading-relaxed text-clay-600">
                   <p>
                     Contoh hipotesis: bila lemak mencapai 36% (meleset 6 poin
-<<<<<<< HEAD
-                    dari batas 30%, lebar rentang L = 30 − 20 = 10) → skor
-                    lemak = 100 − (6 ÷ 10) × 100 = <b>40</b>; bila karbo dan
-                    protein tetap di rentang sehat (100 keduanya), skor menu =
-                    (100 + 100 + 40) ÷ 3 = <b>80</b> → “Cukup seimbang.”
-=======
                     dari batas 30%, lebar rentang L = 30 − 20 = 10) → skor lemak
                     = 100 − (6 ÷ 10) × 100 = <b>40</b>; bila karbo dan protein
                     tetap di rentang sehat (100 keduanya), skor menu = (100 +
                     100 + 40) ÷ 3 = <b>80</b> → “Cukup seimbang.”
->>>>>>> f9b8045 (Update semua)
                   </p>
                   <p>
                     Penyusun menu otomatis memakai penyetel proporsional: skala
@@ -693,62 +603,6 @@ export default function Dashboard() {
         </section>
 
         {/* Logika predikat — jejak inferensi */}
-<<<<<<< HEAD
-      <section className="clay-card mt-6 p-6 sm:p-8">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="flex items-center gap-2 text-xl font-extrabold text-clay-800">
-            <ListChecks className="size-5 text-leaf-600" />
-            Logika Predikat — Jejak Inferensi
-          </h2>
-          <span
-            className={`clay-chip px-4 py-2 text-xs font-extrabold ${
-              proof.balanced
-                ? "bg-leaf-200 text-leaf-700"
-                : "bg-berry-200 text-berry-700"
-            }`}
-          >
-            {proof.conclusion === "MenuLayakSajikan"
-              ? "✅ MenuLayakSajikan(m)"
-              : proof.conclusion === "MenuSeimbang"
-                ? "✅ MenuSeimbang(m)"
-                : "❌ MenuTidakSeimbang(m)"}
-          </span>
-        </div>
-        <p className="mt-2 text-sm font-semibold leading-relaxed text-clay-600">
-          {proof.summary}
-        </p>
-        <div className="mt-4 space-y-2">
-          {proof.steps.map((s) => (
-            <div
-              key={s.id}
-              className={`clay-chip flex flex-wrap items-center gap-2 px-4 py-2.5 text-xs font-bold ${
-                s.fired ? "bg-leaf-100 text-clay-800" : "bg-cream-200 text-clay-500"
-              }`}
-            >
-              <span className="font-extrabold">{s.id}</span>
-              <span className="font-mono text-[11px]">{s.formula}</span>
-              <span className="ml-auto">{s.fired ? "✓ aktif" : "— tidak aktif"}</span>
-            </div>
-          ))}
-        </div>
-        
-        <div className="clay-inset mt-4 bg-cream-100 p-4">
-          <p className="text-[11px] font-extrabold uppercase tracking-wider text-clay-500">
-            Fakta (predikat atomik yang bernilai benar)
-          </p>
-          <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs font-bold text-clay-700">
-            {Object.entries(proof.facts)
-              .filter(([, v]) => v)
-              .map(([k]) => (
-                <span key={k} className="font-mono">
-                  {k} = benar
-                </span>
-              ))}
-          </p>
-        </div>
-      </section>
-        
-=======
         <section className="clay-card mt-6 p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="flex items-center gap-2 text-xl font-extrabold text-clay-800">
@@ -807,7 +661,6 @@ export default function Dashboard() {
           </div>
         </section>
 
->>>>>>> f9b8045 (Update semua)
         {/* Menu harian */}
         <section className="mt-6">
           <h2 className="flex items-center gap-2 px-1 text-xl font-extrabold text-clay-800">

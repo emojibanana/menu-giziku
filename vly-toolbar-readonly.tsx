@@ -198,14 +198,10 @@ const Overlay: React.FC<{
       overlay.style.pointerEvents = "auto";
 
       // Build ignore list from toolbar ref
-<<<<<<< HEAD
-      const shouldIgnore = el && toolbarRef.current && (el === toolbarRef.current || toolbarRef.current.contains(el));
-=======
       const shouldIgnore =
         el &&
         toolbarRef.current &&
         (el === toolbarRef.current || toolbarRef.current.contains(el));
->>>>>>> f9b8045 (Update semua)
       if (!el || shouldIgnore) return;
 
       if (lastHovered.current !== el) {
@@ -241,14 +237,10 @@ const Overlay: React.FC<{
       overlay.style.pointerEvents = "auto";
 
       // Build ignore list from toolbar ref
-<<<<<<< HEAD
-      const shouldIgnore = el && toolbarRef.current && (el === toolbarRef.current || toolbarRef.current.contains(el));
-=======
       const shouldIgnore =
         el &&
         toolbarRef.current &&
         (el === toolbarRef.current || toolbarRef.current.contains(el));
->>>>>>> f9b8045 (Update semua)
       if (!el || shouldIgnore) return;
 
       if (lastHovered.current)
@@ -355,16 +347,6 @@ export const VlyToolbar: React.FC = () => {
   // Handle escape key to close modal
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-<<<<<<< HEAD
-      if (e.key === 'Escape' && showDevOverlay) {
-        setShowDevOverlay(false);
-      }
-    };
-    
-    if (showDevOverlay) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
-=======
       if (e.key === "Escape" && showDevOverlay) {
         setShowDevOverlay(false);
       }
@@ -373,7 +355,6 @@ export const VlyToolbar: React.FC = () => {
     if (showDevOverlay) {
       document.addEventListener("keydown", handleKeyDown);
       return () => document.removeEventListener("keydown", handleKeyDown);
->>>>>>> f9b8045 (Update semua)
     }
   }, [showDevOverlay]);
 
@@ -395,11 +376,7 @@ export const VlyToolbar: React.FC = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      { isDevDeployment && showDevOverlay && (
-=======
       {isDevDeployment && showDevOverlay && (
->>>>>>> f9b8045 (Update semua)
         <div
           onClick={handleOverlayClick}
           role="dialog"
@@ -434,21 +411,13 @@ export const VlyToolbar: React.FC = () => {
                 <div className="flex items-center gap-2 rounded px-2 py-1 transition-colors hover:bg-white/95">
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="h-4 w-4 text-orange-500" />
-<<<<<<< HEAD
-                    <span 
-=======
                     <span
->>>>>>> f9b8045 (Update semua)
                       id="dev-env-label"
                       className="text-sm font-medium text-gray-700"
                       title="Development deployment - should not be shared publicly. Use 'Go to project' to create a production version."
                     >
-<<<<<<< HEAD
-                      This is a testing environment. Share only your published project.
-=======
                       This is a testing environment. Share only your published
                       project.
->>>>>>> f9b8045 (Update semua)
                     </span>
                   </div>
                 </div>

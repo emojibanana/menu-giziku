@@ -44,13 +44,9 @@
   --color-sky-600: oklch(0.62 0.1 230);
   --color-sky-700: oklch(0.5 0.1 230);
   --color-sky-800: oklch(0.4 0.08 230);
-<<<<<<< HEAD
-  --font-clay: "Baloo 2", ui-rounded, "Hiragino Maru Gothic ProN", "Quicksand", Manrope, ui-sans-serif, system-ui, sans-serif;
-=======
   --font-clay:
     "Baloo 2", ui-rounded, "Hiragino Maru Gothic ProN", "Quicksand", Manrope,
     ui-sans-serif, system-ui, sans-serif;
->>>>>>> f9b8045 (Update semua)
   --text-2xl: 1.5rem;
   --text-2xl--line-height: calc(1.5rem + 0.375rem);
   --text-3xl: 1.875rem;

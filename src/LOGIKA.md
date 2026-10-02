@@ -19,10 +19,12 @@ Tujuan: Diberikan satu menu harian m (5 hidangan), tentukan apakah m layak disaj
 **D = {semua menu harian m yang mungkin dibangun oleh generator}**
 
 Setiap menu m terdiri atas:
+
 - **meals**: Array 5 hidangan (slot: Pagi, Siang, Selingan Sore, Malam, Selingan Buah)
 - **totals**: Agregat gizi harian (kcal, protein g, karbo g, lemak g)
 
 Setiap hidangan memiliki:
+
 - **items**: Daftar bahan (string format "Nama 123 g")
 - **kcal, protein, karbo, lemak**: Nilai nutrisi
 - **slot, dish, emoji**: Metadata
@@ -36,6 +38,7 @@ Fakta atomik adalah predikat unary yang dihitung langsung dari menu m (bukan dit
 ### 3.1 Predikat Komposisi Makro
 
 Rentang ideal (PBG "Isi Piringku"):
+
 - Karbo: 55–65% dari total kkal
 - Protein: 10–15% dari total kkal
 - Lemak: 20–30% dari total kkal
@@ -90,12 +93,13 @@ MakroWajarNeg(m) ≡ ¬(¬Karbo(m) ∨ ¬Protein(m) ∨ ¬Lemak(m))
 ## 5. Basis Aturan Inferensi (Rule Base)
 
 ### Forward Chaining Strategy
+
 Setiap aturan hanya bergantung pada fakta yang sudah tersedia di urutan sebelumnya. Strategi: cek golongan pangan → cek proporsi makro → inferensi final.
 
 ### 5.1 Aturan R1: Komposisi Golongan Pangan
 
 ```
-R1: AdaKarbo(m) ∧ AdaProtein(m) ∧ AdaSayur(m) ∧ AdaBuah(m) ∧ AdaOleinat(m) 
+R1: AdaKarbo(m) ∧ AdaProtein(m) ∧ AdaSayur(m) ∧ AdaBuah(m) ∧ AdaOleinat(m)
     → KomposisiWajar(m)
 
 Deskripsi: Menu mengandung ke-5 golongan pangan (karbo, protein, sayur, buah, oleinat)
@@ -123,7 +127,7 @@ Derive: MakroWajar (semua 3 makro seimbang)
 ### 5.4 Aturan R4: Seimbang Lengkap
 
 ```
-R4: KomposisiWajar(m) ∧ MakroWajar(m) ∧ LayakEnergi(m) 
+R4: KomposisiWajar(m) ∧ MakroWajar(m) ∧ LayakEnergi(m)
     → MenuSeimbang(m)
 
 Deskripsi: Golongan lengkap + makro sehat + energi layak
@@ -169,7 +173,7 @@ function forwardChain(m: MenuInput) → PredicateReport {
     Lemak: Lemak(m),
     PorsiWajar: PorsiWajar(m),
     AdaSlotGizi: AdaSlotGizi(m),
-    
+
     // 2. Fakta terderivasi mulai false
     KomposisiWajar: false,
     MakroCP: false,
@@ -178,9 +182,9 @@ function forwardChain(m: MenuInput) → PredicateReport {
     MenuLayakSajikan: false,
     TidakSeimbang: false
   }
-  
+
   steps = []
-  
+
   // 3. Evaluasi setiap aturan berurutan (modus ponens)
   for rule in RULES {
     anteTrue = rule.ante(facts, m)  // cek anteseden
@@ -194,15 +198,15 @@ function forwardChain(m: MenuInput) → PredicateReport {
       fired: anteTrue
     })
   }
-  
+
   // 4. Tentukan kesimpulan akhir
   layak = facts.MenuLayakSajikan ∧ ¬facts.TidakSeimbang
   seimbang = facts.MenuSeimbang ∧ ¬facts.TidakSeimbang
-  
-  conclusion = layak ? "MenuLayakSajikan" 
+
+  conclusion = layak ? "MenuLayakSajikan"
              : seimbang ? "MenuSeimbang"
              : "MenuTidakSeimbang"
-  
+
   return PredicateReport {
     facts: facts,
     steps: steps,
@@ -219,11 +223,11 @@ Setiap aturan yang dievaluasi dicatat:
 
 ```typescript
 interface InferenceStep {
-  id: string;           // "R1", "R2", ..., "R6"
-  formula: string;      // notasi predikat (∧, ∨, ¬, →)
-  desc: string;         // deskripsi aturan dalam bahasa lokal
-  anteTrue: boolean;    // anteseden bernilai benar?
-  fired: boolean;       // aturan diaktifkan (modus ponens berhasil)?
+  id: string; // "R1", "R2", ..., "R6"
+  formula: string; // notasi predikat (∧, ∨, ¬, →)
+  desc: string; // deskripsi aturan dalam bahasa lokal
+  anteTrue: boolean; // anteseden bernilai benar?
+  fired: boolean; // aturan diaktifkan (modus ponens berhasil)?
 }
 ```
 
@@ -299,7 +303,7 @@ R6: ¬LayakEnergi
 ```
 conclusion: "MenuLayakSajikan"
 balanced: true
-summary: "KESIMPULAN: MenuLayakSajikan(m) — menu seimbang, lengkap 5 golongan, 
+summary: "KESIMPULAN: MenuLayakSajikan(m) — menu seimbang, lengkap 5 golongan,
           dan porsinya layak disajikan."
 ```
 
@@ -368,6 +372,7 @@ Dashboard render:
 ### Backend Persistence
 
 Menu yang disimpan disimpan di Convex DB dengan:
+
 - name, date, profil
 - meals, totals, score
 - (Jejak bukti forwardChain dihitung ulang saat load, bukan disimpan)
@@ -377,12 +382,15 @@ Menu yang disimpan disimpan di Convex DB dengan:
 ## 10. Properti Logika
 
 ### Soundness
+
 Setiap aturan berbasis modus ponens (I ∧ (I → C) ⊢ C), yang merupakan inference rule valid.
 
 ### Completeness
+
 Forward chaining mencari solusi dari fakta menuju goal. Jika ada path R1→R2→R3→...→goal, maka akan ditemukan.
 
 ### Determinism
+
 Setiap evaluasi aturan dan kesimpulan deterministik (bukan probabilistik).
 
 ---
@@ -398,6 +406,6 @@ Setiap evaluasi aturan dan kesimpulan deterministik (bukan probabilistik).
 
 ## Referensi
 
-1. **First-Order Logic**: Genesereth & Nilsson, *Logical Foundations of Artificial Intelligence*
-2. **Forward Chaining**: Negnevitsky, *Artificial Intelligence: A Guide to Intelligent Systems*
-3. **Modus Ponens**: Aristotle, *Posterior Analytics*
+1. **First-Order Logic**: Genesereth & Nilsson, _Logical Foundations of Artificial Intelligence_
+2. **Forward Chaining**: Negnevitsky, _Artificial Intelligence: A Guide to Intelligent Systems_
+3. **Modus Ponens**: Aristotle, _Posterior Analytics_

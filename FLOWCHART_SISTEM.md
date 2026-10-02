@@ -43,42 +43,42 @@ flowchart TD
 flowchart TD
     A["Input: GeneratedMenu m"] --> B["Hitung Fakta Atomik"]
     B --> C["✓ AdaKarbo<br/>✓ AdaProtein<br/>✓ AdaSayur<br/>✓ AdaBuah<br/>✓ AdaOleinat<br/>✓ LayakEnergi<br/>✓ Karbo %<br/>✓ Protein %<br/>✓ Lemak %<br/>✓ PorsiWajar"]
-    
+
     C --> D["R1: Golongan Pangan?"]
     D --> E{Semua 5 ada?}
     E -->|Ya| F["KomposisiWajar = true"]
     E -->|Tidak| G["KomposisiWajar = false"]
-    
+
     F --> H["R2: Karbo & Protein OK?"]
     G --> H
     H --> I{Keduanya dalam range?}
     I -->|Ya| J["MakroCP = true"]
     I -->|Tidak| K["MakroCP = false"]
-    
+
     J --> L["R3: Tambah Lemak OK?"]
     K --> L
     L --> M{Lemak juga dalam range?}
     M -->|Ya| N["MakroWajar = true"]
     M -->|Tidak| O["MakroWajar = false"]
-    
+
     N --> P["R4: Semuanya Seimbang?"]
     O --> P
     P --> Q{"KomposisiWajar ∧<br/>MakroWajar ∧<br/>LayakEnergi?"}
     Q -->|Ya| R["MenuSeimbang = true"]
     Q -->|Tidak| S["MenuSeimbang = false"]
-    
+
     R --> T["R5: Porsi Wajar?"]
     S --> T
     T --> U{"MenuSeimbang ∧<br/>PorsiWajar?"}
     U -->|Ya| V["✅ MenuLayakSajikan = true"]
     U -->|Tidak| W["MenuLayakSajikan = false"]
-    
+
     V --> X["R6: Energi Tidak Layak?"]
     W --> X
     X --> Y{"¬LayakEnergi?"}
     Y -->|Ya| Z["❌ TidakSeimbang = true"]
     Y -->|Tidak| AA["TidakSeimbang = false"]
-    
+
     Z --> AB["Kesimpulan:<br/>MenuTidakSeimbang"]
     V --> AC["Kesimpulan:<br/>MenuLayakSajikan"]
     AA --> AD["Kesimpulan:<br/>MenuSeimbang"]
@@ -96,7 +96,7 @@ flowchart TD
     B --> E["Tampilkan Jejak Inferensi<br/>R1, R2, R3, R4, R5, R6<br/>status: FIRED / NOT FIRED"]
     B --> F["Tampilkan Kesimpulan<br/>✅ Layak / Seimbang<br/>❌ Tidak Seimbang"]
     B --> G["Tombol Save to DB<br/>simpan ke Convex"]
-    
+
     C --> H["Cards per hidangan"]
     D --> I["Bar chart / progress"]
     E --> J["Step-by-step trace"]
@@ -116,7 +116,7 @@ flowchart TD
     D --> E["Simpan di DB"]
     E --> F["Return _id menu baru"]
     F -->|Success| G["Toast: Menu tersimpan"]
-    
+
     H["User buka history"] -->|useQuery| I["Backend: getMenus query"]
     I --> J["Query table 'menus'<br/>filter by userId"]
     J --> K["Return daftar menu"]
@@ -131,17 +131,17 @@ flowchart TD
 flowchart TD
     Start[User buka app] --> Landing["Landing Page<br/>(publik)"]
     Landing --> LoginCheck{"Sudah login?"}
-    
+
     LoginCheck -->|Tidak| Auth["Auth Page<br/>Email OTP / Anonym"]
     Auth --> AuthOK["Login berhasil"]
-    
+
     LoginCheck -->|Ya| AuthOK
     AuthOK --> Dashboard["Dashboard<br/>(protected)"]
-    
+
     Dashboard --> SelectProfile["Pilih Profil"]
     SelectProfile --> GenerateMenuCall["generateMenu<br/>profil"]
     GenerateMenuCall --> GeneratedMenu["GeneratedMenu:<br/>5 meals +<br/>totals"]
-    
+
     GeneratedMenu --> ForwardChain["forwardChain<br/>GeneratedMenu"]
     ForwardChain --> R1["R1: Golongan?"]
     R1 --> R2["R2: Macro C+P?"]
@@ -149,19 +149,19 @@ flowchart TD
     R3 --> R4["R4: Seimbang?"]
     R4 --> R5["R5: Porsi Wajar?"]
     R5 --> R6["R6: Energi Tidak Layak?"]
-    
+
     R6 --> Report["PredicateReport<br/>steps + conclusion"]
     Report --> DashboardRender["Render Dashboard<br/>Menu + Macro +<br/>Jejak + Status"]
-    
+
     DashboardRender --> UserAction{"User action?"}
     UserAction -->|Simpan Menu| SaveDB["saveMenu mutation<br/>→ Convex DB"]
     SaveDB --> Toast["✅ Toast"]
-    
+
     UserAction -->|Lihat History| History["Query getMenus<br/>tampilkan list"]
     UserAction -->|Buat Baru| SelectProfile
     UserAction -->|Keluar| Logout["Logout"]
     Logout --> Landing
-    
+
     Toast --> End[Done]
     History --> End
 ```
@@ -170,14 +170,14 @@ flowchart TD
 
 ## 7. Legend
 
-| Simbol | Arti |
-|--------|------|
-| `→` | Alur proses |
-| `{...}` | Keputusan / kondisi |
-| `✓` | Berhasil / true |
-| `❌` | Gagal / false |
-| `R1-R6` | 6 aturan inferensi |
-| `Convex` | Backend database |
+| Simbol   | Arti                |
+| -------- | ------------------- |
+| `→`      | Alur proses         |
+| `{...}`  | Keputusan / kondisi |
+| `✓`      | Berhasil / true     |
+| `❌`     | Gagal / false       |
+| `R1-R6`  | 6 aturan inferensi  |
+| `Convex` | Backend database    |
 
 ---
 

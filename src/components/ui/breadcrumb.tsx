@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { ChevronRight, MoreHorizontal } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-
-function Breadcrumb({ ...props }: React.ComponentProps<"nav">) {
-  return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />
-=======
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
@@ -16,7 +6,6 @@ import { cn } from "@/lib/utils";
 
 function Breadcrumb({ ...props }: React.ComponentProps<"nav">) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
->>>>>>> f9b8045 (Update semua)
 }
 
 function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
@@ -25,19 +14,11 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
       data-slot="breadcrumb-list"
       className={cn(
         "text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5",
-<<<<<<< HEAD
-        className
-      )}
-      {...props}
-    />
-  )
-=======
         className,
       )}
       {...props}
     />
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
@@ -47,11 +28,7 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
       className={cn("inline-flex items-center gap-1.5", className)}
       {...props}
     />
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function BreadcrumbLink({
@@ -59,15 +36,9 @@ function BreadcrumbLink({
   className,
   ...props
 }: React.ComponentProps<"a"> & {
-<<<<<<< HEAD
-  asChild?: boolean
-}) {
-  const Comp = asChild ? Slot : "a"
-=======
   asChild?: boolean;
 }) {
   const Comp = asChild ? Slot : "a";
->>>>>>> f9b8045 (Update semua)
 
   return (
     <Comp
@@ -75,11 +46,7 @@ function BreadcrumbLink({
       className={cn("hover:text-foreground transition-colors", className)}
       {...props}
     />
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
@@ -92,11 +59,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
       className={cn("text-foreground font-normal", className)}
       {...props}
     />
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function BreadcrumbSeparator({
@@ -114,11 +77,7 @@ function BreadcrumbSeparator({
     >
       {children ?? <ChevronRight />}
     </li>
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function BreadcrumbEllipsis({
@@ -136,11 +95,7 @@ function BreadcrumbEllipsis({
       <MoreHorizontal className="size-4" />
       <span className="sr-only">More</span>
     </span>
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 export {
@@ -151,8 +106,4 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
-<<<<<<< HEAD
-}
-=======
 };
->>>>>>> f9b8045 (Update semua)

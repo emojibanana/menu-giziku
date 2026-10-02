@@ -8,8 +8,4 @@ declare global {
   }
 }
 
-<<<<<<< HEAD
 export {};
-=======
-export {};
->>>>>>> f9b8045 (Update semua)

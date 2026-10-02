@@ -43,12 +43,8 @@ export const save = mutation({
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
-<<<<<<< HEAD
-    if (userId === null) throw new Error("Harus masuk dulu untuk menyimpan menu.");
-=======
     if (userId === null)
       throw new Error("Harus masuk dulu untuk menyimpan menu.");
->>>>>>> f9b8045 (Update semua)
     const now = Date.now();
     return await ctx.db.insert("menus", {
       userId,
@@ -56,7 +52,8 @@ export const save = mutation({
       date: args.date,
       profil: args.profil,
       // Emoji hanya dipakai untuk tampilan; tidak ikut dihitung gizinya.
-      meals: args.meals.map(({ emoji: _e, ...m }) => m),
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      meals: args.meals.map(({ emoji: _, ...rest }) => rest),
       totals: args.totals,
       score: args.score,
       createdAt: now,

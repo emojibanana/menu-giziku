@@ -1,23 +1,12 @@
-<<<<<<< HEAD
-import * as React from "react"
-=======
 import * as React from "react";
->>>>>>> f9b8045 (Update semua)
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreHorizontalIcon,
-<<<<<<< HEAD
-} from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { buttonVariants, type Button } from "@/components/ui/button"
-=======
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants, type Button } from "@/components/ui/button";
->>>>>>> f9b8045 (Update semua)
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -28,11 +17,7 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
     />
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function PaginationContent({
@@ -45,19 +30,6 @@ function PaginationContent({
       className={cn("flex flex-row items-center gap-1", className)}
       {...props}
     />
-<<<<<<< HEAD
-  )
-}
-
-function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />
-}
-
-type PaginationLinkProps = {
-  isActive?: boolean
-} & Pick<React.ComponentProps<typeof Button>, "size"> &
-  React.ComponentProps<"a">
-=======
   );
 }
 
@@ -69,7 +41,6 @@ type PaginationLinkProps = {
   isActive?: boolean;
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">;
->>>>>>> f9b8045 (Update semua)
 
 function PaginationLink({
   className,
@@ -87,19 +58,11 @@ function PaginationLink({
           variant: isActive ? "outline" : "ghost",
           size,
         }),
-<<<<<<< HEAD
-        className
-      )}
-      {...props}
-    />
-  )
-=======
         className,
       )}
       {...props}
     />
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function PaginationPrevious({
@@ -116,11 +79,7 @@ function PaginationPrevious({
       <ChevronLeftIcon />
       <span className="hidden sm:block">Previous</span>
     </PaginationLink>
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function PaginationNext({
@@ -137,11 +96,7 @@ function PaginationNext({
       <span className="hidden sm:block">Next</span>
       <ChevronRightIcon />
     </PaginationLink>
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 function PaginationEllipsis({
@@ -158,11 +113,7 @@ function PaginationEllipsis({
       <MoreHorizontalIcon className="size-4" />
       <span className="sr-only">More pages</span>
     </span>
-<<<<<<< HEAD
-  )
-=======
   );
->>>>>>> f9b8045 (Update semua)
 }
 
 export {
@@ -173,8 +124,4 @@ export {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-<<<<<<< HEAD
-}
-=======
 };
->>>>>>> f9b8045 (Update semua)
