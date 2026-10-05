@@ -1,9 +1,8 @@
 /**
  * Mesin nutrisi Menu Giziku.
  *
- * Semua angka gizi per 100 g (bahan matang, siap makan) — sumber praktis:
- * TKPI (Tabel Komposisi Pangan Indonesia) & label kemasan umum. Nilai ini
- * untuk perencanaan menu, bukan diagnosa medis.
+ * Semua angka gizi per 100 g (bahan matang, siap makan) — sumber: tabel-gizi.jpeg.
+ * Nilai ini untuk perencanaan menu, bukan diagnosa medis.
  */
 
 export type Tag = "karbo" | "protein" | "sayur" | "buah" | "oleinat";
@@ -32,23 +31,12 @@ export interface Nutrient {
 }
 
 export const NUTRIENTS: Nutrient[] = [
-  // ---------- Karbohidrat (sumber energi utama) ----------
+  // ---------- Sumber Karbohidrat ----------
   {
-    name: "Nasi putih",
-    kcal: 130,
-    protein: 2.7,
-    karbo: 28,
-    lemak: 0.3,
-    portion: 200,
-    tags: ["karbo"],
-    emoji: "🍚",
-    category: "karbo",
-  },
-  {
-    name: "Nasi merah",
+    name: "Beras cokelat",
     kcal: 111,
-    protein: 2.4,
-    karbo: 23,
+    protein: 2.6,
+    karbo: 23.0,
     lemak: 0.9,
     portion: 200,
     tags: ["karbo"],
@@ -56,10 +44,43 @@ export const NUTRIENTS: Nutrient[] = [
     category: "karbo",
   },
   {
-    name: "Kentang rebus",
-    kcal: 87,
-    protein: 2,
-    karbo: 20,
+    name: "Jagung manis",
+    kcal: 96,
+    protein: 3.4,
+    karbo: 21.0,
+    lemak: 1.2,
+    portion: 150,
+    tags: ["karbo"],
+    emoji: "🌽",
+    category: "karbo",
+  },
+  {
+    name: "Singkong",
+    kcal: 146,
+    protein: 1.2,
+    karbo: 34.7,
+    lemak: 0.3,
+    portion: 180,
+    tags: ["karbo"],
+    emoji: "🥔",
+    category: "karbo",
+  },
+  {
+    name: "Ubi ungu",
+    kcal: 136,
+    protein: 1.1,
+    karbo: 32.9,
+    lemak: 0.2,
+    portion: 160,
+    tags: ["karbo"],
+    emoji: "🍠",
+    category: "karbo",
+  },
+  {
+    name: "Kentang",
+    kcal: 77,
+    protein: 2.0,
+    karbo: 17.5,
     lemak: 0.1,
     portion: 180,
     tags: ["karbo"],
@@ -67,56 +88,78 @@ export const NUTRIENTS: Nutrient[] = [
     category: "karbo",
   },
   {
-    name: "Jagung manis",
-    kcal: 96,
-    protein: 3.3,
-    karbo: 21,
-    lemak: 1.3,
+    name: "Sagu",
+    kcal: 355,
+    protein: 0.2,
+    karbo: 87.1,
+    lemak: 0.1,
     portion: 150,
-    tags: ["karbo"],
-    emoji: "🌽",
-    category: "karbo",
-  },
-  {
-    name: "Mie telur",
-    kcal: 138,
-    protein: 4.5,
-    karbo: 22,
-    lemak: 4,
-    portion: 160,
     tags: ["karbo"],
     emoji: "🍜",
     category: "karbo",
   },
   {
-    name: "Ubi jalar",
-    kcal: 86,
-    protein: 1.6,
-    karbo: 20,
-    lemak: 0.1,
-    portion: 160,
-    tags: ["karbo"],
-    emoji: "🍠",
-    category: "karbo",
-  },
-  {
-    name: "Roti gandum",
+    name: "Roti tawar",
     kcal: 248,
-    protein: 9,
-    karbo: 41,
-    lemak: 3.4,
+    protein: 8.8,
+    karbo: 46.1,
+    lemak: 3.3,
     portion: 60,
     tags: ["karbo"],
     emoji: "🍞",
     category: "karbo",
   },
-
-  // ---------- Protein hewani ----------
   {
-    name: "Ayam panggang",
+    name: "Mie kering",
+    kcal: 356,
+    protein: 11.2,
+    karbo: 72.9,
+    lemak: 1.7,
+    portion: 160,
+    tags: ["karbo"],
+    emoji: "🍜",
+    category: "karbo",
+  },
+
+  // ---------- Sumber Protein Hewani ----------
+  {
+    name: "Telur bebek",
+    kcal: 185,
+    protein: 13.1,
+    karbo: 1.1,
+    lemak: 14.2,
+    portion: 100,
+    tags: ["protein"],
+    emoji: "🥚",
+    category: "proteinHewani",
+  },
+  {
+    name: "Daging sapi tanpa lemak",
+    kcal: 250,
+    protein: 26.0,
+    karbo: 0.0,
+    lemak: 15.0,
+    portion: 70,
+    tags: ["protein"],
+    emoji: "🥩",
+    category: "proteinHewani",
+  },
+  {
+    name: "Daging kambing",
+    kcal: 294,
+    protein: 25.6,
+    karbo: 0.0,
+    lemak: 21.3,
+    portion: 70,
+    tags: ["protein"],
+    emoji: "🥩",
+    category: "proteinHewani",
+  },
+  {
+    name: "Daging ayam tanpa kulit",
     kcal: 165,
-    protein: 31,
-    karbo: 0,
+    protein: 31.0,
+    karbo: 0.0,
     lemak: 3.6,
     portion: 90,
     tags: ["protein"],
@@ -124,99 +167,189 @@ export const NUTRIENTS: Nutrient[] = [
     category: "proteinHewani",
   },
   {
-    name: "Ikan kembung",
-    kcal: 125,
-    protein: 25,
-    karbo: 0,
-    lemak: 2.6,
+    name: "Ikan tongkol",
+    kcal: 144,
+    protein: 24.6,
+    karbo: 0.0,
+    lemak: 4.6,
     portion: 80,
     tags: ["protein"],
     emoji: "🐟",
     category: "proteinHewani",
   },
   {
-    name: "Telur rebus",
-    kcal: 155,
-    protein: 13,
-    karbo: 1.1,
-    lemak: 11,
-    portion: 100,
-    tags: ["protein"],
-    emoji: "🥚",
-    category: "proteinHewani",
-  },
-  {
-    name: "Ikan tuna",
-    kcal: 108,
-    protein: 24,
-    karbo: 0,
-    lemak: 1,
-    portion: 80,
-    tags: ["protein"],
-    emoji: "🐟",
-    category: "proteinHewani",
-  },
-  {
-    name: "Daging sapi tanpa lemak",
-    kcal: 143,
-    protein: 26,
-    karbo: 0,
-    lemak: 3.5,
-    portion: 70,
-    tags: ["protein"],
-    emoji: "🥩",
-    category: "proteinHewani",
-  },
-  {
-    name: "Bakso ikan",
+    name: "Ikan lele",
     kcal: 105,
-    protein: 12,
-    karbo: 6,
-    lemak: 3.8,
-    portion: 90,
+    protein: 17.7,
+    karbo: 0.0,
+    lemak: 2.9,
+    portion: 80,
     tags: ["protein"],
-    emoji: "🍢",
+    emoji: "🐟",
+    category: "proteinHewani",
+  },
+  {
+    name: "Ikan nila",
+    kcal: 96,
+    protein: 20.1,
+    karbo: 0.0,
+    lemak: 1.7,
+    portion: 80,
+    tags: ["protein"],
+    emoji: "🐟",
+    category: "proteinHewani",
+  },
+  {
+    name: "Udang",
+    kcal: 99,
+    protein: 24.0,
+    karbo: 0.0,
+    lemak: 0.3,
+    portion: 80,
+    tags: ["protein"],
+    emoji: "🦐",
     category: "proteinHewani",
   },
 
-  // ---------- Protein nabati ----------
+  // ---------- Sumber Protein Nabati ----------
   {
-    name: "Tahu putih",
-    kcal: 80,
-    protein: 10.9,
-    karbo: 0.9,
-    lemak: 4.7,
-    portion: 100,
-    tags: ["protein"],
-    emoji: "🧈",
-    category: "proteinNabati",
-  },
-  {
-    name: "Tempe goreng",
-    kcal: 180,
-    protein: 18,
-    karbo: 8,
-    lemak: 9,
+    name: "Tempe",
+    kcal: 193,
+    protein: 20.8,
+    karbo: 9.5,
+    lemak: 11.5,
     portion: 70,
     tags: ["protein"],
     emoji: "🟫",
     category: "proteinNabati",
   },
   {
+    name: "Tahu",
+    kcal: 76,
+    protein: 8.1,
+    karbo: 1.9,
+    lemak: 4.8,
+    portion: 100,
+    tags: ["protein"],
+    emoji: "🧈",
+    category: "proteinNabati",
+  },
+  {
     name: "Kacang hijau",
-    kcal: 323,
-    protein: 22,
-    karbo: 56,
+    kcal: 347,
+    protein: 22.9,
+    karbo: 62.9,
     lemak: 1.2,
     portion: 60,
     tags: ["protein", "karbo"],
     emoji: "🫘",
     category: "proteinNabati",
   },
-
-  // ---------- Sayuran ----------
   {
-    name: "Bayam rebus",
+    name: "Kacang kedelai",
+    kcal: 381,
+    protein: 34.9,
+    karbo: 30.2,
+    lemak: 19.9,
+    portion: 60,
+    tags: ["protein", "oleinat"],
+    emoji: "🫘",
+    category: "proteinNabati",
+  },
+  {
+    name: "Kacang merah",
+    kcal: 337,
+    protein: 22.1,
+    karbo: 59.1,
+    lemak: 1.7,
+    portion: 60,
+    tags: ["protein", "karbo"],
+    emoji: "🫘",
+    category: "proteinNabati",
+  },
+  {
+    name: "Kacang tanah",
+    kcal: 567,
+    protein: 25.8,
+    karbo: 16.1,
+    lemak: 49.2,
+    portion: 20,
+    tags: ["protein", "oleinat"],
+    emoji: "🥜",
+    category: "oleinat",
+  },
+  {
+    name: "Oncom",
+    kcal: 68,
+    protein: 4.8,
+    karbo: 5.7,
+    lemak: 3.0,
+    portion: 70,
+    tags: ["protein"],
+    emoji: "🟫",
+    category: "proteinNabati",
+  },
+  {
+    name: "Kacang tolo",
+    kcal: 336,
+    protein: 22.2,
+    karbo: 60.3,
+    lemak: 1.5,
+    portion: 60,
+    tags: ["protein", "karbo"],
+    emoji: "🫘",
+    category: "proteinNabati",
+  },
+
+  // ---------- Susu dan Olahannya ----------
+  {
+    name: "Susu sapi segar",
+    kcal: 61,
+    protein: 3.3,
+    karbo: 4.8,
+    lemak: 3.5,
+    portion: 200,
+    tags: ["protein"],
+    emoji: "🥛",
+    category: "oleinat",
+  },
+  {
+    name: "Susu bubuk full cream",
+    kcal: 496,
+    protein: 26.5,
+    karbo: 38.4,
+    lemak: 26.7,
+    portion: 30,
+    tags: ["protein"],
+    emoji: "🥛",
+    category: "oleinat",
+  },
+  {
+    name: "Yoghurt",
+    kcal: 61,
+    protein: 3.5,
+    karbo: 4.7,
+    lemak: 3.3,
+    portion: 150,
+    tags: ["protein"],
+    emoji: "🥛",
+    category: "oleinat",
+  },
+  {
+    name: "Keju cheddar",
+    kcal: 402,
+    protein: 25.0,
+    karbo: 3.0,
+    lemak: 33.0,
+    portion: 30,
+    tags: ["protein", "oleinat"],
+    emoji: "🧀",
+    category: "oleinat",
+  },
+
+  // ---------- Sayur-sayuran ----------
+  {
+    name: "Bayam",
     kcal: 23,
     protein: 2.9,
     karbo: 3.6,
@@ -227,10 +360,21 @@ export const NUTRIENTS: Nutrient[] = [
     category: "sayur",
   },
   {
+    name: "Kangkung",
+    kcal: 29,
+    protein: 3.0,
+    karbo: 5.0,
+    lemak: 0.3,
+    portion: 80,
+    tags: ["sayur"],
+    emoji: "🥬",
+    category: "sayur",
+  },
+  {
     name: "Wortel",
-    kcal: 35,
-    protein: 1,
-    karbo: 8,
+    kcal: 41,
+    protein: 0.9,
+    karbo: 9.6,
     lemak: 0.2,
     portion: 70,
     tags: ["sayur"],
@@ -238,10 +382,21 @@ export const NUTRIENTS: Nutrient[] = [
     category: "sayur",
   },
   {
-    name: "Brokoli kukus",
-    kcal: 35,
-    protein: 2.4,
-    karbo: 7,
+    name: "Tomat",
+    kcal: 18,
+    protein: 0.9,
+    karbo: 3.9,
+    lemak: 0.2,
+    portion: 100,
+    tags: ["sayur"],
+    emoji: "🍅",
+    category: "sayur",
+  },
+  {
+    name: "Brokoli",
+    kcal: 34,
+    protein: 2.8,
+    karbo: 6.6,
     lemak: 0.4,
     portion: 80,
     tags: ["sayur"],
@@ -249,32 +404,65 @@ export const NUTRIENTS: Nutrient[] = [
     category: "sayur",
   },
   {
-    name: "Kacang panjang",
-    kcal: 35,
-    protein: 2.4,
-    karbo: 6,
+    name: "Kembang kol",
+    kcal: 25,
+    protein: 1.9,
+    karbo: 4.9,
+    lemak: 0.3,
+    portion: 80,
+    tags: ["sayur"],
+    emoji: "🥦",
+    category: "sayur",
+  },
+  {
+    name: "Sawi hijau",
+    kcal: 22,
+    protein: 2.3,
+    karbo: 3.7,
+    lemak: 0.3,
+    portion: 80,
+    tags: ["sayur"],
+    emoji: "🥬",
+    category: "sayur",
+  },
+  {
+    name: "Selada",
+    kcal: 15,
+    protein: 1.4,
+    karbo: 2.9,
     lemak: 0.2,
+    portion: 80,
+    tags: ["sayur"],
+    emoji: "🥗",
+    category: "sayur",
+  },
+  {
+    name: "Terong",
+    kcal: 24,
+    protein: 1.0,
+    karbo: 5.7,
+    lemak: 0.2,
+    portion: 80,
+    tags: ["sayur"],
+    emoji: "🍆",
+    category: "sayur",
+  },
+  {
+    name: "Buncis",
+    kcal: 31,
+    protein: 1.8,
+    karbo: 7.0,
+    lemak: 0.1,
     portion: 70,
     tags: ["sayur"],
     emoji: "🌿",
     category: "sayur",
   },
   {
-    name: "Tauge",
-    kcal: 30,
-    protein: 3,
-    karbo: 6,
-    lemak: 0.2,
-    portion: 60,
-    tags: ["sayur"],
-    emoji: "🌱",
-    category: "sayur",
-  },
-  {
-    name: "Sop labu siam",
-    kcal: 26,
-    protein: 0.6,
-    karbo: 6,
+    name: "Labu siam",
+    kcal: 19,
+    protein: 1.0,
+    karbo: 4.5,
     lemak: 0.1,
     portion: 80,
     tags: ["sayur"],
@@ -282,24 +470,24 @@ export const NUTRIENTS: Nutrient[] = [
     category: "sayur",
   },
   {
-    name: "Bening daun katuk",
-    kcal: 30,
-    protein: 3.5,
-    karbo: 5,
-    lemak: 0.5,
-    portion: 70,
+    name: "Mentimun",
+    kcal: 15,
+    protein: 0.7,
+    karbo: 3.6,
+    lemak: 0.1,
+    portion: 80,
     tags: ["sayur"],
-    emoji: "🍃",
+    emoji: "🥒",
     category: "sayur",
   },
 
-  // ---------- Buah ----------
+  // ---------- Buah-buahan ----------
   {
     name: "Pisang ambon",
-    kcal: 92,
-    protein: 1,
-    karbo: 23,
-    lemak: 0.5,
+    kcal: 89,
+    protein: 1.1,
+    karbo: 22.8,
+    lemak: 0.3,
     portion: 90,
     tags: ["buah"],
     emoji: "🍌",
@@ -307,9 +495,9 @@ export const NUTRIENTS: Nutrient[] = [
   },
   {
     name: "Pepaya",
-    kcal: 46,
+    kcal: 39,
     protein: 0.5,
-    karbo: 12,
+    karbo: 9.8,
     lemak: 0.1,
     portion: 120,
     tags: ["buah"],
@@ -318,31 +506,31 @@ export const NUTRIENTS: Nutrient[] = [
   },
   {
     name: "Jeruk manis",
-    kcal: 45,
+    kcal: 47,
     protein: 0.9,
-    karbo: 11,
-    lemak: 0.2,
+    karbo: 11.8,
+    lemak: 0.1,
     portion: 120,
     tags: ["buah"],
     emoji: "🍊",
     category: "buah",
   },
   {
-    name: "Semangka",
-    kcal: 32,
-    protein: 0.6,
-    karbo: 8,
-    lemak: 0.4,
-    portion: 150,
+    name: "Apel",
+    kcal: 52,
+    protein: 0.3,
+    karbo: 14.0,
+    lemak: 0.2,
+    portion: 120,
     tags: ["buah"],
-    emoji: "🍉",
+    emoji: "🍎",
     category: "buah",
   },
   {
-    name: "Mangga harum manis",
+    name: "Mangga",
     kcal: 60,
     protein: 0.8,
-    karbo: 15,
+    karbo: 15.0,
     lemak: 0.4,
     portion: 100,
     tags: ["buah"],
@@ -350,10 +538,21 @@ export const NUTRIENTS: Nutrient[] = [
     category: "buah",
   },
   {
+    name: "Semangka",
+    kcal: 30,
+    protein: 0.6,
+    karbo: 7.6,
+    lemak: 0.2,
+    portion: 150,
+    tags: ["buah"],
+    emoji: "🍉",
+    category: "buah",
+  },
+  {
     name: "Melon",
     kcal: 34,
     protein: 0.8,
-    karbo: 8,
+    karbo: 8.2,
     lemak: 0.2,
     portion: 140,
     tags: ["buah"],
@@ -361,69 +560,113 @@ export const NUTRIENTS: Nutrient[] = [
     category: "buah",
   },
   {
-    name: "Salak",
-    kcal: 77,
-    protein: 0.4,
-    karbo: 20,
-    lemak: 0,
-    portion: 80,
+    name: "Nanas",
+    kcal: 50,
+    protein: 0.5,
+    karbo: 13.1,
+    lemak: 0.1,
+    portion: 100,
     tags: ["buah"],
-    emoji: "🧅",
+    emoji: "🍍",
+    category: "buah",
+  },
+  {
+    name: "Alpukat",
+    kcal: 160,
+    protein: 2.0,
+    karbo: 8.5,
+    lemak: 14.7,
+    portion: 80,
+    tags: ["buah", "oleinat"],
+    emoji: "🥑",
+    category: "buah",
+  },
+  {
+    name: "Jambu biji",
+    kcal: 49,
+    protein: 0.9,
+    karbo: 12.2,
+    lemak: 0.3,
+    portion: 100,
+    tags: ["buah"],
+    emoji: "🍈",
     category: "buah",
   },
 
-  // ---------- Oleinat ----------
+  // ---------- Sumber Lemak / Oleinat ----------
   {
-    name: "Susu UHT",
-    kcal: 61,
-    protein: 3.2,
-    karbo: 4.8,
-    lemak: 3.3,
-    portion: 200,
-    tags: ["protein"],
-    emoji: "🥛",
+    name: "Kelapa parut segar",
+    kcal: 354,
+    protein: 3.3,
+    karbo: 15.2,
+    lemak: 33.5,
+    portion: 30,
+    tags: ["oleinat"],
+    emoji: "🥥",
     category: "oleinat",
   },
   {
-    name: "Yogurt plain",
-    kcal: 59,
-    protein: 3.5,
-    karbo: 4.7,
-    lemak: 3.3,
-    portion: 150,
-    tags: ["protein"],
-    emoji: "🥛",
-    category: "oleinat",
-  },
-  {
-    name: "Kacang tanah",
-    kcal: 567,
-    protein: 26,
-    karbo: 19,
-    lemak: 49,
-    portion: 20,
-    tags: ["protein", "oleinat"],
-    emoji: "🥜",
-    category: "oleinat",
-  },
-  {
-    name: "Minyak goreng (bumbu)",
-    kcal: 884,
-    protein: 0,
-    karbo: 0,
-    lemak: 100,
+    name: "Minyak kelapa",
+    kcal: 862,
+    protein: 0.0,
+    karbo: 0.0,
+    lemak: 100.0,
     portion: 15,
     tags: ["oleinat"],
     emoji: "🫗",
+    category: "oleinat",
+  },
+  {
+    name: "Minyak sawit",
+    kcal: 884,
+    protein: 0.0,
+    karbo: 0.0,
+    lemak: 100.0,
+    portion: 15,
+    tags: ["oleinat"],
+    emoji: "🫗",
+    category: "oleinat",
+  },
+  {
+    name: "Minyak zaitun",
+    kcal: 884,
+    protein: 0.0,
+    karbo: 0.0,
+    lemak: 100.0,
+    portion: 15,
+    tags: ["oleinat"],
+    emoji: "🫗",
+    category: "oleinat",
+  },
+  {
+    name: "Margarin",
+    kcal: 717,
+    protein: 0.5,
+    karbo: 0.8,
+    lemak: 81.1,
+    portion: 15,
+    tags: ["oleinat"],
+    emoji: "🧈",
+    category: "oleinat",
+  },
+  {
+    name: "Kacang mete",
+    kcal: 553,
+    protein: 18.2,
+    karbo: 30.2,
+    lemak: 43.9,
+    portion: 20,
+    tags: ["protein", "oleinat"],
+    emoji: "🥜",
     category: "oleinat",
   },
 ];
 
 const drinkOfDay = (i: number) =>
   NUTRIENTS.find(
-    (n) => n.name === (i % 2 === 0 ? "Susu UHT" : "Yogurt plain"),
+    (n) => n.name === (i % 2 === 0 ? "Susu sapi segar" : "Yoghurt"),
   )!;
-const cookingOil = NUTRIENTS.find((n) => n.name === "Minyak goreng (bumbu)")!;
+const cookingOil = NUTRIENTS.find((n) => n.name === "Minyak sawit")!;
 
 const byCategory = (cat: Nutrient["category"]) =>
   NUTRIENTS.filter((n) => n.category === cat);
@@ -493,6 +736,53 @@ export const PROFIL_LABEL: Record<Profil, string> = {
   "rumah-tangga": "Ibu Rumah Tangga",
   umum: "Umum",
 };
+
+/** Kelompok usia untuk perhitungan kebutuhan gizi. */
+export type KelompokUsia = "anak-5" | "remaja" | "dewasa" | "lansia";
+
+export interface AnggotaKeluarga {
+  id: string;
+  nama: string;
+  usia: number;
+  kelompok: KelompokUsia;
+}
+
+/** Kebutuhan gizi harian per kelompok usia (kkal, protein g, karbo g, lemak g).
+ * Sumber: AKG Kemenkes RI & FAO/WHO. Nilai praktis untuk perencanaan menu.
+ */
+const KEBUTUHAN_HARIAN: Record<KelompokUsia, Totals> = {
+  "anak-5": { kcal: 1500, protein: 40, karbo: 200, lemak: 50 },
+  remaja: { kcal: 2200, protein: 60, karbo: 300, lemak: 70 },
+  dewasa: { kcal: 2150, protein: 55, karbo: 290, lemak: 65 },
+  lansia: { kcal: 1800, protein: 50, karbo: 240, lemak: 55 },
+};
+
+/** Tentukan kelompok usia berdasarkan umur. */
+export function tentukanKelompokUsia(usia: number): KelompokUsia {
+  if (usia < 10) return "anak-5";
+  if (usia <= 18) return "remaja";
+  if (usia >= 60) return "lansia";
+  return "dewasa";
+}
+
+/** Hitung total kebutuhan gizi harian untuk seluruh anggota keluarga. */
+export function hitungKebutuhanKeluarga(
+  anggota: AnggotaKeluarga[],
+): Totals & { jumlahAnggota: number } {
+  const totals = anggota.reduce(
+    (acc, a) => {
+      const butuh = KEBUTUHAN_HARIAN[a.kelompok];
+      return {
+        kcal: acc.kcal + butuh.kcal,
+        protein: acc.protein + butuh.protein,
+        karbo: acc.karbo + butuh.karbo,
+        lemak: acc.lemak + butuh.lemak,
+      };
+    },
+    { kcal: 0, protein: 0, karbo: 0, lemak: 0 },
+  );
+  return { ...totals, jumlahAnggota: anggota.length };
+}
 
 export interface GeneratedMenu {
   date: string;
@@ -630,6 +920,89 @@ export function generateMenu(profil: Profil, refreshCount = 0): GeneratedMenu {
     score: cek.score,
     verdict: cek.verdict,
     details: cek.details,
+  };
+}
+
+/** Interface menu hasil generate untuk keluarga. */
+export interface GeneratedMenuKeluarga extends GeneratedMenu {
+  anggota: AnggotaKeluarga[];
+  kebutuhanKeluarga: Totals & { jumlahAnggota: number };
+}
+
+/**
+ * Bangun rencana menu harian untuk keluarga berdasarkan daftar anggota.
+ * Porsi disesuaikan agar total gizi mendekati kebutuhan gabungan semua anggota.
+ */
+export function generateMenuKeluarga(
+  anggota: AnggotaKeluarga[],
+  refreshCount = 0,
+): GeneratedMenuKeluarga {
+  if (anggota.length === 0) {
+    // Fallback ke profil umum jika tidak ada anggota
+    const base = generateMenu("umum", refreshCount);
+    return {
+      ...base,
+      anggota: [],
+      kebutuhanKeluarga: {
+        kcal: 0,
+        protein: 0,
+        karbo: 0,
+        lemak: 0,
+        jumlahAnggota: 0,
+      },
+    };
+  }
+
+  const kebutuhan = hitungKebutuhanKeluarga(anggota);
+  // Gunakan profil "rumah-tangga" sebagai basis, lalu sesuaikan skala porsi
+  const baseMenu = generateMenu("rumah-tangga", refreshCount);
+
+  // Hitung rasio kebutuhan vs menu dasar untuk menentukan skala porsi
+  const rasioKcal = kebutuhan.kcal / (baseMenu.totals.kcal || 1);
+  const skalaPorsi = Math.max(0.5, Math.min(3.0, rasioKcal));
+
+  // Skalakan ulang setiap meal berdasarkan kebutuhan keluarga
+  const scaledMeals: Meal[] = baseMenu.meals.map((meal) => ({
+    ...meal,
+    items: meal.items.map((item) => {
+      // Parse berat dari string "Nama Bahan XXX g"
+      const match = item.match(/^(.+?)\s+(\d+)\s*g$/);
+      if (match) {
+        const nama = match[1];
+        const beratLama = parseInt(match[2], 10);
+        const beratBaru = Math.round(beratLama * skalaPorsi);
+        return `${nama} ${beratBaru} g`;
+      }
+      return item;
+    }),
+    kcal: Math.round(meal.kcal * skalaPorsi),
+    protein: Math.round(meal.protein * skalaPorsi * 10) / 10,
+    karbo: Math.round(meal.karbo * skalaPorsi * 10) / 10,
+    lemak: Math.round(meal.lemak * skalaPorsi * 10) / 10,
+  }));
+
+  const totals = scaledMeals.reduce(
+    (acc, m) => ({
+      kcal: acc.kcal + m.kcal,
+      protein: acc.protein + m.protein,
+      karbo: acc.karbo + m.karbo,
+      lemak: acc.lemak + m.lemak,
+    }),
+    { kcal: 0, protein: 0, karbo: 0, lemak: 0 },
+  );
+
+  const cek = checkBalance(scaledMeals, totals);
+
+  return {
+    date: new Date().toISOString().slice(0, 10),
+    profil: "rumah-tangga",
+    meals: scaledMeals,
+    totals,
+    score: cek.score,
+    verdict: cek.verdict,
+    details: cek.details,
+    anggota,
+    kebutuhanKeluarga: kebutuhan,
   };
 }
 

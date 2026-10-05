@@ -11,21 +11,27 @@ import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
 import {
   checkBalance,
-  generateMenu,
+  generateMenuKeluarga,
   macroShares,
   PROFIL_LABEL,
+  tentukanKelompokUsia,
+  hitungKebutuhanKeluarga,
   type Meal,
   type Profil,
+  type AnggotaKeluarga,
 } from "@/lib/nutrition";
 import { forwardChain } from "@/lib/predicates";
 import { motion } from "framer-motion";
 import {
+  Plus,
   CalendarDays,
   CheckCircle2,
   ChefHat,
   ChevronDown,
   ChevronUp,
   Copy,
+  Delete,
+  Users,
   ListChecks,
   LogOut,
   RefreshCw,
@@ -146,17 +152,31 @@ export default function Dashboard() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
+  // Anggota keluarga
+  const [anggota, setAnggota] = useState<AnggotaKeluarga[]>([
+    { id: "1", nama: "Ayah", usia: 35, kelompok: "dewasa" },
+    { id: "2", nama: "Ibu", usia: 33, kelompok: "dewasa" },
+    { id: "3", nama: "Anak 1", usia: 8, kelompok: "anak-5" },
+  ]);
+
+  // Input tambah anggota
+  const [namaInput, setNamaInput] = useState("");
+  const [usiaInput, setUsiaInput] = useState<number | "">("");
   const [profil, setProfil] = useState<Profil>("sekolah");
+
   const [refreshCount, setRefreshCount] = useState(0);
   const [formulaOpen, setFormulaOpen] = useState(false);
   const [savingOpen, setSavingOpen] = useState(false);
   const [saveName, setSaveName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+  // Generate menu berdasarkan anggota keluarga
   const menu = useMemo(
-    () => generateMenu(profil, refreshCount),
-    [profil, refreshCount],
+    () => generateMenuKeluarga(anggota, refreshCount),
+    [anggota, refreshCount],
   );
+
+  const kebutuhan = useMemo(() => hitungKebutuhanKeluarga(anggota), [anggota]);
   const shares = macroShares(menu.totals);
   const tint = scoreTint(menu.score);
   // Hitung ulang cek gizi untuk mendapatkan rincian rumus per makro.
@@ -173,19 +193,45 @@ export default function Dashboard() {
   const saveMenu = useMutation(api.menus.save);
   const removeMenu = useMutation(api.menus.remove);
 
+  // Handler tambah anggota keluarga
+  const handleTambahAnggota = () => {
+    if (!namaInput.trim() || usiaInput === "") {
+      toast.error("Nama dan usia harus diisi.");
+      return;
+    }
+    const usia = Number(usiaInput);
+    if (usia < 0 || usia > 120) {
+      toast.error("Usia tidak valid (0–120).");
+      return;
+    }
+    const kelompok = tentukanKelompokUsia(usia);
+    setAnggota((prev) => [
+      ...prev,
+      { id: crypto.randomUUID(), nama: namaInput.trim(), usia, kelompok },
+    ]);
+    setNamaInput("");
+    setUsiaInput("");
+    toast.success(`Anggota ${namaInput} ditambahkan.`);
+  };
+
+  // Handler hapus anggota
+  const handleHapusAnggota = (id: string) => {
+    setAnggota((prev) => prev.filter((a) => a.id !== id));
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
 
   const handleSave = async () => {
-    const name = saveName.trim() || `Menu ${PROFIL_LABEL[profil]} ${menu.date}`;
+    const name = saveName.trim() || `Menu Keluarga ${menu.date}`;
     setIsSaving(true);
     try {
       await saveMenu({
         name,
         date: menu.date,
-        profil,
+        profil: "rumah-tangga",
         meals: menu.meals,
         totals: menu.totals,
         score: menu.score,
@@ -204,7 +250,8 @@ export default function Dashboard() {
 
   const handleCopy = async () => {
     const text = [
-      `Menu Harian ${PROFIL_LABEL[profil]} — ${menu.date}`,
+      `Menu Harian Keluarga — ${menu.date}`,
+      `Total anggota: ${kebutuhan.jumlahAnggota} orang`,
       `Skor keseimbangan: ${menu.score}/100 (${menu.verdict})`,
       "",
       ...menu.meals.map(
@@ -212,6 +259,7 @@ export default function Dashboard() {
       ),
       "",
       `Total: ${menu.totals.kcal} kkal · Karbo ${shares.karbo}% · Protein ${shares.protein}% · Lemak ${shares.lemak}%`,
+      `Kebutuhan keluarga: ${kebutuhan.kcal} kkal, ${kebutuhan.protein}g protein, ${kebutuhan.karbo}g karbo, ${kebutuhan.lemak}g lemak`,
     ].join("\n");
     try {
       await navigator.clipboard.writeText(text);
@@ -251,8 +299,92 @@ export default function Dashboard() {
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-5 pb-16 pt-8 sm:px-8">
-        {/* Kontrol generator */}
+        {/* Manajemen Anggota Keluarga */}
         <section className="clay-card p-6 sm:p-8">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 className="flex items-center gap-2 text-2xl font-extrabold text-clay-800 sm:text-3xl">
+                <Users className="size-7 text-sky-600" />
+                Anggota Keluarga
+              </h1>
+              <p className="mt-1.5 max-w-md text-sm font-semibold text-clay-600">
+                Tambahkan anggota keluarga dengan nama dan usia. Sistem akan
+                menghitung kebutuhan gizi gabungan.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="clay-chip bg-sky-200 px-3 py-1 text-xs font-extrabold text-sky-700">
+                {anggota.length} orang
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <Input
+              value={namaInput}
+              onChange={(e) => setNamaInput(e.target.value)}
+              placeholder="Nama anggota"
+              className="clay-inset h-11 rounded-2xl border-0 bg-cream-100 px-4 text-sm font-bold text-clay-800 placeholder:text-clay-400 focus-visible:ring-sky-500"
+            />
+            <Input
+              type="number"
+              min={0}
+              max={120}
+              value={usiaInput}
+              onChange={(e) =>
+                setUsiaInput(
+                  e.target.value === "" ? "" : Number(e.target.value),
+                )
+              }
+              placeholder="Usia (tahun)"
+              className="clay-inset h-11 rounded-2xl border-0 bg-cream-100 px-4 text-sm font-bold text-clay-800 placeholder:text-clay-400 focus-visible:ring-sky-500"
+            />
+            <button
+              type="button"
+              onClick={handleTambahAnggota}
+              className="clay-btn inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-extrabold"
+            >
+              <Plus className="size-4" />
+              Tambah
+            </button>
+          </div>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {anggota.map((a) => (
+              <div
+                key={a.id}
+                className="clay-chip flex items-center justify-between bg-white/70 px-4 py-3"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex size-8 items-center justify-center rounded-full bg-sky-200 text-sm font-bold text-sky-700">
+                    {a.nama.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-clay-800">{a.nama}</p>
+                    <p className="text-[11px] font-semibold text-clay-600">
+                      {a.usia} tahun ({a.kelompok})
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleHapusAnggota(a.id)}
+                  className="clay-chip inline-flex items-center justify-center rounded-full bg-berry-100 px-2 py-1 text-[10px] font-extrabold text-berry-700 hover:bg-berry-200"
+                >
+                  <Delete className="size-3" />
+                </button>
+              </div>
+            ))}
+            {anggota.length === 0 && (
+              <div className="clay-inset col-span-full flex items-center justify-center gap-3 border-dashed border-2 border-cream-300 bg-cream-50 p-6 text-sm font-semibold text-clay-500">
+                Belum ada anggota keluarga. Tambahkan untuk membuat menu.
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Kontrol generator */}
+        <section className="clay-card mt-6 p-6 sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <h1 className="flex items-center gap-2 text-2xl font-extrabold text-clay-800 sm:text-3xl">
@@ -665,7 +797,7 @@ export default function Dashboard() {
         <section className="mt-6">
           <h2 className="flex items-center gap-2 px-1 text-xl font-extrabold text-clay-800">
             <Utensils className="size-5 text-leaf-600" />
-            Menu Harian — {PROFIL_LABEL[profil]}
+            Menu Harian — Keluarga {kebutuhan.jumlahAnggota} Orang
           </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {menu.meals.map((m, i) => (
@@ -706,8 +838,7 @@ export default function Dashboard() {
                           {m.name}
                         </p>
                         <p className="mt-0.5 text-[11px] font-bold text-clay-500">
-                          {PROFIL_LABEL[m.profil as Profil] ?? m.profil} ·{" "}
-                          {m.date} · {m.totals.kcal} kkal
+                          Menu Keluarga · {m.date} · {m.totals.kcal} kkal
                         </p>
                       </div>
                       <span
@@ -771,7 +902,7 @@ export default function Dashboard() {
           <Input
             value={saveName}
             onChange={(e) => setSaveName(e.target.value)}
-            placeholder={`Menu ${PROFIL_LABEL[profil]} ${menu.date}`}
+            placeholder={`Menu Keluarga ${menu.date}`}
             className="clay-inset h-11 rounded-2xl border-0 bg-cream-100 px-4 text-sm font-bold text-clay-800 placeholder:text-clay-400 focus-visible:ring-leaf-500"
           />
           <button
