@@ -1,6 +1,21 @@
-## Overview
+# Menu Giziku
 
-This project uses the following tech stack:
+Aplikasi perencanaan menu harian berbasis logika predikat (forward chaining) dengan Convex backend dan React frontend.
+
+## Tech Stack
+
+- **Frontend**: React 19, Vite, Tailwind CSS v4, Shadcn UI, Framer Motion
+- **Backend**: Convex (Serverless database & functions)
+- **Logic**: Predicate Logic Engine (Forward Chaining) untuk validasi keseimbangan gizi
+
+## Fitur Utama
+
+1. **Generasi Menu Otomatis**: Memilih bahan dari database gizi (`src/lib/nutrition.ts`) berdasarkan profil pengguna.
+2. **Validasi Logika Predikat**: Mengevaluasi menu melalui 6 aturan inferensi (R1-R6) untuk memastikan keseimbangan makronutrien dan golongan pangan.
+3. **Jejak Inferensi**: Menampilkan langkah-langkah logika (FIRED/NOT FIRED) di Dashboard.
+4. **Manajemen Keluarga**: Mendukung perhitungan kebutuhan gizi untuk berbagai kelompok usia (Anak, Remaja, Dewasa, Lansia).
+
+---
 
 # Using Authentication (Important!)
 

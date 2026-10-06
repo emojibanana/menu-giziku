@@ -21,18 +21,27 @@ flowchart TD
 
 ---
 
-## 2. Menu Generation Flow (Generate Menu Harian)
+## 2. Menu Generation Flow (Generate Menu Harian & Keluarga)
 
 ```mermaid
 flowchart TD
-    A[User di Dashboard] --> B[Pilih Profil<br/>usia/status/aktivitas]
-    B --> C[generateMenu Profil]
-    C --> D[Ambil 5 bahan<br/>dari NUTRIENTS DB]
-    D --> E["Slot 1: Pagi<br/>Slot 2: Siang<br/>Slot 3: Selingan Sore<br/>Slot 4: Malam<br/>Slot 5: Selingan Buah"]
-    E --> F[Hitung total:<br/>kcal, protein, karbo, lemak]
-    F --> G[Buat GeneratedMenu object]
-    G --> H["{ meals: [...],<br/>totals: {...} }"]
-    H --> I[Pass ke forwardChain]
+    A[User di Dashboard] --> B{Mode?}
+    B -->|Individu| C[Pilih Profil<br/>usia/status/aktivitas]
+    B -->|Keluarga| K[Input Anggota Keluarga<br/>usia per anggota]
+
+    C --> D[generateMenu Profil]
+    K --> L[tentukanKelompokUsia<br/>per anggota]
+    L --> M[hitungKebutuhanKeluarga]
+    M --> N[generateMenuKeluarga]
+
+    D --> O[Ambil 5 bahan<br/>dari NUTRIENTS DB]
+    N --> O
+
+    O --> P["Slot 1: Pagi<br/>Slot 2: Siang<br/>Slot 3: Selingan Sore<br/>Slot 4: Malam<br/>Slot 5: Selingan Buah"]
+    P --> Q[Hitung total:<br/>kcal, protein, karbo, lemak]
+    Q --> R[Buat GeneratedMenu object]
+    R --> S["{ meals: [...],<br/>totals: {...} }"]
+    S --> T[Pass ke forwardChain]
 ```
 
 ---
@@ -138,9 +147,17 @@ flowchart TD
     LoginCheck -->|Ya| AuthOK
     AuthOK --> Dashboard["Dashboard<br/>(protected)"]
 
-    Dashboard --> SelectProfile["Pilih Profil"]
+    Dashboard --> SelectMode{"Mode?"}
+    SelectMode -->|Individu| SelectProfile["Pilih Profil"]
+    SelectMode -->|Keluarga| InputKeluarga["Input Anggota Keluarga"]
+
     SelectProfile --> GenerateMenuCall["generateMenu<br/>profil"]
+    InputKeluarga --> KelUsia["tentukanKelompokUsia"]
+    KelUsia --> KelHitung["hitungKebutuhanKeluarga"]
+    KelHitung --> GenKeluarga["generateMenuKeluarga"]
+
     GenerateMenuCall --> GeneratedMenu["GeneratedMenu:<br/>5 meals +<br/>totals"]
+    GenKeluarga --> GeneratedMenu
 
     GeneratedMenu --> ForwardChain["forwardChain<br/>GeneratedMenu"]
     ForwardChain --> R1["R1: Golongan?"]
