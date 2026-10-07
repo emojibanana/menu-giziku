@@ -39,13 +39,14 @@ const schema = defineSchema(
       userId: v.id("users"),
       name: v.string(),
       date: v.string(), // "YYYY-MM-DD"
-      // One of: "sekolah" | "rumah-tangga" | "umum"
+      // One of: "rumah-tangga" | "umum"
       profil: v.string(),
       meals: v.array(
         v.object({
           slot: v.string(), // "Makan Pagi", "Makan Siang", ... (free label)
           dish: v.string(),
           items: v.array(v.string()),
+          notes: v.optional(v.string()), // catatan bahan masak (minyak goreng, dll)
           kcal: v.number(),
           protein: v.number(),
           karbo: v.number(),

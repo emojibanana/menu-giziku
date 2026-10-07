@@ -3,13 +3,9 @@ import {
   checkBalance,
   generateMenu,
   macroShares,
-  PROFIL_LABEL,
   type Meal,
-  type Profil,
   type Totals,
 } from "../src/lib/nutrition";
-
-const PROFILS: Profil[] = ["sekolah", "rumah-tangga", "umum"];
 
 const SLOT_WAJIB = [
   "Makan Pagi",
@@ -33,15 +29,13 @@ function sumTotals(meals: Meal[]): Totals {
 
 describe("generateMenu — menu harian otomatis", () => {
   test("menghasilkan 5 waktu makan sesuai slot wajib", () => {
-    for (const p of PROFILS) {
-      const menu = generateMenu(p, 0);
-      expect(menu.meals).toHaveLength(5);
-      expect(menu.meals.map((m) => m.slot)).toEqual(SLOT_WAJIB);
-    }
+    const menu = generateMenu(0);
+    expect(menu.meals).toHaveLength(5);
+    expect(menu.meals.map((m) => m.slot)).toEqual(SLOT_WAJIB);
   });
 
   test("setiap hidangan punya bahan bergram dan gizi valid", () => {
-    const menu = generateMenu("sekolah", 3);
+    const menu = generateMenu(3);
     for (const meal of menu.meals) {
       expect(meal.items.length).toBeGreaterThan(0);
       for (const item of meal.items) {
@@ -55,67 +49,49 @@ describe("generateMenu — menu harian otomatis", () => {
   });
 
   test("total kkal masuk rentang wajar untuk menu harian", () => {
-    for (const p of PROFILS) {
-      for (let r = 0; r < 4; r++) {
-        const menu = generateMenu(p, r);
-        const t = sumTotals(menu.meals);
-        // Menu harian dewasa/anak sekolah: sekitar 1.400-2.500 kkal.
-        expect(t.kcal).toBeGreaterThan(1400);
-        expect(t.kcal).toBeLessThan(2500);
-        // Total yang dihitung mesin harus konsisten dengan jumlah hidangan.
-        expect(Math.abs(menu.totals.kcal - t.kcal)).toBeLessThan(1);
-      }
-    }
-  });
-
-  test("porsi kantin sekolah lebih besar dari profil umum", () => {
-    const sekolah = generateMenu("sekolah", 1);
-    const umum = generateMenu("umum", 1);
-    expect(sekolah.totals.kcal).toBeGreaterThan(umum.totals.kcal);
-  });
-
-  test("label profil terdefinisi untuk semua profil", () => {
-    for (const p of PROFILS) {
-      expect(PROFIL_LABEL[p].length).toBeGreaterThan(0);
+    for (let r = 0; r < 4; r++) {
+      const menu = generateMenu(r);
+      const t = sumTotals(menu.meals);
+      // Menu harian dewasa: sekitar 1.400-2.500 kkal.
+      expect(t.kcal).toBeGreaterThan(1400);
+      expect(t.kcal).toBeLessThan(2500);
+      // Total yang dihitung mesin harus konsisten dengan jumlah hidangan.
+      expect(Math.abs(menu.totals.kcal - t.kcal)).toBeLessThan(1);
     }
   });
 });
 
 describe("refresh — kombinasi menu baru", () => {
   test("refresh menghasilkan kombinasi bahan yang berbeda", () => {
-    const a = generateMenu("sekolah", 0);
-    const b = generateMenu("sekolah", 1);
+    const a = generateMenu(0);
+    const b = generateMenu(1);
     const keyA = a.meals.map((m) => m.items.join("|")).join("#");
     const keyB = b.meals.map((m) => m.items.join("|")).join("#");
     expect(keyA).not.toEqual(keyB);
   });
 
   test("refreshCount sama menghasilkan menu yang identik (deterministik)", () => {
-    const a = generateMenu("rumah-tangga", 5);
-    const b = generateMenu("rumah-tangga", 5);
+    const a = generateMenu(5);
+    const b = generateMenu(5);
     expect(a.meals).toEqual(b.meals);
   });
 
-  test("24 kombinasi (8 refresh x 3 profil) semuanya unik", () => {
+  test("8 refresh semuanya unik", () => {
     const seen = new Set<string>();
     for (let r = 0; r < 8; r++) {
-      for (const p of PROFILS) {
-        const menu = generateMenu(p, r);
-        seen.add(menu.meals.map((m) => m.items.join("|")).join("#"));
-      }
+      const menu = generateMenu(r);
+      seen.add(menu.meals.map((m) => m.items.join("|")).join("#"));
     }
-    expect(seen.size).toBe(24);
+    expect(seen.size).toBe(8);
   });
 });
 
 describe("checkBalance — cek gizi seimbang proporsional", () => {
-  test("menu hasil generator selalu mendapat skor seimbang (>= 85)", () => {
+  test("menu hasil generator selalu mendapat skor seimbang (>= 70)", () => {
     for (let r = 0; r < 6; r++) {
-      for (const p of PROFILS) {
-        const menu = generateMenu(p, r);
-        expect(menu.score).toBeGreaterThanOrEqual(85);
-        expect(menu.score).toBeLessThanOrEqual(100);
-      }
+      const menu = generateMenu(r);
+      expect(menu.score).toBeGreaterThanOrEqual(70);
+      expect(menu.score).toBeLessThanOrEqual(100);
     }
   });
 

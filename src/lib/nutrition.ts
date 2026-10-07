@@ -28,6 +28,8 @@ export interface Nutrient {
     | "sayur"
     | "buah"
     | "oleinat";
+  /** Kegunaan bahan dalam hidangan (ringkas) */
+  purpose: string;
 }
 
 export const NUTRIENTS: Nutrient[] = [
@@ -42,6 +44,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🍚",
     category: "karbo",
+    purpose: "Sumber karbohidrat kompleks & serat",
   },
   {
     name: "Jagung manis",
@@ -53,6 +56,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🌽",
     category: "karbo",
+    purpose: "Sumber karbohidrat & energi",
   },
   {
     name: "Singkong",
@@ -64,6 +68,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🥔",
     category: "karbo",
+    purpose: "Sumber karbohidrat & kalori",
   },
   {
     name: "Ubi ungu",
@@ -75,6 +80,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🍠",
     category: "karbo",
+    purpose: "Sumber karbohidrat kompleks & antioksidan",
   },
   {
     name: "Kentang",
@@ -86,6 +92,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🥔",
     category: "karbo",
+    purpose: "Sumber karbohidrat & mineral",
   },
   {
     name: "Sagu",
@@ -97,6 +104,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🍜",
     category: "karbo",
+    purpose: "Sumber karbohidrat murni",
   },
   {
     name: "Roti tawar",
@@ -108,6 +116,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🍞",
     category: "karbo",
+    purpose: "Sumber karbohidrat & protein",
   },
   {
     name: "Mie kering",
@@ -119,6 +128,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["karbo"],
     emoji: "🍜",
     category: "karbo",
+    purpose: "Sumber karbohidrat & energi",
   },
 
   // ---------- Sumber Protein Hewani ----------
@@ -132,6 +142,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🥚",
     category: "proteinHewani",
+    purpose: "Sumber protein lengkap & lemak sehat",
   },
   {
     name: "Daging sapi tanpa lemak",
@@ -143,6 +154,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🥩",
     category: "proteinHewani",
+    purpose: "Sumber protein hewani tinggi",
   },
   {
     name: "Daging kambing",
@@ -154,6 +166,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🥩",
     category: "proteinHewani",
+    purpose: "Sumber protein & lemak hewani",
   },
   {
     name: "Daging ayam tanpa kulit",
@@ -165,6 +178,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🍗",
     category: "proteinHewani",
+    purpose: "Sumber protein hewani rendah lemak",
   },
   {
     name: "Ikan tongkol",
@@ -176,6 +190,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🐟",
     category: "proteinHewani",
+    purpose: "Sumber protein & omega-3",
   },
   {
     name: "Ikan lele",
@@ -187,6 +202,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🐟",
     category: "proteinHewani",
+    purpose: "Sumber protein rendah lemak",
   },
   {
     name: "Ikan nila",
@@ -198,6 +214,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🐟",
     category: "proteinHewani",
+    purpose: "Sumber protein & mineral",
   },
   {
     name: "Udang",
@@ -209,6 +226,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🦐",
     category: "proteinHewani",
+    purpose: "Sumber protein tinggi & rendah lemak",
   },
 
   // ---------- Sumber Protein Nabati ----------
@@ -222,6 +240,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🟫",
     category: "proteinNabati",
+    purpose: "Sumber protein nabati & serat",
   },
   {
     name: "Tahu",
@@ -233,6 +252,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🧈",
     category: "proteinNabati",
+    purpose: "Sumber protein nabati mudah dicerna",
   },
   {
     name: "Kacang hijau",
@@ -244,6 +264,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein", "karbo"],
     emoji: "🫘",
     category: "proteinNabati",
+    purpose: "Sumber protein nabati & karbohidrat",
   },
   {
     name: "Kacang kedelai",
@@ -255,6 +276,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein", "oleinat"],
     emoji: "🫘",
     category: "proteinNabati",
+    purpose: "Sumber protein & lemak nabati",
   },
   {
     name: "Kacang merah",
@@ -266,6 +288,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein", "karbo"],
     emoji: "🫘",
     category: "proteinNabati",
+    purpose: "Sumber protein nabati & serat",
   },
   {
     name: "Kacang tanah",
@@ -277,6 +300,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein", "oleinat"],
     emoji: "🥜",
     category: "oleinat",
+    purpose: "Sumber protein & lemak nabati",
   },
   {
     name: "Oncom",
@@ -288,6 +312,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🟫",
     category: "proteinNabati",
+    purpose: "Sumber protein nabati & probiotik",
   },
   {
     name: "Kacang tolo",
@@ -299,6 +324,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein", "karbo"],
     emoji: "🫘",
     category: "proteinNabati",
+    purpose: "Sumber protein nabati & mineral",
   },
 
   // ---------- Susu dan Olahannya ----------
@@ -312,6 +338,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🥛",
     category: "oleinat",
+    purpose: "Sumber protein & kalsium",
   },
   {
     name: "Susu bubuk full cream",
@@ -323,6 +350,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🥛",
     category: "oleinat",
+    purpose: "Sumber protein & lemak susu",
   },
   {
     name: "Yoghurt",
@@ -334,6 +362,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein"],
     emoji: "🥛",
     category: "oleinat",
+    purpose: "Sumber protein & probiotik sehat",
   },
   {
     name: "Keju cheddar",
@@ -345,6 +374,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein", "oleinat"],
     emoji: "🧀",
     category: "oleinat",
+    purpose: "Sumber protein & kalsium tinggi",
   },
 
   // ---------- Sayur-sayuran ----------
@@ -358,6 +388,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥬",
     category: "sayur",
+    purpose: "Sumber zat besi & vitamin",
   },
   {
     name: "Kangkung",
@@ -369,6 +400,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥬",
     category: "sayur",
+    purpose: "Sumber zat besi & antioksidan",
   },
   {
     name: "Wortel",
@@ -380,6 +412,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥕",
     category: "sayur",
+    purpose: "Sumber beta-karoten & serat",
   },
   {
     name: "Tomat",
@@ -391,6 +424,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🍅",
     category: "sayur",
+    purpose: "Sumber vitamin C & antioksidan",
   },
   {
     name: "Brokoli",
@@ -402,6 +436,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥦",
     category: "sayur",
+    purpose: "Sumber vitamin C & mineral",
   },
   {
     name: "Kembang kol",
@@ -413,6 +448,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥦",
     category: "sayur",
+    purpose: "Sumber vitamin & mineral",
   },
   {
     name: "Sawi hijau",
@@ -424,6 +460,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥬",
     category: "sayur",
+    purpose: "Sumber zat besi & vitamin",
   },
   {
     name: "Selada",
@@ -435,6 +472,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥗",
     category: "sayur",
+    purpose: "Sumber serat & mineral",
   },
   {
     name: "Terong",
@@ -446,6 +484,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🍆",
     category: "sayur",
+    purpose: "Sumber serat & antioksidan",
   },
   {
     name: "Buncis",
@@ -457,6 +496,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🌿",
     category: "sayur",
+    purpose: "Sumber serat & mineral",
   },
   {
     name: "Labu siam",
@@ -468,6 +508,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🎃",
     category: "sayur",
+    purpose: "Sumber serat & vitamin",
   },
   {
     name: "Mentimun",
@@ -479,6 +520,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["sayur"],
     emoji: "🥒",
     category: "sayur",
+    purpose: "Sumber mineral & hidrasi",
   },
 
   // ---------- Buah-buahan ----------
@@ -492,6 +534,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🍌",
     category: "buah",
+    purpose: "Sumber karbohidrat & potasium",
   },
   {
     name: "Pepaya",
@@ -503,6 +546,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🥭",
     category: "buah",
+    purpose: "Sumber vitamin C & enzim pencernaan",
   },
   {
     name: "Jeruk manis",
@@ -514,6 +558,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🍊",
     category: "buah",
+    purpose: "Sumber vitamin C & asam sitrat",
   },
   {
     name: "Apel",
@@ -525,6 +570,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🍎",
     category: "buah",
+    purpose: "Sumber serat & antioksidan",
   },
   {
     name: "Mangga",
@@ -536,6 +582,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🥭",
     category: "buah",
+    purpose: "Sumber vitamin A & C",
   },
   {
     name: "Semangka",
@@ -547,6 +594,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🍉",
     category: "buah",
+    purpose: "Sumber hidrasi & likopen",
   },
   {
     name: "Melon",
@@ -558,6 +606,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🍈",
     category: "buah",
+    purpose: "Sumber hidrasi & mineral",
   },
   {
     name: "Nanas",
@@ -569,6 +618,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🍍",
     category: "buah",
+    purpose: "Sumber vitamin C & enzim bromelain",
   },
   {
     name: "Alpukat",
@@ -580,6 +630,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah", "oleinat"],
     emoji: "🥑",
     category: "buah",
+    purpose: "Sumber lemak sehat & kalium",
   },
   {
     name: "Jambu biji",
@@ -591,6 +642,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["buah"],
     emoji: "🍈",
     category: "buah",
+    purpose: "Sumber vitamin C tinggi & serat",
   },
 
   // ---------- Sumber Lemak / Oleinat ----------
@@ -604,6 +656,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["oleinat"],
     emoji: "🥥",
     category: "oleinat",
+    purpose: "Sumber lemak & mineral",
   },
   {
     name: "Minyak kelapa",
@@ -615,6 +668,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["oleinat"],
     emoji: "🫗",
     category: "oleinat",
+    purpose: "Media goreng & lemak jenuh",
   },
   {
     name: "Minyak sawit",
@@ -626,6 +680,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["oleinat"],
     emoji: "🫗",
     category: "oleinat",
+    purpose: "Media masak & penambah energi",
   },
   {
     name: "Minyak zaitun",
@@ -637,6 +692,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["oleinat"],
     emoji: "🫗",
     category: "oleinat",
+    purpose: "Sumber lemak tak jenuh tunggal",
   },
   {
     name: "Margarin",
@@ -648,6 +704,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["oleinat"],
     emoji: "🧈",
     category: "oleinat",
+    purpose: "Pengganti mentega & lemak trans",
   },
   {
     name: "Kacang mete",
@@ -659,6 +716,7 @@ export const NUTRIENTS: Nutrient[] = [
     tags: ["protein", "oleinat"],
     emoji: "🥜",
     category: "oleinat",
+    purpose: "Sumber lemak sehat & mineral",
   },
 ];
 
@@ -676,6 +734,8 @@ export interface Meal {
   slot: string;
   dish: string;
   items: string[];
+  rawItems?: Array<{ name: string; grams: number }>; // Detail bahan untuk modal
+  notes?: string; // catatan minyak/goreng
   kcal: number;
   protein: number;
   karbo: number;
@@ -702,25 +762,32 @@ const round = (x: number) => Math.round(x * 10) / 10;
 function compose(
   slot: string,
   dish: string,
-  parts: Array<{ item: Nutrient; grams: number }>,
+  parts: Array<{ item: Nutrient; grams: number; note?: string }>,
 ): Meal {
   let kcal = 0;
   let protein = 0;
   let karbo = 0;
   let lemak = 0;
   const items: string[] = [];
-  for (const { item, grams } of parts) {
+  const rawItems: Array<{ name: string; grams: number }> = [];
+  const notes: string[] = [];
+  for (const { item, grams, note } of parts) {
     const f = grams / 100;
     kcal += item.kcal * f;
     protein += item.protein * f;
     karbo += item.karbo * f;
     lemak += item.lemak * f;
-    items.push(`${item.name} ${Math.round(grams)} g`);
+    const itemStr = `${item.name} ${Math.round(grams)} g`;
+    items.push(itemStr);
+    rawItems.push({ name: item.name, grams });
+    if (note) notes.push(note);
   }
   return {
     slot,
     dish,
     items,
+    rawItems,
+    notes: notes.length > 0 ? notes.join(", ") : undefined,
     kcal: round(kcal),
     protein: round(protein),
     karbo: round(karbo),
@@ -728,14 +795,6 @@ function compose(
     emoji: parts[0]?.item.emoji ?? "🍽️",
   };
 }
-
-export type Profil = "sekolah" | "rumah-tangga" | "umum";
-
-export const PROFIL_LABEL: Record<Profil, string> = {
-  sekolah: "Kantin Sekolah",
-  "rumah-tangga": "Ibu Rumah Tangga",
-  umum: "Umum",
-};
 
 /** Kelompok usia untuk perhitungan kebutuhan gizi. */
 export type KelompokUsia = "anak-5" | "remaja" | "dewasa" | "lansia";
@@ -786,7 +845,6 @@ export function hitungKebutuhanKeluarga(
 
 export interface GeneratedMenu {
   date: string;
-  profil: Profil;
   meals: Meal[];
   totals: Totals;
   score: number;
@@ -795,14 +853,13 @@ export interface GeneratedMenu {
 }
 
 /**
- * Bangun rencana menu harian otomatis.
- * `refreshCount` digeser setiap kali user menekan refresh sehingga bahan
- * yang terpilih berputar dan tidak mengulang kombinasi sebelumnya.
+ * Bangun SATU kandidat menu harian (deterministik per refreshCount).
+ * Sistem ini dirancang untuk umum tanpa kategori profil khusus.
  */
-export function generateMenu(profil: Profil, refreshCount = 0): GeneratedMenu {
+function _buildMenu(refreshCount: number): GeneratedMenu {
   const r = Math.max(0, refreshCount);
-  // Porsi dasar per profil (kali dari porsi standar bahan).
-  const p = profil === "sekolah" ? 1.15 : profil === "rumah-tangga" ? 1.0 : 0.9;
+  // Porsi dasar standar (skala 1.0).
+  const p = 1.0;
 
   const pagiKarbo = pick("karbo", r);
   const pagiLauk = pick("proteinHewani", r);
@@ -814,7 +871,6 @@ export function generateMenu(profil: Profil, refreshCount = 0): GeneratedMenu {
   const nabatiSiang = pick("proteinNabati", r);
   const sayurSiang = pick("sayur", r);
   const sayurSore = pick("sayur", r + 2);
-  const karboSore = pick("karbo", r + 2);
   const laukMalam = pick("proteinHewani", r + 2);
   const nabatiMalam = pick("proteinNabati", r + 1);
   const karboMalam = pick("karbo", r + 3);
@@ -822,32 +878,52 @@ export function generateMenu(profil: Profil, refreshCount = 0): GeneratedMenu {
   // Berat dasar (gram) tiap bahan sebelum penyetelan proporsional.
   const base = (n: Nutrient, mult: number) => Math.round(n.portion * mult);
 
-  /** Rakit ulang rencana menu dengan skala porsi karbo & protein tertentu. */
+  /** Rakit ulang rencana menu dengan skala porsi karbo & protein tertentu.
+   * Menu disesuaikan untuk lidah Indonesia: nasi, tempe, tahu, sayur lokal, buah tropis.
+   */
   const buildPlan = (cs: number, ps: number): Meal[] => [
+    // Sarapan (karbo + lauk + sayur ringan + minyak untuk menggoreng)
     compose("Makan Pagi", "Sarapan pembuka energi", [
       { item: pagiKarbo, grams: base(pagiKarbo, 0.9 * p) * cs },
-      { item: pagiLauk, grams: base(pagiLauk, 0.5 * p) * ps },
+      {
+        item: pagiLauk,
+        grams: base(pagiLauk, 0.5 * p) * ps,
+        note: "Goreng dengan minyak sawit",
+      },
+      { item: cookingOil, grams: base(cookingOil, 0.55) }, // minyak untuk menggoreng
+      { item: NUTRIENTS.find((n) => n.name === "Tomat")!, grams: 30 },
       { item: susuPagi, grams: susuPagi.portion },
-      { item: cookingOil, grams: base(cookingOil, 0.55) },
     ]),
+    // Makan Siang (piring lengkap: karbo + lauk hewani + lauk nabati + sayur + minyak)
     compose("Makan Siang", "Piring utama bergizi seimbang", [
       { item: karboSiang, grams: base(karboSiang, 1.1 * p) * cs },
-      { item: laukSiang, grams: base(laukSiang, 0.7 * p) * ps },
+      {
+        item: laukSiang,
+        grams: base(laukSiang, 0.7 * p) * ps,
+        note: "Goreng/direbus dengan minyak",
+      },
       { item: nabatiSiang, grams: base(nabatiSiang, 0.6 * p) * ps },
       { item: sayurSiang, grams: base(sayurSiang, 1.2 * p) },
-      { item: cookingOil, grams: cookingOil.portion },
+      { item: cookingOil, grams: cookingOil.portion }, // minyak untuk memasak
+      { item: NUTRIENTS.find((n) => n.name === "Kangkung")!, grams: 60 },
     ]),
-    compose("Selingan Sore", "Jajanan sehat pengisi energi", [
-      { item: karboSore, grams: base(karboSore, 0.5 * p) * cs },
-      { item: sayurSore, grams: base(sayurSore, 0.8 * p) },
-      { item: buahSore, grams: base(buahSore, 1.1 * p) },
+    // Selingan Sore (ringan: buah segar)
+    compose("Selingan Sore", "Camilan buah segar pengisi energi", [
+      { item: buahSore, grams: base(buahSore, 1.0 * p) },
     ]),
+    // Makan Malam (lebih ringan dari siang, tetap seimbang)
     compose("Makan Malam", "Makan malam hangat keluarga", [
-      { item: karboMalam, grams: base(karboMalam, 1.0 * p) * cs },
-      { item: laukMalam, grams: base(laukMalam, 0.6 * p) * ps },
-      { item: nabatiMalam, grams: base(nabatiMalam, 0.45 * p) * ps },
+      { item: karboMalam, grams: base(karboMalam, 0.8 * p) * cs },
+      {
+        item: laukMalam,
+        grams: base(laukMalam, 0.5 * p) * ps,
+        note: "Goreng/rebus dengan minyak",
+      },
+      { item: nabatiMalam, grams: base(nabatiMalam, 0.4 * p) * ps },
       { item: cookingOil, grams: cookingOil.portion },
+      { item: sayurSore, grams: base(sayurSore, 0.7 * p) },
     ]),
+    // Selingan Buah (penutup alami)
     compose("Selingan Buah", "Penutup manis alami", [
       { item: buahPagi, grams: base(buahPagi, 1.2 * p) },
     ]),
@@ -914,13 +990,28 @@ export function generateMenu(profil: Profil, refreshCount = 0): GeneratedMenu {
   const cek = checkBalance(meals, totals);
   return {
     date: new Date().toISOString().slice(0, 10),
-    profil,
     meals,
     totals,
     score: cek.score,
     verdict: cek.verdict,
     details: cek.details,
   };
+}
+
+/**
+ * Bangun menu harian yang seimbang.
+ * Sistem akan retry otomatis dengan kombinasi bahan berbeda (maks 50x)
+ * jika menu tidak seimbang (score < 70).
+ */
+export function generateMenu(refreshCount = 0): GeneratedMenu {
+  for (let attempt = 0; attempt < 50; attempt++) {
+    const menu = _buildMenu(refreshCount + attempt * 13);
+    if (menu.score >= 70) {
+      return menu;
+    }
+  }
+  // Fallback: kembalikan menu terakhir yang dihasilkan (seharusnya sudah mendekati seimbang karena scaler)
+  return _buildMenu(refreshCount);
 }
 
 /** Interface menu hasil generate untuk keluarga. */
@@ -938,8 +1029,8 @@ export function generateMenuKeluarga(
   refreshCount = 0,
 ): GeneratedMenuKeluarga {
   if (anggota.length === 0) {
-    // Fallback ke profil umum jika tidak ada anggota
-    const base = generateMenu("umum", refreshCount);
+    // Fallback ke menu dasar jika tidak ada anggota
+    const base = generateMenu(refreshCount);
     return {
       ...base,
       anggota: [],
@@ -954,8 +1045,8 @@ export function generateMenuKeluarga(
   }
 
   const kebutuhan = hitungKebutuhanKeluarga(anggota);
-  // Gunakan profil "rumah-tangga" sebagai basis, lalu sesuaikan skala porsi
-  const baseMenu = generateMenu("rumah-tangga", refreshCount);
+  // Gunakan menu dasar (tanpa profil), lalu sesuaikan skala porsi
+  const baseMenu = generateMenu(refreshCount);
 
   // Hitung rasio kebutuhan vs menu dasar untuk menentukan skala porsi
   const rasioKcal = kebutuhan.kcal / (baseMenu.totals.kcal || 1);
@@ -995,7 +1086,6 @@ export function generateMenuKeluarga(
 
   return {
     date: new Date().toISOString().slice(0, 10),
-    profil: "rumah-tangga",
     meals: scaledMeals,
     totals,
     score: cek.score,

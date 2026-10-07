@@ -13,12 +13,11 @@ import {
   checkBalance,
   generateMenuKeluarga,
   macroShares,
-  PROFIL_LABEL,
   tentukanKelompokUsia,
   hitungKebutuhanKeluarga,
   type Meal,
-  type Profil,
   type AnggotaKeluarga,
+  NUTRIENTS,
 } from "@/lib/nutrition";
 import { forwardChain } from "@/lib/predicates";
 import { motion } from "framer-motion";
@@ -52,8 +51,6 @@ const MEAL_TINT: Record<string, string> = {
   "Makan Malam": "bg-sky-200",
   "Selingan Buah": "bg-leaf-100",
 };
-
-const PROFILS: Profil[] = ["sekolah", "rumah-tangga", "umum"];
 
 const MACRO_LABEL: Record<"karbo" | "protein" | "lemak", string> = {
   karbo: "Karbohidrat",
@@ -108,7 +105,15 @@ function MacroBar({
   );
 }
 
-function MealCard({ meal, index }: { meal: Meal; index: number }) {
+function MealCard({
+  meal,
+  index,
+  onDetail,
+}: {
+  meal: Meal;
+  index: number;
+  onDetail: (meal: Meal) => void;
+}) {
   const tint = MEAL_TINT[meal.slot] ?? "bg-cream-200";
   return (
     <motion.div
@@ -143,6 +148,13 @@ function MealCard({ meal, index }: { meal: Meal; index: number }) {
         <p className="mt-3 text-[11px] font-bold text-clay-500">
           P {meal.protein} g · K {meal.karbo} g · L {meal.lemak} g
         </p>
+        <button
+          type="button"
+          onClick={() => onDetail(meal)}
+          className="mt-4 w-full rounded-lg bg-leaf-100 px-3 py-2 text-xs font-extrabold uppercase tracking-wide text-leaf-700 transition-colors hover:bg-leaf-200"
+        >
+          🔍 Lihat Detail Bahan
+        </button>
       </div>
     </motion.div>
   );
@@ -162,13 +174,23 @@ export default function Dashboard() {
   // Input tambah anggota
   const [namaInput, setNamaInput] = useState("");
   const [usiaInput, setUsiaInput] = useState<number | "">("");
-  const [profil, setProfil] = useState<Profil>("sekolah");
 
   const [refreshCount, setRefreshCount] = useState(0);
   const [formulaOpen, setFormulaOpen] = useState(false);
   const [savingOpen, setSavingOpen] = useState(false);
   const [saveName, setSaveName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  // Modal detail bahan per meal
+  const [detailModal, setDetailModal] = useState<{
+    open: boolean;
+    mealName: string;
+    items: { name: string; gram: number; purpose: string }[];
+    totalKcal: number;
+    totalProtein: number;
+    totalKarbo: number;
+    totalLemak: number;
+  } | null>(null);
 
   // Generate menu berdasarkan anggota keluarga
   const menu = useMemo(
@@ -267,6 +289,30 @@ export default function Dashboard() {
     } catch {
       toast.error("Browser menolak akses clipboard.");
     }
+  };
+
+  const handleOpenDetail = (m: Meal) => {
+    // Ambil detail bahan dan purpose dari NUTRIENTS database
+    const itemsWithPurpose = (m.rawItems ?? []).map((it) => {
+      const found = NUTRIENTS.find(
+        (n) => n.name.toLowerCase() === it.name.toLowerCase(),
+      );
+      return {
+        name: it.name,
+        gram: Math.round(it.grams),
+        purpose: found?.purpose ?? "Bahan pangan pelengkap nutrisi",
+      };
+    });
+
+    setDetailModal({
+      open: true,
+      mealName: `${m.emoji} ${m.dish} (${m.slot})`,
+      items: itemsWithPurpose,
+      totalKcal: m.kcal,
+      totalProtein: m.protein,
+      totalKarbo: m.karbo,
+      totalLemak: m.lemak,
+    });
   };
 
   const savedTyped = savedMenus;
@@ -389,26 +435,12 @@ export default function Dashboard() {
             <div>
               <h1 className="flex items-center gap-2 text-2xl font-extrabold text-clay-800 sm:text-3xl">
                 <ChefHat className="size-7 text-leaf-600" />
-                Buat Menu Harian
+                Rekomendasi Menu Keluarga
               </h1>
               <p className="mt-1.5 max-w-md text-sm font-semibold text-clay-600">
-                Pilih profil dapur, lalu tekan buat. Kurang pas? Refresh —
-                kombinasi bahan langsung diputar.
+                Menu dirancang otomatis untuk memenuhi kebutuhan gizi seimbang
+                seluruh anggota keluarga. Kurang pas? Tekan refresh.
               </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              {PROFILS.map((p) => (
-                <button
-                  key={p}
-                  type="button"
-                  onClick={() => setProfil(p)}
-                  className={`clay-btn-soft px-4 py-2.5 text-xs font-extrabold transition-colors ${
-                    profil === p ? "bg-leaf-500! text-white!" : "text-clay-700"
-                  }`}
-                >
-                  {PROFIL_LABEL[p]}
-                </button>
-              ))}
             </div>
           </div>
 
@@ -801,7 +833,12 @@ export default function Dashboard() {
           </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {menu.meals.map((m, i) => (
-              <MealCard key={m.slot + i} meal={m} index={i} />
+              <MealCard
+                key={m.slot + i}
+                meal={m}
+                index={i}
+                onDetail={handleOpenDetail}
+              />
             ))}
           </div>
         </section>
@@ -913,6 +950,64 @@ export default function Dashboard() {
           >
             {isSaving ? "Menyimpan..." : "Simpan ke Daftar Menu"}
           </button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Dialog detail bahan */}
+      <Dialog
+        open={!!detailModal?.open}
+        onOpenChange={(o) => !o && setDetailModal(null)}
+      >
+        <DialogContent className="clay-pop max-w-lg border-0 p-7 [&>button]:rounded-full">
+          {detailModal && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-lg font-extrabold text-clay-800">
+                  Detail Bahan — {detailModal.mealName}
+                </DialogTitle>
+                <DialogDescription className="text-sm font-semibold text-clay-600">
+                  Komponen bahan, jumlah gram, dan kegunaan gizinya.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="max-h-[50vh] overflow-y-auto rounded-2xl bg-cream-100 p-4">
+                <table className="w-full text-left text-xs font-semibold text-clay-700">
+                  <thead>
+                    <tr className="border-b border-clay-300/40 text-[11px] uppercase tracking-wider text-clay-500">
+                      <th className="pb-2 pr-3">Bahan</th>
+                      <th className="pb-2 px-3 text-right">Jumlah</th>
+                      <th className="pb-2 pl-3">Kegunaan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {detailModal.items.map((it) => (
+                      <tr
+                        key={it.name}
+                        className="border-b border-clay-200/40 last:border-0"
+                      >
+                        <td className="py-2 pr-3 font-extrabold text-clay-800">
+                          {it.name}
+                        </td>
+                        <td className="py-2 px-3 text-right font-mono">
+                          {it.gram} g
+                        </td>
+                        <td className="py-2 pl-3 text-clay-600">
+                          {it.purpose}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="clay-inset mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 bg-cream-100 p-3 text-xs font-extrabold text-clay-800">
+                <span>{detailModal.totalKcal} kkal</span>
+                <span>P {detailModal.totalProtein} g</span>
+                <span>K {detailModal.totalKarbo} g</span>
+                <span>L {detailModal.totalLemak} g</span>
+              </div>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>

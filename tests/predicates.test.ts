@@ -13,7 +13,7 @@ import {
   SeimbangMakro,
 } from "../src/lib/predicates";
 
-const menu = generateMenu("sekolah", 0);
+const menu = generateMenu(0);
 
 describe("predikat atomik", () => {
   test("menu dari generator seimbang memenuhi Karbo ∧ Protein ∧ Lemak", () => {
@@ -54,18 +54,17 @@ describe("forward chaining (modus ponens)", () => {
     expect(["MenuLayakSajikan", "MenuSeimbang"]).toContain(r.conclusion);
   });
 
-  test("semua aturan R1-R7 ter-fire untuk menu seimbang", () => {
+  test("semua aturan R1-R5 ter-fire untuk menu seimbang", () => {
     const r = forwardChain(menu);
     const aktif = r.steps.filter((s) => s.fired).map((s) => s.id);
-    for (const id of ["R1", "R2", "R3", "R4", "R5", "R6", "R7"]) {
+    for (const id of ["R1", "R2", "R3", "R4", "R5"]) {
       expect(aktif).toContain(id);
     }
   });
 
-  test("menu kosong → R8 aktif → TidakSeimbang", () => {
+  test("menu kosong → R6 aktif → TidakSeimbang", () => {
     const kosong = {
       date: "2026-01-01",
-      profil: "sekolah" as const,
       meals: [],
       totals: { kcal: 0, protein: 0, karbo: 0, lemak: 0 },
       score: 0,
@@ -74,12 +73,12 @@ describe("forward chaining (modus ponens)", () => {
     };
     const r = forwardChain(kosong);
     expect(r.conclusion).toBe("MenuTidakSeimbang");
-    const r8 = r.steps.find((s) => s.id === "R8");
-    expect(r8?.fired).toBe(true);
+    const r6 = r.steps.find((s) => s.id === "R6");
+    expect(r6?.fired).toBe(true);
   });
 
   test("menu lemak timpang (40%) → MakroWajar tidak terderivasi", () => {
-    const timpang = generateMenu("sekolah", 0);
+    const timpang = generateMenu(0);
     const skewed = {
       ...timpang,
       totals: { kcal: 2000, protein: 60, karbo: 250, lemak: 89 },
@@ -93,6 +92,6 @@ describe("forward chaining (modus ponens)", () => {
   test("jejak inferensi bisa dicetak sebagai teks", () => {
     const txt = predicateSummaryText(menu);
     expect(txt).toContain("KESIMPULAN");
-    expect(txt).toContain("R6");
+    expect(txt).toContain("R5");
   });
 });

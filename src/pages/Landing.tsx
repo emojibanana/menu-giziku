@@ -57,8 +57,8 @@ export default function Landing() {
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-clay-600 sm:text-lg">
             Satu klik, langsung jadi menu harian lengkap — pagi, siang, sore,
-            malam plus selingan — dengan cek gizi seimbang otomatis. Pas buat
-            kantin sekolah, ibu rumah tangga, sampai dapur umum.
+            malam plus selingan — dengan cek gizi seimbang otomatis. Cocok untuk
+            keluarga di rumah hingga keperluan umum.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
@@ -196,7 +196,7 @@ export default function Landing() {
               icon: Utensils,
               color: "bg-sunny-200 text-sunny-700",
               title: "1. Pilih profil dapur",
-              desc: "Kantin sekolah, ibu rumah tangga, atau dapur umum — porsi menyesuaikan otomatis.",
+              desc: "Rumah tangga dan dapur umum — porsi menyesuaikan otomatis.",
             },
             {
               icon: RefreshCw,
