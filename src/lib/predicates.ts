@@ -46,10 +46,12 @@ export interface MacroRange {
   hi: number;
 }
 
-/** Rentang ideal PBG "Isi Piringku": karbo 55-65%, protein 10-15%, lemak 20-30%. */
+/** Rentang ideal PBG "Isi Piringku" yang disesuaikan untuk pola makan Indonesia:
+ * Karbohidrat 50-70% (karena nasi adalah sumber energi utama),
+ * Protein 10-20%, Lemak 20-30%. */
 export const RANGES = {
-  karbo: { lo: 55, hi: 65 } as MacroRange,
-  protein: { lo: 10, hi: 15 } as MacroRange,
+  karbo: { lo: 50, hi: 70 } as MacroRange,
+  protein: { lo: 10, hi: 20 } as MacroRange,
   lemak: { lo: 20, hi: 30 } as MacroRange,
 };
 
