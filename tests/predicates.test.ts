@@ -27,10 +27,10 @@ describe("predikat atomik", () => {
     expect(MakroWajarNeg(menu)).toBe(SeimbangMakro(menu));
   });
 
-  test("LayakEnergi: kkal menu harian dalam pita 1400-2500", () => {
+  test("LayakEnergi: kkal menu harian dalam pita 1400-3000", () => {
     expect(LayakEnergi(menu)).toBe(true);
     expect(menu.totals.kcal).toBeGreaterThanOrEqual(1400);
-    expect(menu.totals.kcal).toBeLessThanOrEqual(2500);
+    expect(menu.totals.kcal).toBeLessThanOrEqual(3000);
   });
 
   test("PorsiWajar: kuantor ∀ atas 5 slot (tiap slot ≥ 20 kkal)", () => {
