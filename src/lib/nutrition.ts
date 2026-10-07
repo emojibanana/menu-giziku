@@ -933,7 +933,8 @@ export function generateMenuKeluarga(
 
   for (let attempt = 0; attempt < MAX_RETRY; attempt++) {
     // Gunakan menu dasar (tanpa profil), lalu sesuaikan skala porsi
-    const baseMenu = generateMenu(refreshCount + attempt);
+    // Tambahkan offset acak besar agar setiap attempt mendapat kombinasi bahan berbeda
+    const baseMenu = generateMenu(refreshCount * 1000 + attempt * 137);
 
     // Hitung rasio kebutuhan vs menu dasar untuk menentukan skala porsi
     const rasioKcal = kebutuhan.kcal / (baseMenu.totals.kcal || 1);
