@@ -273,6 +273,12 @@ export interface PredicateReport {
   summary: string;
 }
 
+/** KombinasiMenuHadir(m) ≡ ¬TidakSeimbang(m) — menu tampil jika R6 tidak terpenuhi. */
+export const KombinasiMenuHadir = (m: MenuInput) => {
+  const r = forwardChain(m);
+  return !r.facts.TidakSeimbang;
+};
+
 /**
  * forwardChain(m) — forward chaining dengan modus ponens:
  * ulangi evaluasi aturan berurutan; fakta turunan langsung dipakai aturan

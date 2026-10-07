@@ -825,23 +825,25 @@ export default function Dashboard() {
           </div>
         </section>
 
-        {/* Menu harian */}
-        <section className="mt-6">
-          <h2 className="flex items-center gap-2 px-1 text-xl font-extrabold text-clay-800">
-            <Utensils className="size-5 text-leaf-600" />
-            Menu Harian — Keluarga {kebutuhan.jumlahAnggota} Orang
-          </h2>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {menu.meals.map((m, i) => (
-              <MealCard
-                key={m.slot + i}
-                meal={m}
-                index={i}
-                onDetail={handleOpenDetail}
-              />
-            ))}
-          </div>
-        </section>
+        {/* Menu harian — hanya tampil jika R6 tidak terpenuhi (menu seimbang) */}
+        {proof.balanced && (
+          <section className="mt-6">
+            <h2 className="flex items-center gap-2 px-1 text-xl font-extrabold text-clay-800">
+              <Utensils className="size-5 text-leaf-600" />
+              Menu Harian — Keluarga {kebutuhan.jumlahAnggota} Orang
+            </h2>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {menu.meals.map((m, i) => (
+                <MealCard
+                  key={m.slot + i}
+                  meal={m}
+                  index={i}
+                  onDetail={handleOpenDetail}
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Menu tersimpan */}
         <section className="mt-10">
