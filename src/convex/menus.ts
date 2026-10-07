@@ -31,6 +31,8 @@ export const save = mutation({
         karbo: v.number(),
         lemak: v.number(),
         emoji: v.optional(v.string()),
+        notes: v.optional(v.string()),
+        rawItems: v.optional(v.array(v.object({ name: v.string(), grams: v.number() }))),
       }),
     ),
     totals: v.object({
