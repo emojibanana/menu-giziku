@@ -810,8 +810,8 @@ function _buildMenu(refreshCount: number): GeneratedMenu {
   ];
 
   // Penyetel proporsional: geser skala porsi karbo & lauk secara bertahap
-  // sampai proporsi makro masuk rentang sehat (karbo 57-63%, protein 11-14%,
-  // lemak 21-29% — sedikit lebih ketat dari target cek). Deterministik.
+  // sampai proporsi makro masuk rentang sehat (karbo 50-70%, protein 10-20%,
+  // lemak 20-30% — sesuai RANGES di predicates.ts). Deterministik.
   const clamp = (x: number, lo: number, hi: number) =>
     Math.max(lo, Math.min(hi, x));
   let cs = 1;
@@ -829,26 +829,26 @@ function _buildMenu(refreshCount: number): GeneratedMenu {
     );
     const sh = macroShares(t);
     let changed = false;
-    if (sh.protein > 14) {
+    if (sh.protein > 20) {
       ps *= 0.96;
       changed = true;
-    } else if (sh.protein < 11) {
+    } else if (sh.protein < 10) {
       ps *= 1.04;
       changed = true;
     }
-    if (sh.lemak > 29) {
+    if (sh.lemak > 30) {
       ps *= 0.985;
       cs *= 1.01;
       changed = true;
-    } else if (sh.lemak < 21) {
+    } else if (sh.lemak < 20) {
       ps *= 1.01;
       cs *= 0.99;
       changed = true;
     }
-    if (sh.karbo < 57) {
+    if (sh.karbo < 50) {
       cs *= 1.03;
       changed = true;
-    } else if (sh.karbo > 63) {
+    } else if (sh.karbo > 70) {
       cs *= 0.97;
       changed = true;
     }
@@ -925,55 +925,77 @@ export function generateMenuKeluarga(
   }
 
   const kebutuhan = hitungKebutuhanKeluarga(anggota);
-  // Gunakan menu dasar (tanpa profil), lalu sesuaikan skala porsi
-  const baseMenu = generateMenu(refreshCount);
 
-  // Hitung rasio kebutuhan vs menu dasar untuk menentukan skala porsi
-  const rasioKcal = kebutuhan.kcal / (baseMenu.totals.kcal || 1);
-  const skalaPorsi = Math.max(0.5, Math.min(3.0, rasioKcal));
+  // Retry loop: generate menu sampai seimbang atau max 20 percobaan
+  let bestResult: GeneratedMenuKeluarga | null = null;
+  let bestScore = -1;
+  const MAX_RETRY = 20;
 
-  // Skalakan ulang setiap meal berdasarkan kebutuhan keluarga
-  const scaledMeals: Meal[] = baseMenu.meals.map((meal) => ({
-    ...meal,
-    items: meal.items.map((item) => {
-      // Parse berat dari string "Nama Bahan XXX g"
-      const match = item.match(/^(.+?)\s+(\d+)\s*g$/);
-      if (match) {
-        const nama = match[1];
-        const beratLama = parseInt(match[2], 10);
-        const beratBaru = Math.round(beratLama * skalaPorsi);
-        return `${nama} ${beratBaru} g`;
-      }
-      return item;
-    }),
-    kcal: Math.round(meal.kcal * skalaPorsi),
-    protein: Math.round(meal.protein * skalaPorsi * 10) / 10,
-    karbo: Math.round(meal.karbo * skalaPorsi * 10) / 10,
-    lemak: Math.round(meal.lemak * skalaPorsi * 10) / 10,
-  }));
+  for (let attempt = 0; attempt < MAX_RETRY; attempt++) {
+    // Gunakan menu dasar (tanpa profil), lalu sesuaikan skala porsi
+    const baseMenu = generateMenu(refreshCount + attempt);
 
-  const totals = scaledMeals.reduce(
-    (acc, m) => ({
-      kcal: acc.kcal + m.kcal,
-      protein: acc.protein + m.protein,
-      karbo: acc.karbo + m.karbo,
-      lemak: acc.lemak + m.lemak,
-    }),
-    { kcal: 0, protein: 0, karbo: 0, lemak: 0 },
-  );
+    // Hitung rasio kebutuhan vs menu dasar untuk menentukan skala porsi
+    const rasioKcal = kebutuhan.kcal / (baseMenu.totals.kcal || 1);
+    const skalaPorsi = Math.max(0.5, Math.min(3.0, rasioKcal));
 
-  const cek = checkBalance(scaledMeals, totals);
+    // Skalakan ulang setiap meal berdasarkan kebutuhan keluarga
+    const scaledMeals: Meal[] = baseMenu.meals.map((meal) => ({
+      ...meal,
+      items: meal.items.map((item) => {
+        // Parse berat dari string "Nama Bahan XXX g"
+        const match = item.match(/^(.+?)\s+(\d+)\s*g$/);
+        if (match) {
+          const nama = match[1];
+          const beratLama = parseInt(match[2], 10);
+          const beratBaru = Math.round(beratLama * skalaPorsi);
+          return `${nama} ${beratBaru} g`;
+        }
+        return item;
+      }),
+      kcal: Math.round(meal.kcal * skalaPorsi),
+      protein: Math.round(meal.protein * skalaPorsi * 10) / 10,
+      karbo: Math.round(meal.karbo * skalaPorsi * 10) / 10,
+      lemak: Math.round(meal.lemak * skalaPorsi * 10) / 10,
+    }));
 
-  return {
-    date: new Date().toISOString().slice(0, 10),
-    meals: scaledMeals,
-    totals,
-    score: cek.score,
-    verdict: cek.verdict,
-    details: cek.details,
-    anggota,
-    kebutuhanKeluarga: kebutuhan,
-  };
+    const totals = scaledMeals.reduce(
+      (acc, m) => ({
+        kcal: acc.kcal + m.kcal,
+        protein: acc.protein + m.protein,
+        karbo: acc.karbo + m.karbo,
+        lemak: acc.lemak + m.lemak,
+      }),
+      { kcal: 0, protein: 0, karbo: 0, lemak: 0 },
+    );
+
+    const cek = checkBalance(scaledMeals, totals);
+
+    const result: GeneratedMenuKeluarga = {
+      date: new Date().toISOString().slice(0, 10),
+      meals: scaledMeals,
+      totals,
+      score: cek.score,
+      verdict: cek.verdict,
+      details: cek.details,
+      anggota,
+      kebutuhanKeluarga: kebutuhan,
+    };
+
+    // Simpan hasil terbaik
+    if (cek.score > bestScore) {
+      bestScore = cek.score;
+      bestResult = result;
+    }
+
+    // Jika sudah seimbang (score >= 70 DAN kalori dalam rentang), langsung return
+    if (cek.score >= 70 && totals.kcal >= 1400 && totals.kcal <= 3000) {
+      return result;
+    }
+  }
+
+  // Jika semua percobaan gagal, return yang terbaik
+  return bestResult!;
 }
 
 /** Skor satu makro (0-100) beserta persentase dan rentang sehatnya. */
@@ -1028,8 +1050,8 @@ export function checkBalance(meals: Meal[], totals: Totals): CekResult {
   };
   const pct = (x: number) => (x / kcal) * 100;
 
-  const sKarbo = inRangeScore(pct(kcalKarbo), 55, 65);
-  const sProtein = inRangeScore(pct(kcalProtein), 10, 15);
+  const sKarbo = inRangeScore(pct(kcalKarbo), 50, 70);
+  const sProtein = inRangeScore(pct(kcalProtein), 10, 20);
   const sLemak = inRangeScore(pct(kcalLemak), 20, 30);
 
   const score = Math.round(((sKarbo + sProtein + sLemak) / 3) * 100);
@@ -1046,15 +1068,15 @@ export function checkBalance(meals: Meal[], totals: Totals): CekResult {
     {
       name: "karbo",
       pct: Math.round(pct(kcalKarbo)),
-      lo: 55,
-      hi: 65,
+      lo: 50,
+      hi: 70,
       score: Math.round(sKarbo * 100),
     },
     {
       name: "protein",
       pct: Math.round(pct(kcalProtein)),
       lo: 10,
-      hi: 15,
+      hi: 20,
       score: Math.round(sProtein * 100),
     },
     {

@@ -35,6 +35,8 @@ import { macroShares, NUTRIENTS, type GeneratedMenu } from "./nutrition";
 /** Input minimal yang dibutuhkan penalaran: bekerja juga untuk menu tersimpan. */
 export type MenuInput = Pick<GeneratedMenu, "meals" | "totals"> & {
   details?: GeneratedMenu["details"];
+  /** Jumlah anggota keluarga (opsional, untuk validasi kalori per orang). */
+  jumlahAnggota?: number;
 };
 
 // ---------------------------------------------------------------------------
@@ -84,8 +86,12 @@ export const Lemak = (m: MenuInput) => {
 };
 
 /** LayakEnergi(m) ≡ 1400 ≤ k(m) ≤ 2500 */
-export const LayakEnergi = (m: MenuInput) =>
-  m.totals.kcal >= KAL_RANGE.lo && m.totals.kcal <= KAL_RANGE.hi;
+export const LayakEnergi = (m: MenuInput) => {
+  const kcal = m.totals.kcal;
+  const n = m.jumlahAnggota ?? 1; // default 1 jika tidak ada info keluarga
+  const avgKcal = kcal / n;
+  return avgKcal >= KAL_RANGE.lo && avgKcal <= KAL_RANGE.hi;
+};
 
 /** Lengkap(m) ≡ |meals(m)| = 5 — seluruh slot makan terisi. */
 export const Lengkap = (m: MenuInput) => m.meals.length === 5;
