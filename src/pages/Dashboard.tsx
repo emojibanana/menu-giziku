@@ -780,11 +780,7 @@ export default function Dashboard() {
                   : "bg-berry-200 text-berry-700"
               }`}
             >
-              {proof.conclusion === "MenuLayakSajikan"
-                ? "✅ MenuLayakSajikan(m)"
-                : proof.conclusion === "MenuSeimbang"
-                  ? "✅ MenuSeimbang(m)"
-                  : "❌ MenuTidakSeimbang(m)"}
+              {proof.balanced ? "✅ Menu Seimbang" : "❌ Menu Tidak Seimbang"}
             </span>
           </div>
           <p className="mt-2 text-sm font-semibold leading-relaxed text-clay-600">
