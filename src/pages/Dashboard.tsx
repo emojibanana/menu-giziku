@@ -168,7 +168,7 @@ export default function Dashboard() {
   const [anggota, setAnggota] = useState<AnggotaKeluarga[]>([
     { id: "1", nama: "Ayah", usia: 35, kelompok: "dewasa" },
     { id: "2", nama: "Ibu", usia: 33, kelompok: "dewasa" },
-    { id: "3", nama: "Anak 1", usia: 8, kelompok: "anak-5" },
+    { id: "3", nama: "Anak 1", usia: 8, kelompok: "anak-anak" },
   ]);
 
   // Input tambah anggota
@@ -250,6 +250,10 @@ export default function Dashboard() {
   };
 
   const handleSave = async () => {
+    if (!menu || !menu.meals || menu.meals.length === 0) {
+      toast.error("Tidak ada menu untuk disimpan.");
+      return;
+    }
     const name = saveName.trim() || `Menu Keluarga ${menu.date}`;
     setIsSaving(true);
     try {
@@ -266,7 +270,8 @@ export default function Dashboard() {
       });
       setSavingOpen(false);
       setSaveName("");
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error("Gagal menyimpan menu. Coba lagi ya.");
     } finally {
       setIsSaving(false);

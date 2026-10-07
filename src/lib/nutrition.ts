@@ -677,7 +677,7 @@ function compose(
 }
 
 /** Kelompok usia untuk perhitungan kebutuhan gizi. */
-export type KelompokUsia = "anak-5" | "remaja" | "dewasa" | "lansia";
+export type KelompokUsia = "anak-anak" | "remaja" | "dewasa" | "lansia";
 
 export interface AnggotaKeluarga {
   id: string;
@@ -690,7 +690,7 @@ export interface AnggotaKeluarga {
  * Sumber: AKG Kemenkes RI & FAO/WHO. Nilai praktis untuk perencanaan menu.
  */
 const KEBUTUHAN_HARIAN: Record<KelompokUsia, Totals> = {
-  "anak-5": { kcal: 1500, protein: 40, karbo: 200, lemak: 50 },
+  "anak-anak": { kcal: 1500, protein: 40, karbo: 200, lemak: 50 },
   remaja: { kcal: 2200, protein: 60, karbo: 300, lemak: 70 },
   dewasa: { kcal: 2150, protein: 55, karbo: 290, lemak: 65 },
   lansia: { kcal: 1800, protein: 50, karbo: 240, lemak: 55 },
@@ -698,7 +698,7 @@ const KEBUTUHAN_HARIAN: Record<KelompokUsia, Totals> = {
 
 /** Tentukan kelompok usia berdasarkan umur. */
 export function tentukanKelompokUsia(usia: number): KelompokUsia {
-  if (usia < 10) return "anak-5";
+  if (usia < 10) return "anak-anak";
   if (usia <= 18) return "remaja";
   if (usia >= 60) return "lansia";
   return "dewasa";
@@ -931,28 +931,26 @@ export function generateMenuKeluarga(
   let bestScore = -1;
   const MAX_RETRY = 20;
 
+  const n = anggota.length;
+  // ponytail: scaling seragam per-item menjaga proporsi makro base menu (yang
+  // sudah seimbang oleh _buildMenu). Rasio tetap terhadap kebutuhan agregat —
+  // selama KEBUTUHAN_HARIAN tiap kelompok punya komposisi mirip, hasilnya seimbang.
+  // Upgrade saat: kalau kebutuhan antar-kelompok beda jauh & mulai gagal, scale
+  // karbo/protein/lemak terpisah pakai target gram dari `kebutuhan`.
   for (let attempt = 0; attempt < MAX_RETRY; attempt++) {
-    // Gunakan menu dasar (tanpa profil), lalu sesuaikan skala porsi
-    // Tambahkan offset acak besar agar setiap attempt mendapat kombinasi bahan berbeda
     const baseMenu = generateMenu(refreshCount * 1000 + attempt * 137);
 
-    // Hitung rasio kebutuhan vs menu dasar untuk menentukan skala porsi
-    const rasioKcal = kebutuhan.kcal / (baseMenu.totals.kcal || 1);
-    const skalaPorsi = Math.max(0.5, Math.min(3.0, rasioKcal));
+    // Skala total makanan ≈ jumlah orang × rasio kcal-per-orang base vs target
+    const rasioPerOrang = kebutuhan.kcal / n / (baseMenu.totals.kcal || 1);
+    const skalaPorsi = Math.max(0.5, Math.min(4.0, rasioPerOrang));
 
-    // Skalakan ulang setiap meal berdasarkan kebutuhan keluarga
     const scaledMeals: Meal[] = baseMenu.meals.map((meal) => ({
       ...meal,
       items: meal.items.map((item) => {
-        // Parse berat dari string "Nama Bahan XXX g"
         const match = item.match(/^(.+?)\s+(\d+)\s*g$/);
-        if (match) {
-          const nama = match[1];
-          const beratLama = parseInt(match[2], 10);
-          const beratBaru = Math.round(beratLama * skalaPorsi);
-          return `${nama} ${beratBaru} g`;
-        }
-        return item;
+        if (!match) return item;
+        const beratBaru = Math.round(parseInt(match[2], 10) * skalaPorsi);
+        return `${match[1]} ${beratBaru} g`;
       }),
       kcal: Math.round(meal.kcal * skalaPorsi),
       protein: Math.round(meal.protein * skalaPorsi * 10) / 10,
@@ -983,14 +981,14 @@ export function generateMenuKeluarga(
       kebutuhanKeluarga: kebutuhan,
     };
 
-    // Simpan hasil terbaik
     if (cek.score > bestScore) {
       bestScore = cek.score;
       bestResult = result;
     }
 
-    // Jika sudah seimbang (score >= 70 DAN kalori dalam rentang), langsung return
-    if (cek.score >= 70 && totals.kcal >= 1400 && totals.kcal <= 3000) {
+    // Seimbang = skor OK DAN rata-rata kkal/orang masuk pita LayakEnergi
+    const avgKcal = totals.kcal / n;
+    if (cek.score >= 70 && avgKcal >= 1400 && avgKcal <= 3000) {
       return result;
     }
   }
