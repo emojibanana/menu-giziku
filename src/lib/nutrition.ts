@@ -940,9 +940,11 @@ export function generateMenuKeluarga(
   for (let attempt = 0; attempt < MAX_RETRY; attempt++) {
     const baseMenu = generateMenu(refreshCount * 1000 + attempt * 137);
 
-    // Skala total makanan ≈ jumlah orang × rasio kcal-per-orang base vs target
-    const rasioPerOrang = kebutuhan.kcal / n / (baseMenu.totals.kcal || 1);
-    const skalaPorsi = Math.max(0.5, Math.min(4.0, rasioPerOrang));
+    // Skala total makanan agar total kalori menu mendekati kebutuhan gabungan keluarga
+    const rasioPorsi = kebutuhan.kcal / (baseMenu.totals.kcal || 1);
+    // ponytail: batas atas 12x untuk keluarga besar (>6 orang) atau anggota dengan
+    // kebutuhan tinggi. Proporsi makro tetap karena scaling seragam per-item.
+    const skalaPorsi = Math.max(0.5, Math.min(12.0, rasioPorsi));
 
     const scaledMeals: Meal[] = baseMenu.meals.map((meal) => ({
       ...meal,
