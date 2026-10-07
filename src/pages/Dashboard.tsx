@@ -256,9 +256,21 @@ export default function Dashboard() {
 
   const handleSave = async () => {
     if (!menu || !menu.meals || menu.meals.length === 0) {
-      toast.error("Tidak ada menu untuk disimpan.");
+      toast.error("Gagal menyimpan: Menu kosong", {
+        description: "Silakan generate menu terlebih dahulu sebelum menyimpan.",
+      });
       return;
     }
+
+    // Cek status autentikasi menggunakan hook useAuth yang sudah ada
+    if (!user) {
+      toast.error("Gagal menyimpan: Belum login", {
+        description: "Anda harus masuk ke akun terlebih dahulu untuk menyimpan menu.",
+      });
+      navigate("/auth");
+      return;
+    }
+
     const name = saveName.trim() || `Menu Keluarga ${menu.date}`;
     setIsSaving(true);
     try {
@@ -271,13 +283,16 @@ export default function Dashboard() {
         score: menu.score,
       });
       toast.success("Menu tersimpan!", {
-        description: `"${name}" ada di daftar menu tersimpan.`,
+        description: `"${name}" berhasil ditambahkan ke daftar menu tersimpan.`,
       });
       setSavingOpen(false);
       setSaveName("");
     } catch (err) {
-      console.error(err);
-      toast.error("Gagal menyimpan menu. Coba lagi ya.");
+      console.error("[Save] Mutation error:", err);
+      const msg = err instanceof Error ? err.message : "Terjadi kesalahan tidak diketahui";
+      toast.error("Gagal menyimpan menu", {
+        description: `Penyebab: ${msg}. Silakan coba lagi atau periksa koneksi internet.`,
+      });
     } finally {
       setIsSaving(false);
     }
