@@ -278,7 +278,12 @@ export default function Dashboard() {
         name,
         date: menu.date,
         profil: "rumah-tangga",
-        meals: menu.meals,
+        // ponytail: strip notes/rawItems karena validator Convex belum di-deploy
+        meals: menu.meals.map((m) => ({
+          slot: m.slot, dish: m.dish, items: m.items,
+          kcal: m.kcal, protein: m.protein, karbo: m.karbo, lemak: m.lemak,
+          ...(m.emoji ? { emoji: m.emoji } : {}),
+        })),
         totals: menu.totals,
         score: menu.score,
       });
