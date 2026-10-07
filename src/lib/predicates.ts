@@ -56,7 +56,7 @@ export const RANGES = {
 };
 
 /** Batas energi harian yang layak untuk menu utama (kkal). */
-export const KAL_RANGE = { lo: 1400, hi: 2500 } as const;
+export const KAL_RANGE = { lo: 1400, hi: 2600 } as const;
 
 function pctOf(m: MenuInput, name: "karbo" | "protein" | "lemak"): number {
   // Sumber kebenaran: proporsi kkal dari total gizi (Atwater 4-4-9),
