@@ -208,10 +208,15 @@ export default function Dashboard() {
   );
 
   // Logika predikat: forward chaining atas menu aktif (fakta → aturan → kesimpulan).
-  const proof = useMemo(
-    () => forwardChain({ ...menu, jumlahAnggota: anggota.length }),
-    [menu, anggota.length],
-  );
+  const proof = useMemo(() => {
+    const input = { ...menu, jumlahAnggota: anggota.length };
+    console.log("[Predikat] Input ke forwardChain:", {
+      totalKcal: menu.totals.kcal,
+      jumlahAnggota: input.jumlahAnggota,
+      avgKcal: menu.totals.kcal / (input.jumlahAnggota || 1),
+    });
+    return forwardChain(input);
+  }, [menu, anggota.length]);
   const savedMenus = (useQuery(api.menus.list) ?? []) as Array<
     Doc<"menus"> & { _id: Id<"menus"> }
   >;

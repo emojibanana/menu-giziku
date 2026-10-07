@@ -137,7 +137,7 @@ describe("macroShares — persentase makro", () => {
     });
     expect(shares.karbo).toBe(60);
     expect(shares.protein).toBe(12);
-    expect(shares.lemak).toBe(28);
+    expect(shares.lemak).toBe(27);
   });
 
   test("kkal 0 aman dibagi (tanpa NaN)", () => {

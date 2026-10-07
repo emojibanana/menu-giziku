@@ -54,7 +54,9 @@ export interface MacroRange {
 export const RANGES = {
   karbo: { lo: 50, hi: 70 } as MacroRange,
   protein: { lo: 10, hi: 20 } as MacroRange,
-  lemak: { lo: 20, hi: 30 } as MacroRange,
+  // ponytail: batas atas dinaikkan ke 35% untuk mengakomodasi masakan Indonesia
+  // yang cenderung berminyak/berlemak (rendang, gorengan, santan).
+  lemak: { lo: 20, hi: 35 } as MacroRange,
 };
 
 /** Batas energi harian yang layak untuk menu utama (kkal). */

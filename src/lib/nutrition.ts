@@ -1103,8 +1103,8 @@ export function macroShares(totals: Totals): {
       : totals.karbo * 4 + totals.protein * 4 + totals.lemak * 9;
   if (kcal <= 0) return { karbo: 0, protein: 0, lemak: 0 };
   return {
-    karbo: Math.round(((totals.karbo * 4) / kcal) * 100),
-    protein: Math.round(((totals.protein * 4) / kcal) * 100),
-    lemak: Math.round(((totals.lemak * 9) / kcal) * 100),
+    karbo: Math.floor(((totals.karbo * 4) / kcal) * 100),
+    protein: Math.floor(((totals.protein * 4) / kcal) * 100),
+    lemak: Math.floor(((totals.lemak * 9) / kcal) * 100),
   };
 }
