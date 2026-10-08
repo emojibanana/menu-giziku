@@ -358,9 +358,7 @@ export default function Dashboard() {
     });
   };
 
-  const handleOpenSavedMealDetail = (
-    meal: Doc<"menus">["meals"][number],
-  ) => {
+  const handleOpenSavedMealDetail = (meal: Doc<"menus">["meals"][number]) => {
     const itemsWithPurpose = (meal.rawItems ?? []).map((it) => {
       const found = NUTRIENTS.find(
         (n) => n.name.toLowerCase() === it.name.toLowerCase(),
@@ -375,7 +373,14 @@ export default function Dashboard() {
     setDetailModal({
       open: true,
       mealName: `${meal.emoji ?? "🍽️"} ${meal.dish} (${meal.slot})`,
-      items: itemsWithPurpose.length > 0 ? itemsWithPurpose : meal.items.map((i) => ({ name: i, gram: 0, purpose: "-" })),
+      items:
+        itemsWithPurpose.length > 0
+          ? itemsWithPurpose
+          : meal.items.map((i) => ({
+              name: i,
+              gram: 0,
+              purpose: "Data lama — simpan ulang untuk melihat detail",
+            })),
       totalKcal: meal.kcal,
       totalProtein: meal.protein,
       totalKarbo: meal.karbo,
