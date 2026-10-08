@@ -47,6 +47,10 @@ const schema = defineSchema(
           dish: v.string(),
           items: v.array(v.string()),
           notes: v.optional(v.string()), // catatan bahan masak (minyak goreng, dll)
+          emoji: v.optional(v.string()), // emoji hidangan untuk tampilan
+          rawItems: v.optional(
+            v.array(v.object({ name: v.string(), grams: v.number() })),
+          ), // detail bahan dengan gram untuk tampilan detail
           kcal: v.number(),
           protein: v.number(),
           karbo: v.number(),
