@@ -361,6 +361,14 @@ export default function Dashboard() {
   const handleOpenSavedMealDetail = (
     meal: Doc<"menus">["meals"][number] & { emoji?: string },
   ) => {
+    console.log("[DEBUG] handleOpenSavedMealDetail input:", {
+      _id: meal._id,
+      dish: meal.dish,
+      slot: meal.slot,
+      rawItems: meal.rawItems,
+      notes: meal.notes,
+      items: meal.items,
+    });
     const rawItems = (meal as typeof meal & { rawItems?: Array<{ name: string; grams: number }> }).rawItems;
     const itemsWithPurpose = (rawItems ?? []).map((it) => {
       const found = NUTRIENTS.find(
