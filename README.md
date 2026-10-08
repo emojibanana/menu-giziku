@@ -14,6 +14,8 @@ Aplikasi perencanaan menu harian berbasis logika predikat (forward chaining) den
 2. **Validasi Logika Predikat**: Mengevaluasi menu melalui 6 aturan inferensi (R1-R6) untuk memastikan keseimbangan makronutrien dan golongan pangan.
 3. **Jejak Inferensi**: Menampilkan langkah-langkah logika (FIRED/NOT FIRED) di Dashboard.
 4. **Manajemen Keluarga**: Mendukung perhitungan kebutuhan gizi untuk berbagai kelompok usia (Anak, Remaja, Dewasa, Lansia).
+5. **Detail Bahan per Meal**: Pengguna dapat melihat rincian bahan dan gramnya (rawItems) untuk setiap hidangan di menu aktif maupun menu tersimpan.
+6. **Simpan & Reuse Menu**: Menyimpan rencana menu lengkap ke database Convex dengan detail bahan, catatan (notes), dan metadata. Dapat diakses kembali via Dashboard untuk dilihat detailnya.
 
 ---
 

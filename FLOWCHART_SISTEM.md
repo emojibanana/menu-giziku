@@ -105,12 +105,14 @@ flowchart TD
     B --> E["Tampilkan Jejak Inferensi<br/>R1, R2, R3, R4, R5, R6<br/>status: FIRED / NOT FIRED"]
     B --> F["Tampilkan Kesimpulan<br/>✅ Layak / Seimbang<br/>❌ Tidak Seimbang"]
     B --> G["Tombol Save to DB<br/>simpan ke Convex"]
+    B --> H["Tombol Detail per Hidangan<br/>lihat bahan & gram (rawItems)"]
 
-    C --> H["Cards per hidangan"]
-    D --> I["Bar chart / progress"]
-    E --> J["Step-by-step trace"]
-    F --> K["Badge status"]
-    G --> L["Success toast"]
+    C --> I["Cards per hidangan"]
+    D --> J["Bar chart / progress"]
+    E --> K["Step-by-step trace"]
+    F --> L["Badge status"]
+    G --> M["Success toast"]
+    H --> N["Modal Detail Bahan"]
 ```
 
 ---
