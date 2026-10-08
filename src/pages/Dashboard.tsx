@@ -265,7 +265,8 @@ export default function Dashboard() {
     // Cek status autentikasi menggunakan hook useAuth yang sudah ada
     if (!user) {
       toast.error("Gagal menyimpan: Belum login", {
-        description: "Anda harus masuk ke akun terlebih dahulu untuk menyimpan menu.",
+        description:
+          "Anda harus masuk ke akun terlebih dahulu untuk menyimpan menu.",
       });
       navigate("/auth");
       return;
@@ -278,11 +279,17 @@ export default function Dashboard() {
         name,
         date: menu.date,
         profil: "rumah-tangga",
-        // ponytail: strip notes/rawItems karena validator Convex belum di-deploy
         meals: menu.meals.map((m) => ({
-          slot: m.slot, dish: m.dish, items: m.items,
-          kcal: m.kcal, protein: m.protein, karbo: m.karbo, lemak: m.lemak,
+          slot: m.slot,
+          dish: m.dish,
+          items: m.items,
+          kcal: m.kcal,
+          protein: m.protein,
+          karbo: m.karbo,
+          lemak: m.lemak,
           ...(m.emoji ? { emoji: m.emoji } : {}),
+          ...(m.rawItems ? { rawItems: m.rawItems } : {}),
+          ...(m.notes ? { notes: m.notes } : {}),
         })),
         totals: menu.totals,
         score: menu.score,
@@ -294,7 +301,10 @@ export default function Dashboard() {
       setSaveName("");
     } catch (err) {
       console.error("[Save] Mutation error:", err);
-      const msg = err instanceof Error ? err.message : "Terjadi kesalahan tidak diketahui";
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Terjadi kesalahan tidak diketahui";
       toast.error("Gagal menyimpan menu", {
         description: `Penyebab: ${msg}. Silakan coba lagi atau periksa koneksi internet.`,
       });
@@ -339,12 +349,38 @@ export default function Dashboard() {
 
     setDetailModal({
       open: true,
-      mealName: `${m.emoji} ${m.dish} (${m.slot})`,
+      mealName: `${m.emoji ?? "🍽️"} ${m.dish} (${m.slot})`,
       items: itemsWithPurpose,
       totalKcal: m.kcal,
       totalProtein: m.protein,
       totalKarbo: m.karbo,
       totalLemak: m.lemak,
+    });
+  };
+
+  const handleOpenSavedMealDetail = (
+    meal: Doc<"menus">["meals"][number] & { emoji?: string },
+  ) => {
+    const rawItems = (meal as typeof meal & { rawItems?: Array<{ name: string; grams: number }> }).rawItems;
+    const itemsWithPurpose = (rawItems ?? []).map((it) => {
+      const found = NUTRIENTS.find(
+        (n) => n.name.toLowerCase() === it.name.toLowerCase(),
+      );
+      return {
+        name: it.name,
+        gram: Math.round(it.grams),
+        purpose: found?.purpose ?? "Bahan pangan pelengkap nutrisi",
+      };
+    });
+
+    setDetailModal({
+      open: true,
+      mealName: `${meal.emoji ?? "🍽️"} ${meal.dish} (${meal.slot})`,
+      items: itemsWithPurpose.length > 0 ? itemsWithPurpose : meal.items.map((i) => ({ name: i, gram: 0, purpose: "-" })),
+      totalKcal: meal.kcal,
+      totalProtein: meal.protein,
+      totalKarbo: meal.karbo,
+      totalLemak: meal.lemak,
     });
   };
 
@@ -923,7 +959,14 @@ export default function Dashboard() {
                         >
                           <CheckCircle2 className="size-3.5 shrink-0 text-leaf-500" />
                           <span className="font-extrabold">{mm.slot}:</span>
-                          {mm.dish}
+                          <span className="truncate">{mm.dish}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleOpenSavedMealDetail(mm)}
+                            className="ml-auto inline-flex items-center gap-1 rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-sky-700 hover:bg-sky-200"
+                          >
+                            🔍 Detail
+                          </button>
                         </li>
                       ))}
                     </ul>
