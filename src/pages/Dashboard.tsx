@@ -359,7 +359,7 @@ export default function Dashboard() {
   };
 
   const handleOpenSavedMealDetail = (
-    meal: Doc<"menus">["meals"][number] & { emoji?: string },
+    meal: Doc<"menus">["meals"][number] & { _id: string; notes?: string; rawItems?: Array<{ name: string; grams: number }> },
   ) => {
     console.log("[DEBUG] handleOpenSavedMealDetail input:", {
       _id: meal._id,
