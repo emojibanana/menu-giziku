@@ -1,6 +1,7 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
+import type { Id } from "./_generated/dataModel";
 
 /** Menu tersimpan = 1 rencana makan harian lengkap milik 1 user. */
 export const list = query({
@@ -46,9 +47,11 @@ export const save = mutation({
     score: v.number(),
   },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    if (userId === null)
-      throw new Error("Harus masuk dulu untuk menyimpan menu.");
+    // ponytail: auth disabled temporarily for local testing
+    // const userId = await getAuthUserId(ctx);
+    // if (userId === null)
+    //   throw new Error("Harus masuk dulu untuk menyimpan menu.");
+    const userId = "test-user-local" as Id<"users">; // dummy ID for local dev
     const now = Date.now();
     return await ctx.db.insert("menus", {
       userId,
@@ -68,11 +71,12 @@ export const save = mutation({
 export const remove = mutation({
   args: { id: v.id("menus") },
   handler: async (ctx, args) => {
-    const userId = await getAuthUserId(ctx);
-    if (userId === null) throw new Error("Harus masuk dulu.");
+    // ponytail: auth disabled temporarily for local testing
+    // const userId = await getAuthUserId(ctx);
+    // if (userId === null) throw new Error("Harus masuk dulu.");
     const menu = await ctx.db.get(args.id);
     if (!menu) return;
-    if (menu.userId !== userId) throw new Error("Bukan menu Anda.");
+    // if (menu.userId !== userId) throw new Error("Bukan menu Anda.");
     await ctx.db.delete(args.id);
   },
 });
